@@ -1,0 +1,7 @@
+[book]
+title = "Spacewars Amethyst Tutorial"
+author = "David Pascoe-Deslauriers (spotzero)"
+
+[build]
+build-dir = "../spacewars-book"
+create-missing = true
