@@ -16,22 +16,4 @@ I'm breaking each tutorial up into chapters of the feature that I'm implementing
 
 I'm assuming that because that's where I was when I started writting this.
 
-Chapters:
-
-1. Creating an initial game space
-2. Adding ships
-2. Accepting Input
-3. Making ships fly around
-4. Fireing missles
-5. Adding a gravity well
-6. Collisions
-7. Respawning and score keeping
-8. Sound
-9. Ship energy and health
-10. Energy recharging
-11. Pausing
-12. Damage animation
-13. Adding a menu
-14. Particle effects: Engines, damage, and explosions
-15. Adding lasers
-16. Adding hyper space
+See the embedded book for the tutorials.
