@@ -1,6 +1,9 @@
 # Summary
 
 - [Introduction](introduction.md)
+- [Tutorial 0: Preparing for a software project](tut0.md)
+  - [Requirements](tut0/requirements.md)
+  - [Content style guide](tut0/content-style-guide.md)
 - [Tutorial 1: Creating an initial game space](tut1.md)
 - [Tutorial 2: Adding ships](tut2.md)
 - [Tutorial 3: Accepting Input](tut3.md)
@@ -18,3 +21,4 @@
 - [Tutorial 15: Particle effects: Engines, damage, and explosions](tut15.md)
 - [Tutorial 16: Adding lasers](tut16.md)
 - [Tutorial 17: Adding hyper space](tut17.md)
+- [Tutorial 18: Adding AI Player](tut18.md)
