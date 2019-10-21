@@ -28,29 +28,57 @@ The ships retain both momentum and argular momentum if left alone.
 
 ### Controls
 
-There are three controls:
+Each player has three controls:
 - Turn clockwise
   - While active:
-     - Decreases the ship's energy
-     - and gives a positive argular accelaration
+    - Decreases the ship's energy
+    - and gives a positive argular accelaration
+    - if there isn't enough ship energy left, do nothing
 - Turn clockwise
   - While active:
     - Decrease the ship's energy
     - and gives a negative argular accelaration
+    - if there isn't enough ship energy left, do nothing
 - Thrust
   - While active:
     - Decrease the ship's energy
     - and give an acceleration in the direction the ship is pointing
+    - if there isn't enough ship energy left, do nothing
+
+Each player has the following actions:
+- Fire a torpedo (See: Torpedos)
+- Fire laser (See: Lasers)
+- Engage hyperspace (see: Hyperspace)
+- Recharge shields (see: Shields)
+
 
 ### Energy
 
-### Thrust/Movement
+- Ship has a a pool of energy with a maxium amount
+- When is isn't full, it slowly recharges until full again
 
 ### Hull
 
+- Ship have a fixed maxium hull points
+- When the ship's hull points reach zero, the ship is destructed
+- Hull points are not recovered
+
 ### Shields
 
+- The ship has a fixed number of shield points
+- The shields can be recharged by subtracting a large amount from the ship's energy (if there is enough remaining)
+
 ### Torpedos
+
+- Torpedos can be fired either ship for the cost of a small amount of energy
+- Torpedos start with a velocity of the ship that fired it plus a forward amount
+- Torpedos accelerate forward briefly after being fired
+- If a torpedos collides with a ship (any ship) is explodes and does damage
+- If the ship has shields remaining and sufficient to still have shields after the damage is done, a small amount of damage is done to the shields
+- If the ship has shields remaining, but insufficient to still have shields after the damage is done, damage it calculated with:
+  - Shields reduced to zero
+  - Hull damaged by "amount of hull damage done by torpedo minus shields that were remaining
+- If the ship's has no shields, a large amount of damage is done to the hull
 
 ### Lasers
 
@@ -60,15 +88,13 @@ There are three controls:
 
 ### Scoring, Death, and Respawning
 
-### Pausing
+## Pausing
 
-### End of game
+## End of game
 
 ## Graphics
 
-
 ## Sound
-
 
 ## Optional Future Additions
 
