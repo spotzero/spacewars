@@ -10,6 +10,7 @@ use amethyst::{
 };
 
 mod state;
+mod components;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());

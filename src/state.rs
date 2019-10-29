@@ -9,6 +9,9 @@ use amethyst::{
 
 use log::info;
 
+use super::components::{Physical};
+
+
 pub struct MyState;
 
 impl SimpleState for MyState {
@@ -29,6 +32,13 @@ impl SimpleState for MyState {
         // Load our sprites and display them
         let sprites = load_sprites(world);
         init_sprites(world, &sprites, &dimensions);
+
+        world
+            .create_entity()
+            .with(Physical {
+                mass: 5.0,
+            })
+            .build();
     }
 
     fn handle_event(
