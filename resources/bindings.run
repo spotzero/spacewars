@@ -1,0 +1,12 @@
+(
+    axes: {
+        Rotation(0): Emulated(pos: Key(W), neg: Key(S)),
+        Thrust(0): Emulated(pos: Key(D), neg: Key(A)),
+        Rotation(1): Emulated(pos: Key(Up), neg: Key(Down)),
+        Thrust(1): Emulated(pos: Key(Right), neg: Key(Left)),
+    },
+    actions: {
+        Shoot(0): [[Key(Space)]],
+        Shoot(1): [[Key(Return)]],
+    },
+)
