@@ -1,0 +1,4 @@
+(
+  title: "Spacewars!",
+  dimensions: Some((800, 800)),
+)
