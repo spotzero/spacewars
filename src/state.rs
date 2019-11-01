@@ -1,5 +1,5 @@
 use amethyst::{
-    assets::{AssetStorage, Loader},
+    assets::{AssetStorage, Handle, Loader},
     core::transform::Transform,
     input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
@@ -7,27 +7,33 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
+use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use log::info;
 
-use super::components::{Physical};
+pub struct SpacewarsState;
 
-
-pub struct MyState;
-
-impl SimpleState for MyState {
+impl SimpleState for SpacewarsState {
     // On start will run when this state is initialized. For more
     // state lifecycle hooks, see:
     // https://book.amethyst.rs/stable/concepts/state.html#life-cycle
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
-        // Get the screen dimensions so we can initialize the camera and
-        // place our sprites correctly later. We'll clone this since we'll
-        // pass the world mutably to the following functions.
-        let dimensions = (*world.read_resource::<ScreenDimensions>()).clone();
+        let ship_render = SpriteRender {
+            sprite_sheet: load_sprite_sheet(world, "backgrounds/background").clone(),
+            sprite_number: 0, // paddle is the first sprite in the sprite_sheet
+        };
+        let mut bg_transform = Transform::default();
+        bg_transform.set_translation_xyz(500.0, 500.0, -1.0);
+
+        world
+            .create_entity()
+            .with(ship_render)
+            .with(bg_transform)
+            .build();
 
         // Place the camera
-        init_camera(world, &dimensions);
+        initialise_camera(world);
     }
 
     fn handle_event(
@@ -56,15 +62,37 @@ impl SimpleState for MyState {
     }
 }
 
-fn init_camera(world: &mut World, dimensions: &ScreenDimensions) {
-    // Center the camera in the middle of the screen, and let it cover
-    // the entire screen
+/// Initialise the camera.
+fn initialise_camera(world: &mut World) {
+    // Setup camera in a way that our screen covers whole arena and (0, 0) is in the bottom left.
     let mut transform = Transform::default();
-    transform.set_translation_xyz(dimensions.width() * 0.5, dimensions.height() * 0.5, 1.);
+    transform.set_translation_xyz(ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5, 1.0);
 
     world
         .create_entity()
-        .with(Camera::standard_2d(dimensions.width(), dimensions.height()))
+        .with(Camera::standard_2d(ARENA_WIDTH, ARENA_HEIGHT))
         .with(transform)
         .build();
+}
+
+fn load_sprite_sheet(world: &mut World, texture: &str) -> Handle<SpriteSheet> {
+    let texture_handle = {
+        let loader = world.read_resource::<Loader>();
+        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
+        loader.load(
+            format!("textures/{}.png", texture),
+            ImageFormat::default(),
+            (),
+            &texture_storage,
+        )
+    };
+
+    let loader = world.read_resource::<Loader>();
+    let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
+    loader.load(
+        format!("textures/{}.ron", texture),
+        SpriteSheetFormat(texture_handle), // We pass it the texture we want it to use
+        (),
+        &sprite_sheet_store,
+    )
 }
