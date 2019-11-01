@@ -95,8 +95,8 @@ fn initialise_camera(world: &mut World) {
 }
 
 fn load_sprite_sheet(world: &mut World, texture: &str) -> Handle<SpriteSheet> {
-    /*
-    let mut sampler = ;
+
+    let mut sampler = SamplerInfo::new(Filter::Linear, WrapMode::Clamp);
     sampler.lod_bias = Lod::from(0.1);
     sampler.anisotropic = Anisotropic::On(100);
 
@@ -108,14 +108,14 @@ fn load_sprite_sheet(world: &mut World, texture: &str) -> Handle<SpriteSheet> {
         generate_mips: true,
         premultiply_alpha: true,
     };
-*/
+
     let texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
             format!("textures/{}.png", texture),
-              ImageFormat::default(),
-  //          ImageFormat(my_config),
+  //            ImageFormat::default(),
+            ImageFormat(my_config),
             (),
             &texture_storage,
         )
