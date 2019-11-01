@@ -1,9 +1,12 @@
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
+    core::math::{Vector3},
     core::transform::Transform,
     input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
-    renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
+    renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture, Transparent},
+    renderer::rendy::hal::image::{Anisotropic, Filter, Lod, SamplerInfo, WrapMode},
+    renderer::rendy::texture::image::{ImageTextureConfig, Repr, TextureKind},
     window::ScreenDimensions,
 };
 
@@ -19,17 +22,33 @@ impl SimpleState for SpacewarsState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
-        let ship_render = SpriteRender {
+        let bg_render = SpriteRender {
             sprite_sheet: load_sprite_sheet(world, "backgrounds/background").clone(),
             sprite_number: 0, // paddle is the first sprite in the sprite_sheet
         };
         let mut bg_transform = Transform::default();
-        bg_transform.set_translation_xyz(500.0, 500.0, -1.0);
+        bg_transform.set_translation_xyz(500.0, 500.0, -10.0);
+
+        world
+            .create_entity()
+            .with(bg_render)
+            .with(bg_transform)
+            .build();
+
+        let ship_render = SpriteRender {
+            sprite_sheet: load_sprite_sheet(world, "ships/ship-001").clone(),
+            //sprite_sheet: load_sprite_sheet(world, "particles/particle0").clone(),
+            sprite_number: 0, // paddle is the first sprite in the sprite_sheet
+        };
+        let mut ship_transform = Transform::default();
+        ship_transform.set_translation_xyz(500.0, 500.0, 0.0);
+        ship_transform.set_scale(Vector3::new(0.2,0.2,1.0));
 
         world
             .create_entity()
             .with(ship_render)
-            .with(bg_transform)
+            .with(ship_transform)
+            .with(Transparent)
             .build();
 
         // Place the camera
@@ -76,12 +95,27 @@ fn initialise_camera(world: &mut World) {
 }
 
 fn load_sprite_sheet(world: &mut World, texture: &str) -> Handle<SpriteSheet> {
+    /*
+    let mut sampler = ;
+    sampler.lod_bias = Lod::from(0.1);
+    sampler.anisotropic = Anisotropic::On(100);
+
+    let my_config = ImageTextureConfig {
+        format: None,
+        repr: Repr::Srgb,
+        kind: TextureKind::D2,
+        sampler_info: sampler,
+        generate_mips: true,
+        premultiply_alpha: true,
+    };
+*/
     let texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
             format!("textures/{}.png", texture),
-            ImageFormat::default(),
+              ImageFormat::default(),
+  //          ImageFormat(my_config),
             (),
             &texture_storage,
         )
