@@ -11,6 +11,7 @@ use amethyst::{
 };
 
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
+use crate::components::Movable;
 use log::info;
 
 pub struct SpacewarsState;
@@ -42,13 +43,18 @@ impl SimpleState for SpacewarsState {
         };
         let mut ship_transform = Transform::default();
         ship_transform.set_translation_xyz(500.0, 500.0, 0.0);
-        ship_transform.set_scale(Vector3::new(0.2,0.2,1.0));
+        ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
 
         world
             .create_entity()
             .with(ship_render)
             .with(ship_transform)
             .with(Transparent)
+            .with(Movable{
+                vel: Vector3::new(10.0,10.0,0.0),
+                ang: 0.5,
+                mass: 1500.0,
+            })
             .build();
 
         // Place the camera

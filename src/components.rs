@@ -1,13 +1,13 @@
 extern crate amethyst;
 
 use amethyst::{
-    core::math::{Rotation2, Vector2},
+    core::math::Vector3,
     ecs::*,
 };
 
 #[derive(Component, Debug)]
 pub struct Movable {
-    pub vel: Vector2<f32>, // Velocity vector.
+    pub vel: Vector3<f32>, // Velocity vector.
     pub ang: f32,          // Angular momentum.
     pub mass: f32,         // Mass.
 }

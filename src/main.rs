@@ -9,8 +9,12 @@ use amethyst::{
     utils::application_root_dir,
 };
 
+mod bundle;
 mod components;
 mod state;
+mod systems;
+
+use crate::bundle::SpacewarsBundle;
 
 const ARENA_HEIGHT: f32 = 1000.0;
 const ARENA_WIDTH: f32 = 1000.0;
@@ -25,6 +29,7 @@ fn main() -> amethyst::Result<()> {
 
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
+        .with_bundle(SpacewarsBundle)?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
