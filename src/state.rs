@@ -1,6 +1,6 @@
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
-    core::math::{Vector3},
+    core::math::{Translation3, UnitQuaternion, Vector3},
     core::transform::Transform,
     input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
@@ -11,7 +11,7 @@ use amethyst::{
 };
 
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
-use crate::components::Movable;
+use crate::components::*;
 use log::info;
 
 pub struct SpacewarsState;
@@ -51,9 +51,21 @@ impl SimpleState for SpacewarsState {
             .with(ship_transform)
             .with(Transparent)
             .with(Movable{
-                vel: Vector3::new(10.0,10.0,0.0),
-                ang: 0.5,
-                mass: 1500.0,
+                vel: Transform::new(
+                    Translation3::new(0.0,0.0,0.0),
+                    UnitQuaternion::from_euler_angles(0.0, 0.0, 45.0),
+                    Vector3::new(1.0,1.0,1.0)
+                ),
+                mass: 150.0,
+            })
+            .with(Ship {
+                hull: 50.0,
+                shield: 75.0,
+                thrust: 5000.0,
+                torque: 25.0,
+                controllable: true,
+                applying_thrust: 0,
+                applying_torque: 20,
             })
             .build();
 

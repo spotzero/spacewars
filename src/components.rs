@@ -2,13 +2,13 @@ extern crate amethyst;
 
 use amethyst::{
     core::math::Vector3,
+    core::transform::Transform,
     ecs::*,
 };
 
 #[derive(Component, Debug)]
 pub struct Movable {
-    pub vel: Vector3<f32>, // Velocity vector.
-    pub ang: f32,          // Angular momentum.
+    pub vel: Transform,
     pub mass: f32,         // Mass.
 }
 
@@ -30,6 +30,8 @@ pub struct Ship {
     pub thrust: f32,
     pub torque: f32,
     pub controllable: bool,
+    pub applying_thrust: i8,
+    pub applying_torque: i8,
 }
 
 #[derive(Component, Debug)]
