@@ -28,12 +28,27 @@ impl SimpleState for SpacewarsState {
             sprite_number: 0, // paddle is the first sprite in the sprite_sheet
         };
         let mut bg_transform = Transform::default();
-        bg_transform.set_translation_xyz(500.0, 500.0, -10.0);
+        bg_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -10.0);
 
         world
             .create_entity()
             .with(bg_render)
             .with(bg_transform)
+            .build();
+
+        let gravitywell_render = SpriteRender {
+            sprite_sheet: load_sprite_sheet(world, "backgrounds/gravity-well").clone(),
+            sprite_number: 0, // paddle is the first sprite in the sprite_sheet
+        };
+        let mut gravitywell_transform = Transform::default();
+        gravitywell_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -9.0);
+        gravitywell_transform.set_scale(Vector3::new(0.5,0.5,1.0));
+
+        world
+            .create_entity()
+            .with(gravitywell_render)
+            .with(gravitywell_transform)
+            .with(Transparent)
             .build();
 
         let ship_render = SpriteRender {
@@ -42,7 +57,7 @@ impl SimpleState for SpacewarsState {
             sprite_number: 0, // paddle is the first sprite in the sprite_sheet
         };
         let mut ship_transform = Transform::default();
-        ship_transform.set_translation_xyz(750.0, 250.0, 0.0);
+        ship_transform.set_translation_xyz(ARENA_WIDTH/4.0, ARENA_HEIGHT/2.0, 0.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
 
         world
@@ -51,7 +66,7 @@ impl SimpleState for SpacewarsState {
             .with(ship_transform)
             .with(Transparent)
             .with(Movable{
-                velocity: Vector3::new(0.0,0.0,0.0),
+                velocity: Vector3::new(0.0,120.0,0.0),
                 angular_velocity: 0.0,
                 mass: 150.0,
             })
@@ -66,11 +81,13 @@ impl SimpleState for SpacewarsState {
             .with(Player {
                 controllable: true,
                 id: 1,
+                last_torpedo: 0.0,
+                last_missle: 0.0,
             })
             .build();
 
         let mut ship_transform = Transform::default();
-        ship_transform.set_translation_xyz(250.0, 750.0, 0.0);
+        ship_transform.set_translation_xyz(3.0*(ARENA_WIDTH/4.0), ARENA_HEIGHT/2.0, 0.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
 
         world
@@ -79,7 +96,7 @@ impl SimpleState for SpacewarsState {
             .with(ship_transform)
             .with(Transparent)
             .with(Movable{
-                velocity: Vector3::new(0.0,0.0,0.0),
+                velocity: Vector3::new(0.0,-120.0,0.0),
                 angular_velocity: 0.0,
                 mass: 150.0,
             })
@@ -94,6 +111,8 @@ impl SimpleState for SpacewarsState {
             .with(Player {
                 controllable: true,
                 id: 2,
+                last_torpedo: 0.0,
+                last_missle: 0.0,
             })
             .build();
 
@@ -150,7 +169,6 @@ fn load_sprite_sheet(world: &mut World, texture: &str) -> Handle<SpriteSheet> {
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
             format!("textures/{}.png", texture),
-  //            ImageFormat::default(),
             ImageFormat(my_config),
             (),
             &texture_storage,

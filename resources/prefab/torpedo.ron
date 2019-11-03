@@ -1,0 +1,27 @@
+Prefab(
+    entities: [
+        PrefabEntity(
+            data: Movable(
+                velocity: Vector3(0.0, 0.0, 0.0),
+                angular_velocity: 0.0,
+                mass: 5,
+            ),
+        ),
+        PrefabEntity(
+            data: Ship(
+                hull: 10.0,
+                shield: 0.0,
+                thrust: 500.0,
+                torque: 0.0,
+                applying_thrust: 1.0,
+                applying_torque: 0.0,
+            ),
+        ),
+        PrefabEntity(
+            data: Lifetime(
+                start: 0.0,
+                life: 4.0,
+            ),
+        ),
+    ],
+)

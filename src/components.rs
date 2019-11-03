@@ -37,10 +37,12 @@ pub struct Ship {
 pub struct Player {
     pub id: u8,
     pub controllable: bool,
+    pub last_torpedo: f32,
+    pub last_missle: f32,
 }
 
 #[derive(Component, Debug)]
 pub struct Lifetime {
     pub start: f32,
-    pub end: f32,
+    pub life: f32,
 }

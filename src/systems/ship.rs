@@ -3,11 +3,12 @@ use amethyst::{
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    core::math::Vector3,
+    core::math::{magnitude, Vector3},
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
 };
 
 use crate::components::*;
+use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
 /// This system is responsible for moving all balls according to their speed
 /// and the time passed.
@@ -23,8 +24,9 @@ impl<'s> System<'s> for ShipSystem {
     );
 
     fn run(&mut self, (ships, transforms, mut movables, time): Self::SystemData) {
+        let gravitywell = Vector3::new(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, 0.0);
 
-        for (ship, tranform, movable) in (&ships, &transforms, &mut movables).join() {
+        for (ship, transform, movable) in (&ships, &transforms, &mut movables).join() {
 
             if ship.applying_thrust != 0.0 {
                 let mut thrust = (ship.thrust * time.delta_seconds()) /  movable.mass;
@@ -33,7 +35,7 @@ impl<'s> System<'s> for ShipSystem {
                 }
                 
                 let mut thrustvector = Vector3::new(0.0,thrust,0.0);
-                thrustvector = tranform.rotation().transform_vector(&thrustvector);
+                thrustvector = transform.rotation().transform_vector(&thrustvector);
                 movable.velocity += thrustvector;
             }
             
@@ -43,6 +45,14 @@ impl<'s> System<'s> for ShipSystem {
                     torque *= -1.0;
                 }
                 movable.angular_velocity += torque;
+            }
+
+            let dir = gravitywell - transform.translation();
+            let dis = magnitude(&dir);
+            if dis > 0.001 {
+                //let gravity = ( (1000000.0 * dir.normalize()) / (dis * dis)) * time.delta_seconds();
+                let gravity = dir.normalize() * (80.0 * time.delta_seconds());
+                movable.velocity += gravity;
             }
         }
     }
