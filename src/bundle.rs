@@ -16,6 +16,7 @@ impl<'a, 'b> SystemBundle<'a, 'b> for SpacewarsBundle {
         _world: &mut World,
         builder: &mut DispatcherBuilder<'a, 'b>,
     ) -> Result<(), Error> {
+        builder.add(ShipInputSystem, "shipinput_system", &["input_system"]);
         builder.add(PhysicsSystem, "physics_system", &[]);
         builder.add(ShipSystem, "ship_system", &[]);
         Ok(())

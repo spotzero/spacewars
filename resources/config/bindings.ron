@@ -1,0 +1,33 @@
+(
+    axes: {
+        "torque_p1": Emulated(
+            pos: Key(D),
+            neg: Key(A)
+        ),
+        "thrust_p1": Emulated(
+          pos: Key(W),
+          neg: Key(S)
+        ),
+        "torque_p2": Emulated(
+            pos: Key(Numpad6),
+            neg: Key(Numpad4)
+            ),
+        "thrust_p2": Emulated(
+            pos: Key(Numpad8),
+            neg: Key(Numpad5)
+        ),
+    },
+    actions: {
+        "laser_p1": [[Key(Q)]],
+        "torpedo_p1": [[Key(E)]],
+        "missle_p1":  [[Key(Z)]],
+        "recharge_p1":  [[Key(X)]],
+        "hyperspace_p1": [[Key(C)]],
+
+        "laser_p2": [[Key(Numpad7)]],
+        "torpedo_p2": [[Key(Numpad9)]],
+        "missle_p2":  [[Key(Numpad1)]],
+        "recharge_p2": [[Key(Numpad2)]],
+        "hyperspace_p2": [[Key(Numpad3)]],
+    },
+)

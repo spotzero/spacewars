@@ -2,19 +2,19 @@ extern crate amethyst;
 
 use amethyst::{
     core::math::Vector3,
-    core::transform::Transform,
     ecs::*,
 };
 
 #[derive(Component, Debug)]
 pub struct Movable {
-    pub vel: Transform,
-    pub mass: f32,         // Mass.
+    pub velocity: Vector3<f32>,
+    pub angular_velocity: f32,
+    pub mass: f32,
 }
 
 #[derive(Component, Debug)]
 pub struct Collidable {
-    pub radius: f32, // radius.
+    pub radius: f32,
 }
 
 #[derive(Component, Debug)]
@@ -29,9 +29,14 @@ pub struct Ship {
     pub shield: f32,
     pub thrust: f32,
     pub torque: f32,
+    pub applying_thrust: f32,
+    pub applying_torque: f32,
+}
+
+#[derive(Component, Debug)]
+pub struct Player {
+    pub id: u8,
     pub controllable: bool,
-    pub applying_thrust: i8,
-    pub applying_torque: i8,
 }
 
 #[derive(Component, Debug)]

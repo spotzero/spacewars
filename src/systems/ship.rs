@@ -25,17 +25,25 @@ impl<'s> System<'s> for ShipSystem {
     fn run(&mut self, (ships, transforms, mut movables, time): Self::SystemData) {
 
         for (ship, tranform, movable) in (&ships, &transforms, &mut movables).join() {
-            if ship.applying_thrust != 0 {
+
+            if ship.applying_thrust != 0.0 {
                 let mut thrust = (ship.thrust * time.delta_seconds()) /  movable.mass;
-                if ship.applying_thrust < 0 {
+                if ship.applying_thrust < 0.0 {
                     thrust *= -1.0;
                 }
                 
                 let mut thrustvector = Vector3::new(0.0,thrust,0.0);
                 thrustvector = tranform.rotation().transform_vector(&thrustvector);
-                movable.vel.prepend_translation(thrustvector);
+                movable.velocity += thrustvector;
             }
-            print!("Velocity: {},{}\n",movable.vel.translation().x, movable.vel.translation().y);
+            
+            if ship.applying_torque != 0.0 {
+                let mut torque = (ship.torque * time.delta_seconds()) /  movable.mass;
+                if ship.applying_torque < 0.0 {
+                    torque *= -1.0;
+                }
+                movable.angular_velocity += torque;
+            }
         }
     }
 }

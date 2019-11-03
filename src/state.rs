@@ -42,30 +42,58 @@ impl SimpleState for SpacewarsState {
             sprite_number: 0, // paddle is the first sprite in the sprite_sheet
         };
         let mut ship_transform = Transform::default();
-        ship_transform.set_translation_xyz(500.0, 500.0, 0.0);
+        ship_transform.set_translation_xyz(750.0, 250.0, 0.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
 
         world
             .create_entity()
-            .with(ship_render)
+            .with(ship_render.clone())
             .with(ship_transform)
             .with(Transparent)
             .with(Movable{
-                vel: Transform::new(
-                    Translation3::new(0.0,0.0,0.0),
-                    UnitQuaternion::from_euler_angles(0.0, 0.0, 45.0),
-                    Vector3::new(1.0,1.0,1.0)
-                ),
+                velocity: Vector3::new(0.0,0.0,0.0),
+                angular_velocity: 0.0,
                 mass: 150.0,
             })
             .with(Ship {
                 hull: 50.0,
                 shield: 75.0,
-                thrust: 5000.0,
-                torque: 25.0,
+                thrust: 50000.0,
+                torque: 600.0,
+                applying_thrust: 0.0,
+                applying_torque: 0.0,
+            })
+            .with(Player {
                 controllable: true,
-                applying_thrust: 0,
-                applying_torque: 20,
+                id: 1,
+            })
+            .build();
+
+        let mut ship_transform = Transform::default();
+        ship_transform.set_translation_xyz(250.0, 750.0, 0.0);
+        ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
+
+        world
+            .create_entity()
+            .with(ship_render.clone())
+            .with(ship_transform)
+            .with(Transparent)
+            .with(Movable{
+                velocity: Vector3::new(0.0,0.0,0.0),
+                angular_velocity: 0.0,
+                mass: 150.0,
+            })
+            .with(Ship {
+                hull: 50.0,
+                shield: 75.0,
+                thrust: 50000.0,
+                torque: 600.0,
+                applying_thrust: 0.0,
+                applying_torque: 0.0,
+            })
+            .with(Player {
+                controllable: true,
+                id: 2,
             })
             .build();
 
@@ -83,17 +111,7 @@ impl SimpleState for SpacewarsState {
             if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
                 return Trans::Quit;
             }
-
-            // Listen to any key events
-            if let Some(event) = get_key(&event) {
-                info!("handling key event: {:?}", event);
-            }
-
-            // If you're looking for a more sophisticated event handling solution,
-            // including key bindings and gamepad support, please have a look at
-            // https://book.amethyst.rs/stable/pong-tutorial/pong-tutorial-03.html#capturing-user-input
         }
-
         // Keep going
         Trans::None
     }
