@@ -19,6 +19,8 @@ impl<'a, 'b> SystemBundle<'a, 'b> for SpacewarsBundle {
         builder.add(ShipInputSystem, "shipinput_system", &["input_system"]);
         builder.add(PhysicsSystem, "physics_system", &[]);
         builder.add(ShipSystem, "ship_system", &[]);
+        builder.add(ParticleSystem, "particle_system", &[]);
+        builder.add(EngineParticleSystem, "engine_particle_system", &[]);
         Ok(())
     }
 }

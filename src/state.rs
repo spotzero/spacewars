@@ -56,6 +56,7 @@ impl SimpleState for SpacewarsState {
             //sprite_sheet: load_sprite_sheet(world, "particles/particle0").clone(),
             sprite_number: 0, // paddle is the first sprite in the sprite_sheet
         };
+
         let mut ship_transform = Transform::default();
         ship_transform.set_translation_xyz(ARENA_WIDTH/4.0, ARENA_HEIGHT/2.0, 0.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
@@ -67,7 +68,7 @@ impl SimpleState for SpacewarsState {
             .with(Transparent)
             .with(Movable{
                 velocity: Vector3::new(0.0,120.0,0.0),
-                angular_velocity: 0.0,
+                angular_velocity: 0.6,
                 mass: 150.0,
             })
             .with(Ship {
@@ -77,12 +78,14 @@ impl SimpleState for SpacewarsState {
                 torque: 600.0,
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
-            })/*
-            .with(Engine {
+            })
+            .with(ShipEngines {
+                engines: [ Engine {
                 location: Vector3::new(0.0, 2.0, -1.0),
                 direction: true,
                 tint: Srgba::new(1.0, 0.1, 0.1, 1.0),
-            })*/
+                }].to_vec(),
+            })
             .with(Player {
                 controllable: true,
                 id: 1,
@@ -94,6 +97,7 @@ impl SimpleState for SpacewarsState {
 
         let mut ship_transform = Transform::default();
         ship_transform.set_translation_xyz(3.0*(ARENA_WIDTH/4.0), ARENA_HEIGHT/2.0, 0.0);
+        ship_transform.set_rotation_2d(135.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
 
         world
@@ -103,7 +107,7 @@ impl SimpleState for SpacewarsState {
             .with(Transparent)
             .with(Movable{
                 velocity: Vector3::new(0.0,-120.0,0.0),
-                angular_velocity: 0.0,
+                angular_velocity: 0.6,
                 mass: 150.0,
             })
             .with(Ship {
@@ -113,12 +117,7 @@ impl SimpleState for SpacewarsState {
                 torque: 600.0,
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
-            })/*
-            .with(Engine {
-                location: Vector3::new(0.0, 2.0, -1.0),
-                direction: true,
-                tint: Srgba::new(0.1, 0.1, 0.1, 1.0),
-            })*/
+            })
             .with(Player {
                 controllable: true,
                 id: 2,

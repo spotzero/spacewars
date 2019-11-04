@@ -49,9 +49,14 @@ pub struct Lifetime {
     pub life: f32,
 }
 
-#[derive(Component, Debug)]
+#[derive(Clone, Debug)]
 pub struct Engine {
     pub location: Vector3<f32>,
     pub direction: bool,
     pub tint: Srgba,
+}
+
+#[derive(Component, Debug)]
+pub struct ShipEngines {
+    pub engines: Vec<Engine>,
 }

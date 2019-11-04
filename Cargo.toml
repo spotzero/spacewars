@@ -10,3 +10,4 @@ edition = "2018"
 
 amethyst = { version = "0.13", features = ["vulkan"] }
 log = { version = "0.4", features = ["serde"] }
+#shred = {features = ["nightly"]}
