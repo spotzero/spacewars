@@ -84,6 +84,8 @@ impl SimpleState for SpacewarsState {
                 location: Vector3::new(0.0, 2.0, -1.0),
                 direction: true,
                 tint: Srgba::new(1.0, 0.1, 0.1, 1.0),
+                last_emit: 0.0,
+                emit_rate: 10.0,
                 }].to_vec(),
             })
             .with(Player {
