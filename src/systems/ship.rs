@@ -3,7 +3,7 @@ use amethyst::{
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    core::math::{magnitude, Vector3},
+    core::math::Vector3,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
 };
 
@@ -48,7 +48,7 @@ impl<'s> System<'s> for ShipSystem {
             }
 
             let dir = gravitywell - transform.translation();
-            let dis = magnitude(&dir);
+            let dis = dir.magnitude();
             if dis > 0.001 {
                 //let gravity = ( (1000000.0 * dir.normalize()) / (dis * dis)) * time.delta_seconds();
                 let gravity = dir.normalize() * (80.0 * time.delta_seconds());

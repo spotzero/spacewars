@@ -1,19 +1,18 @@
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
-    core::math::{Translation3, UnitQuaternion, Vector3},
+    core::math::Vector3,
     core::transform::Transform,
-    input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
+    input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture, Transparent},
     renderer::palette::Srgba,
     renderer::rendy::hal::image::{Anisotropic, Filter, Lod, SamplerInfo, WrapMode},
     renderer::rendy::texture::image::{ImageTextureConfig, Repr, TextureKind},
-    window::ScreenDimensions,
+//    window::ScreenDimensions,
 };
 
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::components::*;
-use log::info;
 
 pub struct SpacewarsState;
 
@@ -78,18 +77,18 @@ impl SimpleState for SpacewarsState {
                 torque: 600.0,
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
-            })
+            })/*
+            .with(Engine {
+                location: Vector3::new(0.0, 2.0, -1.0),
+                direction: true,
+                tint: Srgba::new(1.0, 0.1, 0.1, 1.0),
+            })*/
             .with(Player {
                 controllable: true,
                 id: 1,
                 last_torpedo: 0.0,
                 last_missle: 0.0,
                 last_hyperspace: 0.0,
-            })
-            .with(Thuster {
-                location: Vector3::new(0.0, 2.0, -1.0),
-                direction: true,
-                tint: Srgba::new(1.0, 0.1, 0.1, 1.0),
             })
             .build();
 
@@ -114,18 +113,18 @@ impl SimpleState for SpacewarsState {
                 torque: 600.0,
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
-            })
+            })/*
+            .with(Engine {
+                location: Vector3::new(0.0, 2.0, -1.0),
+                direction: true,
+                tint: Srgba::new(0.1, 0.1, 0.1, 1.0),
+            })*/
             .with(Player {
                 controllable: true,
                 id: 2,
                 last_torpedo: 0.0,
                 last_missle: 0.0,
                 last_hyperspace: 0.0,
-            })
-            .with(Thuster {
-                location: Vector3::new(0.0, 2.0, -1.0),
-                direction: true,
-                tint: Srgba::new(0.1, 0.1, 0.1, 1.0),
             })
             .build();
 

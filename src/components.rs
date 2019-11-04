@@ -50,8 +50,8 @@ pub struct Lifetime {
 }
 
 #[derive(Component, Debug)]
-pub struct Thuster {
+pub struct Engine {
     pub location: Vector3<f32>,
     pub direction: bool,
-    pub tint: Srgba<f32>,
+    pub tint: Srgba,
 }
