@@ -3,6 +3,7 @@ extern crate amethyst;
 use amethyst::{
     core::math::Vector3,
     ecs::*,
+    renderer::palette::Srgba,
 };
 
 #[derive(Component, Debug)]
@@ -39,10 +40,18 @@ pub struct Player {
     pub controllable: bool,
     pub last_torpedo: f32,
     pub last_missle: f32,
+    pub last_hyperspace: f32,
 }
 
 #[derive(Component, Debug)]
 pub struct Lifetime {
     pub start: f32,
     pub life: f32,
+}
+
+#[derive(Component, Debug)]
+pub struct Thuster {
+    pub location: Vector3<f32>,
+    pub direction: bool,
+    pub tint: Srgba<f32>,
 }
