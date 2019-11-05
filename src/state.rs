@@ -13,6 +13,7 @@ use amethyst::{
 
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::components::*;
+use crate::resources::*;
 
 pub struct SpacewarsState;
 
@@ -21,41 +22,32 @@ impl SimpleState for SpacewarsState {
     // state lifecycle hooks, see:
     // https://book.amethyst.rs/stable/concepts/state.html#life-cycle
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        let world = data.world;
+        let mut world = data.world;
+        let mut sprite_sheet_manager = SpriteSheetManager::default();
+        sprite_sheet_manager.insert(&mut world, "backgrounds/background-2");
+        sprite_sheet_manager.insert(&mut world, "backgrounds/gravity-well");
+        sprite_sheet_manager.insert(&mut world, "ships/ship-001");
+        sprite_sheet_manager.insert(&mut world, "particles/particle0");
 
-        let bg_render = SpriteRender {
-            sprite_sheet: load_sprite_sheet(world, "backgrounds/background-2").clone(),
-            sprite_number: 0, // paddle is the first sprite in the sprite_sheet
-        };
         let mut bg_transform = Transform::default();
         bg_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -10.0);
 
         world
             .create_entity()
-            .with(bg_render)
+            .with(sprite_sheet_manager.get_render("backgrounds/background-2").unwrap())
             .with(bg_transform)
             .build();
 
-        let gravitywell_render = SpriteRender {
-            sprite_sheet: load_sprite_sheet(world, "backgrounds/gravity-well").clone(),
-            sprite_number: 0, // paddle is the first sprite in the sprite_sheet
-        };
         let mut gravitywell_transform = Transform::default();
         gravitywell_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -9.0);
         gravitywell_transform.set_scale(Vector3::new(0.5,0.5,1.0));
 
         world
             .create_entity()
-            .with(gravitywell_render)
+            .with(sprite_sheet_manager.get_render("backgrounds/gravity-well").unwrap())
             .with(gravitywell_transform)
             .with(Transparent)
             .build();
-
-        let ship_render = SpriteRender {
-            sprite_sheet: load_sprite_sheet(world, "ships/ship-001").clone(),
-            //sprite_sheet: load_sprite_sheet(world, "particles/particle0").clone(),
-            sprite_number: 0, // paddle is the first sprite in the sprite_sheet
-        };
 
         let mut ship_transform = Transform::default();
         ship_transform.set_translation_xyz(ARENA_WIDTH/4.0, ARENA_HEIGHT/2.0, 0.0);
@@ -63,7 +55,7 @@ impl SimpleState for SpacewarsState {
 
         world
             .create_entity()
-            .with(ship_render.clone())
+            .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
             .with(ship_transform)
             .with(Transparent)
             .with(Movable{
@@ -104,7 +96,7 @@ impl SimpleState for SpacewarsState {
 
         world
             .create_entity()
-            .with(ship_render.clone())
+            .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
             .with(ship_transform)
             .with(Transparent)
             .with(Movable{
@@ -131,6 +123,7 @@ impl SimpleState for SpacewarsState {
 
         // Place the camera
         initialise_camera(world);
+        world.add_resource(sprite_sheet_manager);
     }
 
     fn handle_event(
@@ -160,40 +153,4 @@ fn initialise_camera(world: &mut World) {
         .with(Camera::standard_2d(ARENA_WIDTH, ARENA_HEIGHT))
         .with(transform)
         .build();
-}
-
-fn load_sprite_sheet(world: &mut World, texture: &str) -> Handle<SpriteSheet> {
-
-    let mut sampler = SamplerInfo::new(Filter::Linear, WrapMode::Clamp);
-    sampler.lod_bias = Lod::from(0.1);
-    sampler.anisotropic = Anisotropic::On(100);
-
-    let my_config = ImageTextureConfig {
-        format: None,
-        repr: Repr::Srgb,
-        kind: TextureKind::D2,
-        sampler_info: sampler,
-        generate_mips: true,
-        premultiply_alpha: true,
-    };
-
-    let texture_handle = {
-        let loader = world.read_resource::<Loader>();
-        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
-        loader.load(
-            format!("textures/{}.png", texture),
-            ImageFormat(my_config),
-            (),
-            &texture_storage,
-        )
-    };
-
-    let loader = world.read_resource::<Loader>();
-    let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
-    loader.load(
-        format!("textures/{}.ron", texture),
-        SpriteSheetFormat(texture_handle), // We pass it the texture we want it to use
-        (),
-        &sprite_sheet_store,
-    )
 }

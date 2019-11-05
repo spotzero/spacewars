@@ -1,5 +1,3 @@
-extern crate amethyst;
-
 use amethyst::{
     core::math::Vector3,
     ecs::*,

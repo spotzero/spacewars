@@ -1,3 +1,5 @@
+extern crate amethyst;
+
 use amethyst::{
     core::transform::TransformBundle,
     prelude::*,
@@ -14,6 +16,7 @@ mod bundle;
 mod components;
 mod state;
 mod systems;
+mod resources;
 
 use crate::bundle::SpacewarsBundle;
 
