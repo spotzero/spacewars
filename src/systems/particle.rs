@@ -5,9 +5,14 @@ use amethyst::{
     derive::SystemDesc,
     core::math::Vector3,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
+    ecs::{Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::{sprite::SpriteSheetHandle, transparent::Transparent, SpriteRender},
 };
 
-use crate::components::*;
+use crate::{
+    components::*,
+    resources::*,
+};
 
 // ParticleSystem controls the lifetime and fade of emitted particles.
 #[derive(SystemDesc)]
@@ -31,14 +36,29 @@ impl<'s> System<'s> for ParticleSystem {
 
 impl<'s> System<'s> for EngineParticleSystem {
     type SystemData = (
+        Entities<'s>,
         ReadStorage<'s, Ship>,
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Movable>,
         ReadStorage<'s, ShipEngines>,
+        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run (&mut self, (ships, transforms, movables, engines): Self::SystemData) {
-        // Do nothing yet.
-    }
+    fn run (&mut self, (entities, ships, transforms, movables, engines, sprite_sheet_manager, lazy_update): Self::SystemData) {
+        for (ship, transform, mover, engine) in (&ships, &transforms, &movables, &engines).join() {
+            if ship.applying_thrust != 0.0 {
+                let part: Entity = entities.create();
+                lazy_update.insert(part, sprite_sheet_manager.get_render("particles/particle0").unwrap());
+                lazy_update.insert(part, transform.clone());
+                lazy_update.insert(part, Transparent);
+                lazy_update.insert(part, Movable {
+                  velocity: mover.velocity.clone(),
+                  angular_velocity: 0.0,
+                  mass: 0.1,
+                });
+            }
 
+        }
+    }
 }
