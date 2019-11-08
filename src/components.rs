@@ -43,8 +43,8 @@ pub struct Player {
 
 #[derive(Component, Debug)]
 pub struct Lifetime {
-    pub start: f32,
-    pub life: f32,
+    pub start: f64,
+    pub life: f64,
 }
 
 #[derive(Clone, Debug)]
@@ -52,8 +52,8 @@ pub struct Engine {
     pub location: Vector3<f32>,
     pub direction: bool,
     pub tint: Srgba,
-    pub last_emit: f32,
-    pub emit_rate: f32,
+    pub last_emit: f64,
+    pub emit_rate: f64,
 }
 
 #[derive(Component, Debug)]
