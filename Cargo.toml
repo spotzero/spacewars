@@ -11,3 +11,6 @@ edition = "2018"
 amethyst = { version = "0.13", features = ["vulkan"] }
 log = { version = "0.4", features = ["serde"] }
 rand = "0.7"
+
+[profile.dev]
+debug = 0
