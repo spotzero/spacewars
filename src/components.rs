@@ -47,6 +47,9 @@ pub struct Lifetime {
     pub life: f64,
 }
 
+#[derive(Component, Debug)]
+pub struct ParticleCom;
+
 #[derive(Clone, Debug)]
 pub struct Engine {
     pub location: Vector3<f32>,

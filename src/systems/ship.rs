@@ -33,12 +33,12 @@ impl<'s> System<'s> for ShipSystem {
                 if ship.applying_thrust < 0.0 {
                     thrust *= -1.0;
                 }
-                
+
                 let mut thrustvector = Vector3::new(0.0,thrust,0.0);
                 thrustvector = transform.rotation().transform_vector(&thrustvector);
                 movable.velocity += thrustvector;
             }
-            
+
             if ship.applying_torque != 0.0 {
                 let mut torque = (ship.torque * time.delta_seconds()) /  movable.mass;
                 if ship.applying_torque < 0.0 {

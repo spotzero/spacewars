@@ -72,13 +72,22 @@ impl SimpleState for SpacewarsState {
                 applying_torque: 0.0,
             })
             .with(ShipEngines {
-                engines: [ Engine {
-                location: Vector3::new(0.0, 2.0, -1.0),
-                direction: true,
-                tint: Srgba::new(1.0, 0.1, 0.1, 1.0),
-                last_emit: 0.0,
-                emit_rate: 10.0,
-                }].to_vec(),
+                engines: [
+                    Engine {
+                        location: Vector3::new(14.0, -20.0, 0.1),
+                        direction: true,
+                        tint: Srgba::new(1.0, 0.1, 0.1, 1.0),
+                        last_emit: 0.0,
+                        emit_rate: 0.02,
+                    },
+                    Engine {
+                        location: Vector3::new(-14.0, -20.0, 0.1),
+                        direction: true,
+                        tint: Srgba::new(1.0, 0.1, 0.1, 1.0),
+                        last_emit: 0.0,
+                        emit_rate: 0.02,
+                    },
+                ].to_vec(),
             })
             .with(Player {
                 controllable: true,
