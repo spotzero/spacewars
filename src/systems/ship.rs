@@ -20,31 +20,40 @@ impl<'s> System<'s> for ShipSystem {
         ReadStorage<'s, Ship>,
         ReadStorage<'s, Transform>,
         WriteStorage<'s, Movable>,
+        WriteStorage<'s, Energy>,
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (ships, transforms, mut movables, time): Self::SystemData) {
+    fn run(&mut self, (ships, transforms, mut movables, mut energies, time): Self::SystemData) {
         let gravitywell = Vector3::new(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, 0.0);
 
-        for (ship, transform, movable) in (&ships, &transforms, &mut movables).join() {
+        for (ship, transform, movable, energy) in (&ships, &transforms, &mut movables, &mut energies).join() {
 
             if ship.applying_thrust != 0.0 {
                 let mut thrust = (ship.thrust * time.delta_seconds()) /  movable.mass;
-                if ship.applying_thrust < 0.0 {
-                    thrust *= -1.0;
-                }
+                if energy.charge > thrust {
+                    energy.charge -= thrust * 0.05;
 
-                let mut thrustvector = Vector3::new(0.0,thrust,0.0);
-                thrustvector = transform.rotation().transform_vector(&thrustvector);
-                movable.velocity += thrustvector;
+                    if ship.applying_thrust < 0.0 {
+                        thrust *= -1.0;
+                    }
+
+                    let mut thrustvector = Vector3::new(0.0,thrust,0.0);
+                    thrustvector = transform.rotation().transform_vector(&thrustvector);
+                    movable.velocity += thrustvector;
+                }
             }
 
             if ship.applying_torque != 0.0 {
                 let mut torque = (ship.torque * time.delta_seconds()) /  movable.mass;
-                if ship.applying_torque < 0.0 {
-                    torque *= -1.0;
+                if energy.charge > torque {
+                    energy.charge -= torque * 2.0;
+
+                    if ship.applying_torque < 0.0 {
+                        torque *= -1.0;
+                    }
+                    movable.angular_velocity += torque;
                 }
-                movable.angular_velocity += torque;
             }
 
             let dir = gravitywell - transform.translation();

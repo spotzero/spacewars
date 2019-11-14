@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use amethyst::{
-    assets::{AssetStorage, Handle, Loader, Prefab, PrefabLoader, ProgressCounter, RonFormat},
+    assets::{AssetStorage, Handle, Loader},
     ecs::prelude::*,
     renderer::{
         formats::texture::ImageFormat,
@@ -37,7 +37,7 @@ impl SpriteSheetManager {
             Some(h) => Some(SpriteRender {
                 sprite_sheet: h.clone(),
                 sprite_number: number,
-              }),
+            }),
             None => None,
         }
     }

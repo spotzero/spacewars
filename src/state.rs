@@ -1,13 +1,10 @@
 use amethyst::{
-    assets::{AssetStorage, Handle, Loader},
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
-    renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture, Transparent},
+    renderer::{Camera, Transparent},
     renderer::palette::Srgba,
-    renderer::rendy::hal::image::{Anisotropic, Filter, Lod, SamplerInfo, WrapMode},
-    renderer::rendy::texture::image::{ImageTextureConfig, Repr, TextureKind},
 //    window::ScreenDimensions,
 };
 
@@ -58,6 +55,14 @@ impl SimpleState for SpacewarsState {
             .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
             .with(ship_transform)
             .with(Transparent)
+            .with(Collidable {
+                radius: 10.0,
+            })
+            .with(Energy {
+                charge: 100.0,
+                recharge_rate: 5.0,
+                max_charge: 100.0,
+            })
             .with(Movable{
                 velocity: Vector3::new(0.0,120.0,0.0),
                 angular_velocity: 0.6,
@@ -126,6 +131,14 @@ impl SimpleState for SpacewarsState {
             .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
             .with(ship_transform)
             .with(Transparent)
+            .with(Collidable {
+                radius: 10.0,
+            })
+            .with(Energy {
+                charge: 100.0,
+                recharge_rate: 5.0,
+                max_charge: 100.0,
+            })
             .with(Movable{
                 velocity: Vector3::new(0.0,-120.0,0.0),
                 angular_velocity: 0.6,
@@ -150,7 +163,7 @@ impl SimpleState for SpacewarsState {
 
         // Place the camera
         initialise_camera(world);
-        world.add_resource(sprite_sheet_manager);
+        world.insert(sprite_sheet_manager);
     }
 
     fn handle_event(

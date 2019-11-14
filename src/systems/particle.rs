@@ -8,7 +8,7 @@ use amethyst::{
     renderer::palette::Srgba,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
     ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
-    renderer::{sprite::SpriteSheetHandle, transparent::Transparent, SpriteRender, resources::Tint},
+    renderer::{transparent::Transparent, resources::Tint},
 };
 
 use rand::Rng;
@@ -37,7 +37,7 @@ impl<'s> System<'s> for ParticleSystem {
     fn run(&mut self, (entities, _particles, lifetimes, time): Self::SystemData) {
         for (entity, lifetime) in (&entities, &lifetimes).join() {
             if lifetime.start + lifetime.life < time.absolute_real_time_seconds() {
-    let _ = entities.delete(entity);
+                let _ = entities.delete(entity);
             }
         }
     }

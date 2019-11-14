@@ -18,8 +18,9 @@ pub struct Collidable {
 
 #[derive(Component, Debug)]
 pub struct Energy {
-    pub energy: f32,
+    pub charge: f32,
     pub recharge_rate: f32,
+    pub max_charge: f32,
 }
 
 #[derive(Component, Debug)]
