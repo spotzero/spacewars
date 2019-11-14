@@ -37,9 +37,11 @@ pub struct Ship {
 pub struct Player {
     pub id: u8,
     pub controllable: bool,
-    pub last_torpedo: f32,
-    pub last_missle: f32,
-    pub last_hyperspace: f32,
+    pub last_torpedo: f64,
+    pub torpedo_interval: f64,
+    pub torpedo_energy: f32,
+    pub last_hyperspace: f64,
+    pub hyperspace_interval: f64,
 }
 
 #[derive(Component, Debug)]

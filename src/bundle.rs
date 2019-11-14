@@ -23,6 +23,7 @@ impl<'a, 'b> SystemBundle<'a, 'b> for SpacewarsBundle {
         builder.add(EngineParticleSystem, "engine_particle_system", &[]);
         builder.add(RechargeSystem, "recharge_system", &[]);
         builder.add(GravitywellCollisionSystem, "gravitywell_collision_system", &[]);
+        builder.add(FireTorpedoSystem, "fire_torpedo_system", &["input_system"]);
         Ok(())
     }
 }

@@ -5,6 +5,7 @@ mod energy;
 mod particle;
 mod physics;
 mod ship;
+mod torpedo;
 
 pub use self::{
     collision::GravitywellCollisionSystem,
@@ -14,4 +15,5 @@ pub use self::{
     particle::EngineParticleSystem,
     physics::PhysicsSystem,
     ship::ShipSystem,
+    torpedo::FireTorpedoSystem,
 };

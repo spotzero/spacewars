@@ -25,6 +25,7 @@ impl SimpleState for SpacewarsState {
         sprite_sheet_manager.insert(&mut world, "backgrounds/gravity-well");
         sprite_sheet_manager.insert(&mut world, "ships/ship-001");
         sprite_sheet_manager.insert(&mut world, "particles/particle0");
+        sprite_sheet_manager.insert(&mut world, "weapons/missle-001");
 
         let mut bg_transform = Transform::default();
         bg_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -10.0);
@@ -116,8 +117,10 @@ impl SimpleState for SpacewarsState {
                 controllable: true,
                 id: 1,
                 last_torpedo: 0.0,
-                last_missle: 0.0,
+                torpedo_interval: 1.5,
+                torpedo_energy: 10.0,
                 last_hyperspace: 0.0,
+                hyperspace_interval: 5.0,
             })
             .build();
 
@@ -156,8 +159,10 @@ impl SimpleState for SpacewarsState {
                 controllable: true,
                 id: 2,
                 last_torpedo: 0.0,
-                last_missle: 0.0,
+                torpedo_interval: 1.5,
+                torpedo_energy: 10.0,
                 last_hyperspace: 0.0,
+                hyperspace_interval: 5.0,
             })
             .build();
 
