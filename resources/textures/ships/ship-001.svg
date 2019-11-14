@@ -16,7 +16,7 @@
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="ship-001.svg"
-   inkscape:export-filename="/home/dpascoed/workspace/spacewars/assets/textures/ships/ship-001.png"
+   inkscape:export-filename="/home/dpascoed/Documents/dave/rust/spacewars/resources/textures/ships/ship-001.png"
    inkscape:export-xdpi="96.000008"
    inkscape:export-ydpi="96.000008">
   <defs
@@ -29,16 +29,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="236.31508"
+     inkscape:cx="13.100794"
      inkscape:cy="164.56624"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      inkscape:window-width="3840"
-     inkscape:window-height="2099"
+     inkscape:window-height="2054"
      inkscape:window-x="0"
-     inkscape:window-y="34"
+     inkscape:window-y="54"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -57,6 +57,42 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-161.53332)">
+    <g
+       id="g954-7"
+       transform="matrix(1,0,0,-1,177.6299,462.78387)">
+      <ellipse
+         ry="31.835724"
+         rx="15.771737"
+         cy="265.34448"
+         cx="-143.06398"
+         id="path897-28"
+         style="fill:#cccccc;fill-opacity:1;stroke:#000000;stroke-width:2.77348971;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <ellipse
+         ry="9.3549109"
+         rx="11.339286"
+         cy="288.77896"
+         cx="-143.06398"
+         id="path950-2"
+         style="fill:#00a3fa;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+       id="g954-1-9"
+       transform="matrix(1,0,0,-1,243.96472,462.78387)">
+      <ellipse
+         ry="31.835724"
+         rx="15.771737"
+         cy="265.34448"
+         cx="-143.06398"
+         id="path897-2-9"
+         style="fill:#cccccc;fill-opacity:1;stroke:#000000;stroke-width:2.77348971;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <ellipse
+         ry="9.3549109"
+         rx="11.339286"
+         cy="288.77896"
+         cx="-143.06398"
+         id="path950-7-6"
+         style="fill:#00a3fa;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
     <g
        id="g871"
        transform="translate(0,-8.3627474)">
@@ -140,13 +176,12 @@
        cy="229.26665"
        rx="46.967525"
        ry="39.313511" />
-    <rect
+    <path
+       transform="rotate(-45)"
        style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -120.61975,187.68294 c 0,0 21.95536,-6.77083 28.726188,0 6.770828,6.77083 0,28.72619 0,28.72619 h -28.726188 z"
        id="rect979"
-       width="28.726189"
-       height="28.726189"
-       x="-107.52357"
-       y="174.58678"
-       transform="rotate(-45)" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="czccc" />
   </g>
 </svg>
