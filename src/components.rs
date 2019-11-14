@@ -53,7 +53,8 @@ pub struct ParticleCom;
 #[derive(Clone, Debug)]
 pub struct Engine {
     pub location: Vector3<f32>,
-    pub direction: bool,
+    pub direction: i8,
+    pub rotate: i8,
     pub tint: Srgba,
     pub last_emit: f64,
     pub emit_rate: f64,

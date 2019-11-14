@@ -58,9 +58,9 @@ impl<'s> System<'s> for EngineParticleSystem {
 
     fn run (&mut self, (entities, ships, transforms, movables, mut ship_engines, sprite_sheet_manager, lazy_update, time): Self::SystemData) {
         for (ship, transform, mover, ship_engine) in (&ships, &transforms, &movables, &mut ship_engines).join() {
-            if ship.applying_thrust != 0.0 {
+            if ship.applying_thrust != 0.0 || ship.applying_torque != 0.0 {
                 for i in 0..ship_engine.engines.len() {
-                    if check_engine(&ship_engine.engines[i], ship.applying_thrust, &time) {
+                    if check_engine(&ship_engine.engines[i], ship.applying_thrust, ship.applying_torque, &time) {
                         emit_particle_for(&mut ship_engine.engines[i], ship, &time, &lazy_update, transform, mover, &entities, &sprite_sheet_manager);
                     }
                 }
@@ -69,13 +69,17 @@ impl<'s> System<'s> for EngineParticleSystem {
     }
 }
 
-fn check_engine(engine: &Engine, applying_thrust: f32, time: &Time) -> bool {
+fn check_engine(engine: &Engine, applying_thrust: f32, applying_torque: f32, time: &Time) -> bool {
     if
         engine.last_emit + engine.emit_rate < time.absolute_real_time_seconds()
         && (
-            (applying_thrust > 0.0 && engine.direction)
+            (applying_thrust > 0.0 && engine.direction > 0)
             ||
-            (applying_thrust < 0.0 && !engine.direction)
+            (applying_thrust < 0.0 && engine.direction < 0)
+            ||
+            (applying_torque > 0.0 && engine.rotate > 0)
+            ||
+            (applying_torque < 0.0 && engine.rotate < 0)
         )
     {
         true
@@ -97,7 +101,7 @@ fn emit_particle_for<'a>(
     let mut rng = rand::thread_rng();
     engine.last_emit = time.absolute_real_time_seconds();
     let mut thrust = (ship.thrust * time.delta_seconds()) / 2.0;
-    if ship.applying_thrust > 0.0 {
+    if engine.direction > 0 {
         thrust *= -1.0;
     }
 
@@ -107,7 +111,7 @@ fn emit_particle_for<'a>(
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
     pos.append_translation(engine.location);
-    //pos.move_backward(-1.0);
+
     let part: Entity = entities.create();
     lazy_update.insert(part, sprite_sheet_manager.get_render("particles/particle0").unwrap());
     lazy_update.insert(part, pos);
