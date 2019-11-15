@@ -61,7 +61,7 @@ impl<'s> System<'s> for EngineParticleSystem {
             if ship.applying_thrust != 0.0 || ship.applying_torque != 0.0 {
                 for i in 0..ship_engine.engines.len() {
                     if check_engine(&ship_engine.engines[i], &ship, &time) {
-                        emit_particle_for(&mut ship_engine.engines[i], ship, &time, &lazy_update, transform, mover, &entities, &sprite_sheet_manager);
+                        emit_particle_for(&mut ship_engine.engines[i], &time, &lazy_update, transform, mover, &entities, &sprite_sheet_manager);
                     }
                 }
             }
@@ -90,7 +90,6 @@ fn check_engine(engine: &Engine, ship: &Ship, time: &Time) -> bool {
 
 fn emit_particle_for<'a>(
     engine: &'a mut Engine,
-    ship: &Ship,
     time: &Time,
     lazy_update: &LazyUpdate,
     transform: &Transform,

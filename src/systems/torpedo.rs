@@ -3,7 +3,6 @@ use amethyst::{
     core::transform::Transform,
     core::SystemDesc,
     core::math::Vector3,
-    core::math::UnitQuaternion,
     derive::SystemDesc,
     renderer::palette::Srgba,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},

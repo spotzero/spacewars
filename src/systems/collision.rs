@@ -7,8 +7,6 @@ use amethyst::{
 };
 
 use crate::components::*;
-use crate::ARENA_HEIGHT;
-use crate::ARENA_WIDTH;
 
 #[derive(SystemDesc)]
 pub struct GravitywellCollisionSystem;
