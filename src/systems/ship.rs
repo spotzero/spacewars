@@ -17,21 +17,23 @@ pub struct ShipSystem;
 
 impl<'s> System<'s> for ShipSystem {
     type SystemData = (
-        ReadStorage<'s, Ship>,
+        WriteStorage<'s, Ship>,
         ReadStorage<'s, Transform>,
         WriteStorage<'s, Movable>,
         WriteStorage<'s, Energy>,
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (ships, transforms, mut movables, mut energies, time): Self::SystemData) {
+    fn run(&mut self, (mut ships, transforms, mut movables, mut energies, time): Self::SystemData) {
         let gravitywell = Vector3::new(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, 0.0);
 
-        for (ship, transform, movable, energy) in (&ships, &transforms, &mut movables, &mut energies).join() {
+        for (ship, transform, movable, energy) in (&mut ships, &transforms, &mut movables, &mut energies).join() {
 
             if ship.applying_thrust != 0.0 {
                 let mut thrust = (ship.thrust * time.delta_seconds()) /  movable.mass;
                 if energy.charge > thrust {
+                    ship.thrust_failure = false;
+
                     energy.charge -= thrust * 0.05;
 
                     if ship.applying_thrust < 0.0 {
@@ -41,6 +43,8 @@ impl<'s> System<'s> for ShipSystem {
                     let mut thrustvector = Vector3::new(0.0,thrust,0.0);
                     thrustvector = transform.rotation().transform_vector(&thrustvector);
                     movable.velocity += thrustvector;
+                } else {
+                    ship.thrust_failure = true;
                 }
             }
 
@@ -48,21 +52,25 @@ impl<'s> System<'s> for ShipSystem {
                 let mut torque = (ship.torque * time.delta_seconds()) /  movable.mass;
                 if energy.charge > torque {
                     energy.charge -= torque * 2.0;
+                    ship.thrust_failure = false;
 
                     if ship.applying_torque < 0.0 {
                         torque *= -1.0;
                     }
                     movable.angular_velocity += torque;
+                } else {
+                    ship.torque_failure = true;
                 }
             }
 
             let dir = gravitywell - transform.translation();
             let dis = dir.magnitude();
-            if dis > 0.001 {
-                //let gravity = ( (1000000.0 * dir.normalize()) / (dis * dis)) * time.delta_seconds();
-                let gravity = dir.normalize() * (80.0 * time.delta_seconds());
-                movable.velocity += gravity;
-            }
+            let gravity = if dis > 200.0 {
+                dir.normalize() * (80.0 * time.delta_seconds())
+            } else {
+                ( (100000.0 * dir.normalize()) / dis) * time.delta_seconds()
+            };
+            movable.velocity += gravity;
         }
     }
 }

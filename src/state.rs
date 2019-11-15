@@ -74,6 +74,8 @@ impl SimpleState for SpacewarsState {
                 shield: 75.0,
                 thrust: 50000.0,
                 torque: 600.0,
+                thrust_failure: false,
+                torque_failure: false,
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
             })
@@ -152,6 +154,8 @@ impl SimpleState for SpacewarsState {
                 shield: 75.0,
                 thrust: 50000.0,
                 torque: 600.0,
+                thrust_failure: false,
+                torque_failure: false,
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
             })

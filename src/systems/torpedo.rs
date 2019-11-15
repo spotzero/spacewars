@@ -5,6 +5,7 @@ use amethyst::{
     core::math::Vector3,
     core::math::UnitQuaternion,
     derive::SystemDesc,
+    renderer::palette::Srgba,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
     ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
     input::{InputHandler, StringBindings},
@@ -72,7 +73,7 @@ fn spawn_torpedo(
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
     pos.set_scale(Vector3::new(0.05,0.05,1.0));
-
+    pos.move_forward(0.1);
     let part: Entity = entities.create();
     lazy_update.insert(part, sprite_sheet_manager.get_render("weapons/missle-001").unwrap());
     lazy_update.insert(part, pos);
@@ -83,6 +84,8 @@ fn spawn_torpedo(
         shield: 0.0,
         thrust: 2000.0,
         torque: 0.0,
+        thrust_failure: false,
+        torque_failure: false,
         applying_thrust: 1.0,
         applying_torque: 0.0,
     });
@@ -100,4 +103,17 @@ fn spawn_torpedo(
         angular_velocity: 0.0,
         mass: 10.0,
     });
+    lazy_update.insert(part, ShipEngines {
+        engines: [
+            Engine {
+                location: Vector3::new(0.0, -16.0, 0.05),
+                direction: 1,
+                rotate: 0,
+                tint: Srgba::new(1.0, 0.1, 1.0, 1.0),
+                last_emit: 0.0,
+                emit_rate: 0.02,
+            },
+        ].to_vec()
+    });
+
 }

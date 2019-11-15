@@ -29,6 +29,8 @@ pub struct Ship {
     pub shield: f32,
     pub thrust: f32,
     pub torque: f32,
+    pub thrust_failure: bool,
+    pub torque_failure: bool,
     pub applying_thrust: f32,
     pub applying_torque: f32,
 }
