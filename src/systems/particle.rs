@@ -61,7 +61,9 @@ impl<'s> System<'s> for EngineParticleSystem {
             if ship.applying_thrust != 0.0 || ship.applying_torque != 0.0 {
                 for i in 0..ship_engine.engines.len() {
                     if check_engine(&ship_engine.engines[i], &ship, &time) {
-                        emit_particle_for(&mut ship_engine.engines[i], &time, &lazy_update, transform, mover, &entities, &sprite_sheet_manager);
+                        for _j in 0..3 {
+                            emit_particle_for(&mut ship_engine.engines[i], &time, &lazy_update, transform, mover, &entities, &sprite_sheet_manager);
+                        }
                     }
                 }
             }
@@ -117,7 +119,7 @@ fn emit_particle_for<'a>(
     lazy_update.insert(part, pos);
     lazy_update.insert(part, ParticleCom);
     lazy_update.insert(part, Transparent);
-    lazy_update.insert(part, Tint(Srgba::new(1.0, 0.1, 0.1, 0.1)));
+    lazy_update.insert(part, Tint(engine.tint.clone()));
     lazy_update.insert(part, Lifetime {
         start: engine.last_emit,
         life: rng.gen_range(0.2, 0.3),

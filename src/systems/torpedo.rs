@@ -105,10 +105,10 @@ fn spawn_torpedo(
     lazy_update.insert(part, ShipEngines {
         engines: [
             Engine {
-                location: Vector3::new(0.0, -16.0, 0.05),
+                location: Vector3::new(0.0, -14.0, 0.05),
                 direction: 1,
                 rotate: 0,
-                tint: Srgba::new(1.0, 0.1, 1.0, 1.0),
+                tint: Srgba::new(0.9, 0.6, 0.0, 1.0),
                 last_emit: 0.0,
                 emit_rate: 0.02,
             },
