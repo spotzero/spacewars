@@ -15,9 +15,7 @@ use crate::resources::*;
 pub struct SpacewarsState;
 
 impl SimpleState for SpacewarsState {
-    // On start will run when this state is initialized. For more
-    // state lifecycle hooks, see:
-    // https://book.amethyst.rs/stable/concepts/state.html#life-cycle
+
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let mut world = data.world;
         let mut sprite_sheet_manager = SpriteSheetManager::default();
@@ -25,6 +23,7 @@ impl SimpleState for SpacewarsState {
         sprite_sheet_manager.insert(&mut world, "backgrounds/gravity-well");
         sprite_sheet_manager.insert(&mut world, "ships/ship-001");
         sprite_sheet_manager.insert(&mut world, "particles/particle0");
+        sprite_sheet_manager.insert(&mut world, "particles/debris");
         sprite_sheet_manager.insert(&mut world, "weapons/missle-001");
 
         let mut bg_transform = Transform::default();
