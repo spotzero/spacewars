@@ -1,44 +1,54 @@
 use amethyst::{
+    core::math::Vector3,
     core::timing::Time,
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
+    ecs::prelude::{Join, Read, System, SystemData, World, WriteStorage},
 };
 
 use crate::components::*;
-use crate::ARENA_HEIGHT;
-use crate::ARENA_WIDTH;
+use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
 #[derive(SystemDesc)]
 pub struct PhysicsSystem;
 
 impl<'s> System<'s> for PhysicsSystem {
     type SystemData = (
-        ReadStorage<'s, Movable>,
+        WriteStorage<'s, Movable>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (movable, mut locals, time): Self::SystemData) {
+    fn run(&mut self, (mut movable, mut transforms, time): Self::SystemData) {
+        let gravitywell = Vector3::new(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, 0.0);
 
-        for (mover, local) in (&movable, &mut locals).join() {
-            local.prepend_translation(mover.velocity * time.delta_seconds());
+        for (mover, transform) in (&mut movable, &mut transforms).join() {
+            transform.prepend_translation(mover.velocity * time.delta_seconds());
             if mover.angular_velocity != 0.0 {
-                local.rotate_2d(mover.angular_velocity * time.delta_seconds());
+                transform.rotate_2d(mover.angular_velocity * time.delta_seconds());
             }
 
-            if local.translation().x < 0.0 {
-                local.set_translation_x(ARENA_WIDTH + local.translation().x);
-            } else if local.translation().x > ARENA_WIDTH {
-                local.set_translation_x(local.translation().x - ARENA_WIDTH);
+            if transform.translation().x < 0.0 {
+                transform.set_translation_x(ARENA_WIDTH + transform.translation().x);
+            } else if transform.translation().x > ARENA_WIDTH {
+                transform.set_translation_x(transform.translation().x - ARENA_WIDTH);
             }
 
-            if local.translation().y < 0.0 {
-                local.set_translation_y(ARENA_HEIGHT + local.translation().y);
-            } else if local.translation().y > ARENA_HEIGHT {
-                local.set_translation_y(local.translation().y - ARENA_HEIGHT);
+            if transform.translation().y < 0.0 {
+                transform.set_translation_y(ARENA_HEIGHT + transform.translation().y);
+            } else if transform.translation().y > ARENA_HEIGHT {
+                transform.set_translation_y(transform.translation().y - ARENA_HEIGHT);
             }
+
+            let dir = gravitywell - transform.translation();
+            let dis = dir.magnitude();
+            let gravity = if dis > 200.0 {
+                dir.normalize() * (80.0 * time.delta_seconds())
+            } else {
+                ( (100000.0 * dir.normalize()) / dis) * time.delta_seconds()
+            };
+            mover.velocity += gravity;
 
         }
     }
