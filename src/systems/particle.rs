@@ -5,10 +5,9 @@ use amethyst::{
     derive::SystemDesc,
     core::math::Vector3,
     core::math::UnitQuaternion,
-    renderer::palette::Srgba,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
-    ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
-    renderer::{transparent::Transparent, resources::Tint},
+    ecs::{Entities, LazyUpdate, ReadExpect, world::EntitiesRes},
+    renderer::resources::Tint,
 };
 
 use rand::Rng;
@@ -114,19 +113,14 @@ fn emit_particle_for<'a>(
     pos.append_translation(engine.location);
     pos.set_scale(Vector3::new(0.1,0.1,1.0));
 
-    let part: Entity = entities.create();
-    lazy_update.insert(part, sprite_sheet_manager.get_render("particles/particle0").unwrap());
-    lazy_update.insert(part, pos);
-    lazy_update.insert(part, ParticleCom);
-    lazy_update.insert(part, Transparent);
-    lazy_update.insert(part, Tint(engine.tint.clone()));
-    lazy_update.insert(part, Lifetime {
-        start: engine.last_emit,
-        life: rng.gen_range(0.2, 0.3),
-    });
-    lazy_update.insert(part, Movable {
-        velocity: mover.velocity + thrustvector,
-        angular_velocity: 0.0,
-        mass: 0.1,
-    });
+    emit_particle(
+        engine.last_emit,
+        rng.gen_range(0.2, 0.3),
+        pos,
+        mover.velocity + thrustvector,
+        Tint(engine.tint.clone()),
+        &lazy_update,
+        &entities,
+        &sprite_sheet_manager
+    );
 }

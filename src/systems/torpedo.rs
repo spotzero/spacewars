@@ -46,13 +46,22 @@ impl<'s> System<'s> for FireTorpedoSystem {
         for (transform, movable, player, energy) in (&transforms, &movables, &mut players, &mut energies).join() {
             let fire_torpedo = input.action_is_down(&format!("torpedo_p{}", player.id)).expect("Shoot action exists");
             if
-              fire_torpedo
-              && player.last_torpedo + player.torpedo_interval < time.absolute_real_time_seconds()
-              && energy.charge > player.torpedo_energy
+                fire_torpedo
+                && player.last_torpedo + player.torpedo_interval < time.absolute_real_time_seconds()
+                && energy.charge > player.torpedo_energy
             {
                 energy.charge -= player.torpedo_energy;
                 player.last_torpedo = time.absolute_real_time_seconds();
                 spawn_torpedo(&transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time);
+                generate_explosion(
+                    &transform,
+                    &movable,
+                    50.0,
+                    &entities,
+                    &sprite_sheet_manager,
+                    &lazy_update,
+                    &time,
+                );
             }
 
         }
