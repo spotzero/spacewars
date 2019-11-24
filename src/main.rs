@@ -10,6 +10,7 @@ use amethyst::{
     },
     input::{InputBundle, StringBindings},
     utils::application_root_dir,
+    ui::RenderUi,
 };
 
 mod bundle;
@@ -44,7 +45,8 @@ fn main() -> amethyst::Result<()> {
                     RenderToWindow::from_config_path(display_config)
                         .with_clear([0.0, 0.0, 0.0, 1.0]),
                 )
-                .with_plugin(RenderFlat2D::default()),
+                .with_plugin(RenderFlat2D::default())
+                .with_plugin(RenderUi::default()),
         )?;
 
     let mut game = Application::new(resources, state::SpacewarsState, game_data)?;

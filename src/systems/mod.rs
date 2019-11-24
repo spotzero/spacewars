@@ -6,6 +6,7 @@ mod particle;
 mod physics;
 mod ship;
 mod torpedo;
+mod ui;
 
 pub use self::{
     collision::GravitywellCollisionSystem,
@@ -16,4 +17,5 @@ pub use self::{
     physics::PhysicsSystem,
     ship::ShipSystem,
     torpedo::FireTorpedoSystem,
+    ui::StatusUiSystem,
 };
