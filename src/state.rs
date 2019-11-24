@@ -1,10 +1,12 @@
 use amethyst::{
+    assets::Loader,
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, Transparent},
     renderer::palette::Srgba,
+    ui::{Anchor, TtfFormat, UiText, UiTransform},
 //    window::ScreenDimensions,
 };
 
@@ -171,6 +173,7 @@ impl SimpleState for SpacewarsState {
 
         // Place the camera
         initialise_camera(world);
+        initialise_ui(world);
         world.insert(sprite_sheet_manager);
     }
 
@@ -201,4 +204,63 @@ fn initialise_camera(world: &mut World) {
         .with(Camera::standard_2d(ARENA_WIDTH, ARENA_HEIGHT))
         .with(transform)
         .build();
+}
+
+fn initialise_ui(world: &mut World) {
+
+    let font = world.read_resource::<Loader>().load(
+        "font/Ubuntu-R.ttf",
+        TtfFormat,
+        (),
+        &world.read_resource(),
+    );
+
+    let p1_transform = UiTransform::new(
+        "P1".to_string(),
+        Anchor::TopMiddle,
+        Anchor::Middle,
+        -50.,
+        -50.,
+        1.,
+        200.,
+        50.,
+    );
+
+    let p1_stats = world
+        .create_entity()
+        .with(p1_transform)
+        .with(UiText::new(
+            font.clone(),
+            ui_stats_message(0.0,0.0,0.0),
+            [1.0, 0.0, 0.0, 1.0],
+            50.,
+        ))
+        .build();
+
+
+    let p2_transform = UiTransform::new(
+        "P2".to_string(),
+        Anchor::TopMiddle,
+        Anchor::Middle,
+        50.,
+        -50.,
+        1.,
+        200.,
+        50.,
+    );
+
+    let p2_stats = world
+        .create_entity()
+        .with(p2_transform)
+        .with(UiText::new(
+            font.clone(),
+            ui_stats_message(0.0,0.0,0.0),
+            [0.0, 0.0, 1.0, 1.0],
+            50.,
+        ))
+        .build();
+    let mut status_ui = StatusUi::default();
+    status_ui.status.insert(1, p1_stats);
+    status_ui.status.insert(1, p2_stats);
+    world.insert(status_ui);
 }
