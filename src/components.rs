@@ -52,8 +52,21 @@ pub struct Lifetime {
     pub life: f64,
 }
 
-#[derive(Component, Debug)]
+#[derive(Component, Default)]
+#[storage(NullStorage)]
 pub struct ParticleCom;
+
+#[derive(Component, Default)]
+#[storage(NullStorage)]
+pub struct DebrisCom;
+
+#[derive(Component, Debug)]
+pub struct Torpedo {
+    pub damage: f32,
+    pub fired: f64,
+    pub life: f64,
+    pub exploding: bool,
+}
 
 #[derive(Clone, Debug)]
 pub struct Engine {

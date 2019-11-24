@@ -10,5 +10,4 @@ pub struct PlayerShip {
 }
 
 pub struct ExhaustParticle {
-    
 }
