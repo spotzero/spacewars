@@ -216,14 +216,14 @@ fn initialise_ui(world: &mut World) {
     );
 
     let p1_transform = UiTransform::new(
-        "P1".to_string(),
-        Anchor::TopMiddle,
-        Anchor::Middle,
-        -50.,
-        -50.,
-        1.,
+        "p1-stats".to_string(),
+        Anchor::TopLeft,
+        Anchor::TopLeft,
+        0.0,
+        0.0,
+        0.0,
         200.,
-        50.,
+        100.,
     );
 
     let p1_stats = world
@@ -239,7 +239,7 @@ fn initialise_ui(world: &mut World) {
 
 
     let p2_transform = UiTransform::new(
-        "P2".to_string(),
+        "p2-stats".to_string(),
         Anchor::TopMiddle,
         Anchor::Middle,
         50.,

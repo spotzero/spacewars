@@ -10,7 +10,7 @@ use amethyst::{
     },
     input::{InputBundle, StringBindings},
     utils::application_root_dir,
-    ui::RenderUi,
+    ui::{RenderUi, UiBundle},
 };
 
 mod bundle;
@@ -38,6 +38,7 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(
             InputBundle::<StringBindings>::new().with_bindings_from_file(key_bindings_path)?,
         )?
+        .with_bundle(UiBundle::<StringBindings>::new())?
         .with_bundle(SpacewarsBundle)?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()

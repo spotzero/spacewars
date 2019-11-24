@@ -11,5 +11,5 @@ pub fn ui_stats_message(
     shields: f32,
     hull: f32
 ) -> String {
-  format!("Energy: {}\nShields: {}\nHull: {}", energy, shields, hull).to_string()
+  format!("Energy: {}", energy).to_string()
 }
