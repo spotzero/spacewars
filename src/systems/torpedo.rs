@@ -97,6 +97,7 @@ fn spawn_torpedo(
         applying_thrust: 1.0,
         applying_torque: 0.0,
     });
+    lazy_update.insert(part, Collidable {kind: CollidableKind::Torpedo, radius: 5.0});
     lazy_update.insert(part, Lifetime {
         start: time.absolute_real_time_seconds(),
         life: 5.0,

@@ -13,8 +13,19 @@ pub struct Movable {
 
 #[derive(Component, Debug)]
 pub struct Collidable {
+    pub kind: CollidableKind,
     pub radius: f32,
 }
+
+#[derive(Debug)]
+pub enum CollidableKind {
+    Debris,
+    Explosion,
+    GravityWell,
+    Ship,
+    Torpedo,
+}
+
 
 #[derive(Component, Debug)]
 pub struct Energy {
@@ -50,6 +61,12 @@ pub struct Player {
 pub struct Lifetime {
     pub start: f64,
     pub life: f64,
+}
+
+#[derive(Component, Debug)]
+pub struct Explosion {
+  pub dsp: f32,
+  pub vel: f32,
 }
 
 #[derive(Component, Default)]

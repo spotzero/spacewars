@@ -59,6 +59,7 @@ impl SimpleState for SpacewarsState {
             .with(ship_transform)
             .with(Transparent)
             .with(Collidable {
+                kind: CollidableKind::Ship,
                 radius: 10.0,
             })
             .with(Energy {
@@ -139,6 +140,7 @@ impl SimpleState for SpacewarsState {
             .with(ship_transform)
             .with(Transparent)
             .with(Collidable {
+                kind: CollidableKind::Ship,
                 radius: 10.0,
             })
             .with(Energy {
