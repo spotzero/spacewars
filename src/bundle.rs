@@ -24,7 +24,8 @@ impl<'a, 'b> SystemBundle<'a, 'b> for SpacewarsBundle {
         builder.add(RechargeSystem, "recharge_system", &[]);
         builder.add(GravitywellCollisionSystem, "gravitywell_collision_system", &[]);
         builder.add(FireTorpedoSystem, "fire_torpedo_system", &["input_system"]);
-        builder.add(StatusUiSystem, "status_ui_system", &[]);
+        builder.add(StatusUpdateSystem, "status_update_system", &[]);
+        builder.add(StatusUiSystem, "status_ui_system", &["status_update_system"]);
         Ok(())
     }
 }

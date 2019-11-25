@@ -27,10 +27,17 @@ pub fn generate_explosion(
   let mut rng = rand::thread_rng();
 
   let mut count = 0.0;
-  while count < mass {
+  let mut flip = false;
+  while count < mass / 2.0 {
     count += 0.1;
     let angle = rng.gen_range(-3.14, 3.14);
-    let mut thrustvector = UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,rng.gen_range(0.0, 150.0),0.0));
+    let mut thrustvector = if flip {
+        flip = false;
+        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,rng.gen_range(0.0, 150.0),0.0))
+    } else {
+        flip = true;
+        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,150.0,0.0))
+    };
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
     pos.append_translation(Vector3::new(0.0,0.0,0.2));

@@ -1,15 +1,13 @@
 use amethyst::ecs::prelude::Entity;
 use std::collections::HashMap;
 
-#[derive(Default)]
-pub struct StatusUi {
-    pub status: HashMap<u8, Entity>
+pub struct StatusOfPlayer {
+    pub energy: f32,
+    pub shields: f32,
+    pub hull: f32,
 }
 
-pub fn ui_stats_message(
-    energy: f32,
-    shields: f32,
-    hull: f32
-) -> String {
-  format!("Energy: {}", energy).to_string()
+#[derive(Default)]
+pub struct StatusOfPlayers {
+    pub players: HashMap<u8, StatusOfPlayer>,
 }

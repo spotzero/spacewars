@@ -1,5 +1,6 @@
 use amethyst::{
     assets::Loader,
+    ecs::Entity,
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
@@ -52,7 +53,7 @@ impl SimpleState for SpacewarsState {
         ship_transform.set_translation_xyz(ARENA_WIDTH/4.0, ARENA_HEIGHT/2.0, 0.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
 
-        world
+        let player1 = world
             .create_entity()
             .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
             .with(ship_transform)
@@ -132,7 +133,7 @@ impl SimpleState for SpacewarsState {
         ship_transform.set_rotation_2d(135.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
 
-        world
+        let player2 = world
             .create_entity()
             .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
             .with(ship_transform)
@@ -160,6 +161,42 @@ impl SimpleState for SpacewarsState {
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
             })
+            .with(ShipEngines {
+                engines: [
+                    Engine {
+                        location: Vector3::new(13.0, -18.0, 0.1),
+                        direction: 1,
+                        rotate: -1,
+                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
+                        last_emit: 0.0,
+                        emit_rate: 0.02,
+                    },
+                    Engine {
+                        location: Vector3::new(-13.0, -18.0, 0.1),
+                        direction: 1,
+                        rotate: 1,
+                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
+                        last_emit: 0.0,
+                        emit_rate: 0.02,
+                    },
+                    Engine {
+                        location: Vector3::new(13.0, 18.0, 0.1),
+                        direction: -1,
+                        rotate: 1,
+                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
+                        last_emit: 0.0,
+                        emit_rate: 0.02,
+                    },
+                    Engine {
+                        location: Vector3::new(-13.0, 18.0, 0.1),
+                        direction: -1,
+                        rotate: -1,
+                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
+                        last_emit: 0.0,
+                        emit_rate: 0.02,
+                    },
+                ].to_vec(),
+            })
             .with(Player {
                 controllable: true,
                 id: 2,
@@ -173,7 +210,7 @@ impl SimpleState for SpacewarsState {
 
         // Place the camera
         initialise_camera(world);
-        initialise_ui(world);
+        initialise_ui(world, &[player1, player2]);
         world.insert(sprite_sheet_manager);
     }
 
@@ -206,61 +243,134 @@ fn initialise_camera(world: &mut World) {
         .build();
 }
 
-fn initialise_ui(world: &mut World) {
+fn initialise_ui(world: &mut World, players: &[Entity]) {
 
     let font = world.read_resource::<Loader>().load(
-        "font/Ubuntu-R.ttf",
+        "font/UbuntuMono-R.ttf",
         TtfFormat,
         (),
         &world.read_resource(),
     );
 
-    let p1_transform = UiTransform::new(
+    let mut p1_transform = UiTransform::new(
         "p1-stats".to_string(),
         Anchor::TopLeft,
         Anchor::TopLeft,
+        20.0,
         0.0,
         0.0,
-        0.0,
-        200.,
-        100.,
+        300.,
+        50.,
     );
 
-    let p1_stats = world
+    world
         .create_entity()
-        .with(p1_transform)
+        .with(p1_transform.clone())
         .with(UiText::new(
             font.clone(),
-            ui_stats_message(0.0,0.0,0.0),
+            "".to_string(),
             [1.0, 0.0, 0.0, 1.0],
             50.,
         ))
+        .with(StatusUi{
+            data: StatusUiKind::Energy,
+            player: 1,
+        })
+        .build();
+
+    p1_transform.local_y -= 50.0;
+    world
+        .create_entity()
+        .with(p1_transform.clone())
+        .with(UiText::new(
+            font.clone(),
+            "".to_string(),
+            [1.0, 0.0, 0.0, 1.0],
+            50.,
+        ))
+        .with(StatusUi{
+            data: StatusUiKind::Shields,
+            player: 1,
+        })
+        .build();
+
+    p1_transform.local_y -= 50.0;
+    world
+        .create_entity()
+        .with(p1_transform.clone())
+        .with(UiText::new(
+            font.clone(),
+            "".to_string(),
+            [1.0, 0.0, 0.0, 1.0],
+            50.,
+        ))
+        .with(StatusUi{
+            data: StatusUiKind::Hull,
+            player: 1,
+        })
         .build();
 
 
-    let p2_transform = UiTransform::new(
+    let mut p2_transform = UiTransform::new(
         "p2-stats".to_string(),
-        Anchor::TopMiddle,
-        Anchor::Middle,
-        50.,
-        -50.,
-        1.,
-        200.,
+        Anchor::TopRight,
+        Anchor::TopRight,
+        -20.0,
+        0.0,
+        0.0,
+        300.,
         50.,
     );
 
-    let p2_stats = world
+    world
         .create_entity()
-        .with(p2_transform)
+        .with(p2_transform.clone())
         .with(UiText::new(
             font.clone(),
-            ui_stats_message(0.0,0.0,0.0),
+            "".to_string(),
             [0.0, 0.0, 1.0, 1.0],
             50.,
         ))
+        .with(StatusUi{
+            data: StatusUiKind::Energy,
+            player: 2,
+        })
         .build();
-    let mut status_ui = StatusUi::default();
-    status_ui.status.insert(1, p1_stats);
-    status_ui.status.insert(1, p2_stats);
-    world.insert(status_ui);
+
+    p2_transform.local_y -= 50.0;
+    world
+        .create_entity()
+        .with(p2_transform.clone())
+        .with(UiText::new(
+            font.clone(),
+            "".to_string(),
+            [0.0, 0.0, 1.0, 1.0],
+            50.,
+        ))
+        .with(StatusUi{
+            data: StatusUiKind::Shields,
+            player: 2,
+        })
+        .build();
+
+    p2_transform.local_y -= 50.0;
+    world
+        .create_entity()
+        .with(p2_transform.clone())
+        .with(UiText::new(
+            font.clone(),
+            "".to_string(),
+            [0.0, 0.0, 1.0, 1.0],
+            50.,
+        ))
+        .with(StatusUi{
+            data: StatusUiKind::Hull,
+            player: 2,
+        })
+        .build();
+
+    let mut sop = StatusOfPlayers::default();
+    sop.players.insert(1, StatusOfPlayer{energy: 0.0, shields: 0.0, hull: 0.0});
+    sop.players.insert(2, StatusOfPlayer{energy: 0.0, shields: 0.0, hull: 0.0});
+    world.insert(sop);
 }

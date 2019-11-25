@@ -82,3 +82,16 @@ pub struct Engine {
 pub struct ShipEngines {
     pub engines: Vec<Engine>,
 }
+
+#[derive(Component, Debug)]
+pub struct StatusUi {
+    pub data: StatusUiKind,
+    pub player: u8,
+}
+
+#[derive(Debug)]
+pub enum StatusUiKind {
+    Energy,
+    Shields,
+    Hull,
+}

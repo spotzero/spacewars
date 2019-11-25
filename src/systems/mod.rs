@@ -17,5 +17,6 @@ pub use self::{
     physics::PhysicsSystem,
     ship::ShipSystem,
     torpedo::FireTorpedoSystem,
+    ui::StatusUpdateSystem,
     ui::StatusUiSystem,
 };
