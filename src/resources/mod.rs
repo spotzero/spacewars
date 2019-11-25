@@ -1,4 +1,6 @@
 mod assets;
+mod collision;
+mod damage;
 mod explosions;
 mod particle;
 mod ui;
