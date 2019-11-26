@@ -53,17 +53,54 @@ impl<'s> System<'s> for FireTorpedoSystem {
                 energy.charge -= player.torpedo_energy;
                 player.last_torpedo = time.absolute_real_time_seconds();
                 spawn_torpedo(&transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time);
+            }
+
+        }
+    }
+}
+
+#[derive(SystemDesc)]
+pub struct ExplodeTorpedoSystem;
+
+impl<'s> System<'s> for ExplodeTorpedoSystem {
+    type SystemData = (
+        Entities<'s>,
+        ReadStorage<'s, Transform>,
+        ReadStorage<'s, Movable>,
+        ReadStorage<'s, Torpedo>,
+        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, LazyUpdate>,
+        Read<'s, Time>,
+    );
+
+    fn run(&mut self, (
+        entities,
+        transforms,
+        movables,
+        mut torpedos,
+        sprite_sheet_manager,
+        lazy_update,
+        time
+    ): Self::SystemData) {
+        for (entity, transform, movable, torpedo) in (&entities, &transforms, &movables, &torpedos).join() {
+            if (torpedo.fired + torpedo.life) <= time.absolute_real_time_seconds() {
                 generate_explosion(
                     &transform,
                     &movable,
-                    50.0,
+                    30.0,
                     &entities,
                     &sprite_sheet_manager,
                     &lazy_update,
                     &time,
+                    Explosion{vel: 150.0, dsp: 30.0}
                 );
+                let _ = entities.delete(entity);
+            } else if (torpedo.fired + torpedo.spawning) <= time.absolute_real_time_seconds() {
+                lazy_update.insert(entity, Collidable{
+                    kind: CollidableKind::Torpedo,
+                    radius: 10.0,
+                });
             }
-
         }
     }
 }
@@ -77,7 +114,7 @@ fn spawn_torpedo(
     time: &Time
 ) {
 
-    let mut thrustvector = Vector3::new(0.0, 20.0,0.0);
+    let mut thrustvector = Vector3::new(0.0, 40.0,0.0);
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
     pos.set_scale(Vector3::new(0.05,0.05,1.0));
@@ -98,9 +135,11 @@ fn spawn_torpedo(
         applying_torque: 0.0,
     });
     lazy_update.insert(part, Collidable {kind: CollidableKind::Torpedo, radius: 5.0});
-    lazy_update.insert(part, Lifetime {
-        start: time.absolute_real_time_seconds(),
-        life: 5.0,
+    lazy_update.insert(part, Torpedo {
+        fired: time.absolute_real_time_seconds(),
+        life: 2.0,
+        spawning: 0.5,
+
     });
     lazy_update.insert(part, Energy {
         charge: 50.0,
@@ -124,5 +163,4 @@ fn spawn_torpedo(
             },
         ].to_vec()
     });
-
 }

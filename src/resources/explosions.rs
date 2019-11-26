@@ -8,6 +8,7 @@ use amethyst::{
     ecs::world::EntitiesRes,
     renderer::resources::Tint,
     renderer::palette::Srgba,
+    ecs::Entity,
 };
 use rand::Rng;
 
@@ -22,12 +23,17 @@ pub fn generate_explosion(
     sprite_sheet_manager: &SpriteSheetManager,
     lazy_update: &LazyUpdate,
     time: &Time,
+    explosion: Explosion,
 ) {
 
   let mut rng = rand::thread_rng();
 
   let mut count = 0.0;
   let mut flip = false;
+
+  let min_life = 0.6;
+  let max_life = 1.0;
+
   while count < mass / 2.0 {
     count += 0.1;
     let angle = rng.gen_range(-3.14, 3.14);
@@ -45,7 +51,7 @@ pub fn generate_explosion(
 
     emit_particle(
         time.absolute_real_time_seconds(),
-        rng.gen_range(0.6, 1.0),
+        rng.gen_range(min_life, max_life),
         pos,
         mover.velocity + thrustvector,
         Tint(Srgba::new(1.0, 0.6, 0.0, 0.5)),
@@ -54,4 +60,13 @@ pub fn generate_explosion(
         &sprite_sheet_manager
     );
   }
+  let exploder: Entity = entities.create();
+  lazy_update.insert(exploder, transform.clone());
+  lazy_update.insert(exploder, mover.clone());
+  lazy_update.insert(exploder, Collidable{kind: CollidableKind::Explosion, radius: 0.1});
+  lazy_update.insert(exploder, explosion);
+  lazy_update.insert(exploder, Lifetime {
+      start: time.absolute_real_time_seconds(),
+      life: max_life,
+  });
 }

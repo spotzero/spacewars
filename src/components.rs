@@ -4,7 +4,7 @@ use amethyst::{
     renderer::palette::Srgba,
 };
 
-#[derive(Component, Debug)]
+#[derive(Component, Clone, Debug)]
 pub struct Movable {
     pub velocity: Vector3<f32>,
     pub angular_velocity: f32,
@@ -79,10 +79,9 @@ pub struct DebrisCom;
 
 #[derive(Component, Debug)]
 pub struct Torpedo {
-    pub damage: f32,
     pub fired: f64,
     pub life: f64,
-    pub exploding: bool,
+    pub spawning: f64,
 }
 
 #[derive(Clone, Debug)]
