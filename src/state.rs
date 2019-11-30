@@ -58,10 +58,6 @@ impl SimpleState for SpacewarsState {
             .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
             .with(ship_transform)
             .with(Transparent)
-            .with(Collidable {
-                kind: CollidableKind::Ship,
-                radius: 10.0,
-            })
             .with(Energy {
                 charge: 100.0,
                 recharge_rate: 5.0,
@@ -81,6 +77,10 @@ impl SimpleState for SpacewarsState {
                 torque_failure: false,
                 applying_thrust: 0.0,
                 applying_torque: 0.0,
+            })
+            .with(Collidable{
+                kind: CollidableKind::Ship,
+                radius: 25.0,
             })
             .with(ShipEngines {
                 engines: [
@@ -141,7 +141,7 @@ impl SimpleState for SpacewarsState {
             .with(Transparent)
             .with(Collidable {
                 kind: CollidableKind::Ship,
-                radius: 10.0,
+                radius: 25.0,
             })
             .with(Energy {
                 charge: 100.0,
@@ -212,6 +212,7 @@ impl SimpleState for SpacewarsState {
 
         // Place the camera
         initialise_camera(world);
+        initialise_collision(world);
         initialise_ui(world, &[player1, player2]);
         world.insert(sprite_sheet_manager);
     }
@@ -243,6 +244,11 @@ fn initialise_camera(world: &mut World) {
         .with(Camera::standard_2d(ARENA_WIDTH, ARENA_HEIGHT))
         .with(transform)
         .build();
+}
+
+fn initialise_collision(world: &mut World) {
+    world.insert(CollisionEvents{events: Vec::new()});
+
 }
 
 fn initialise_ui(world: &mut World, players: &[Entity]) {

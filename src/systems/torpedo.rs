@@ -141,6 +141,10 @@ fn spawn_torpedo(
         spawning: 0.5,
 
     });
+    lazy_update.insert(part, Collidable {
+        kind: CollidableKind::Torpedo,
+        radius: 20.0,
+    });
     lazy_update.insert(part, Energy {
         charge: 50.0,
         recharge_rate: 0.0,

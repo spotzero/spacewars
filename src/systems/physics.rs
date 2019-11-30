@@ -49,7 +49,6 @@ impl<'s> System<'s> for PhysicsSystem {
                 ( (100000.0 * dir.normalize()) / dis) * time.delta_seconds()
             };
             mover.velocity += gravity;
-
         }
     }
 }

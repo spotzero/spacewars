@@ -10,7 +10,7 @@ mod torpedo;
 mod ui;
 
 pub use self::{
-    collision::GravitywellCollisionSystem,
+    collision::CollisionSystem,
     energy::RechargeSystem,
     explosion::ExplosionSystem,
     input::ShipInputSystem,

@@ -1,9 +1,9 @@
 use amethyst::ecs::Entity;
 
 pub struct Damage {
-    target: Entity,
-    amount: f32,
-    kind: DamageKind,
+    pub target: Entity,
+    pub amount: f32,
+    pub kind: DamageKind,
 }
 
 pub enum DamageKind {
@@ -11,5 +11,5 @@ pub enum DamageKind {
 }
 
 pub struct DamageEvents {
-    events: Vec<Damage>,
+   pub  events: Vec<Damage>,
 }
