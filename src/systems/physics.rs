@@ -40,7 +40,7 @@ impl<'s> System<'s> for PhysicsSystem {
             } else if transform.translation().y > ARENA_HEIGHT {
                 transform.set_translation_y(transform.translation().y - ARENA_HEIGHT);
             }
-
+/*
             let dir = gravitywell - transform.translation();
             let dis = dir.magnitude();
             let gravity = if dis > 200.0 {
@@ -49,6 +49,7 @@ impl<'s> System<'s> for PhysicsSystem {
                 ( (100000.0 * dir.normalize()) / dis) * time.delta_seconds()
             };
             mover.velocity += gravity;
+            */
         }
     }
 }

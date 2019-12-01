@@ -1,11 +1,13 @@
 use amethyst::{
     assets::Loader,
     ecs::Entity,
+    core::math::Point3,
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, Transparent},
+    renderer::debug_drawing::{DebugLines, DebugLinesComponent, DebugLinesParams},
     renderer::palette::Srgba,
     ui::{Anchor, TtfFormat, UiText, UiTransform},
 //    window::ScreenDimensions,
@@ -47,11 +49,18 @@ impl SimpleState for SpacewarsState {
             .with(sprite_sheet_manager.get_render("backgrounds/gravity-well").unwrap())
             .with(gravitywell_transform)
             .with(Transparent)
+            .with(Collidable {
+                kind: CollidableTypes::GRAVITYWELL,
+                radius: 25.0,
+            })
             .build();
 
         let mut ship_transform = Transform::default();
         ship_transform.set_translation_xyz(ARENA_WIDTH/4.0, ARENA_HEIGHT/2.0, 0.0);
         ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
+
+        let mut debug_ship = DebugLinesComponent::with_capacity(16);
+        debug_ship.add_circle_2d(Point3::new(0.,0.,1.), 25.0, 16, Srgba::new(1.0,1.0,1.0,1.0));
 
         let player1 = world
             .create_entity()
@@ -64,8 +73,10 @@ impl SimpleState for SpacewarsState {
                 max_charge: 100.0,
             })
             .with(Movable{
-                velocity: Vector3::new(0.0,120.0,0.0),
-                angular_velocity: 0.6,
+                //velocity: Vector3::new(0.0,120.0,0.0),
+                //angular_velocity: 0.6,
+                velocity: Vector3::new(0.0,0.0,0.0),
+                angular_velocity: 0.,
                 mass: 150.0,
             })
             .with(Ship {
@@ -79,9 +90,10 @@ impl SimpleState for SpacewarsState {
                 applying_torque: 0.0,
             })
             .with(Collidable{
-                kind: CollidableKind::Ship,
+                kind: CollidableTypes::PLAYER,
                 radius: 25.0,
             })
+            .with(debug_ship)
             .with(ShipEngines {
                 engines: [
                     Engine {
@@ -140,7 +152,7 @@ impl SimpleState for SpacewarsState {
             .with(ship_transform)
             .with(Transparent)
             .with(Collidable {
-                kind: CollidableKind::Ship,
+                kind: CollidableTypes::PLAYER,
                 radius: 25.0,
             })
             .with(Energy {
@@ -149,8 +161,10 @@ impl SimpleState for SpacewarsState {
                 max_charge: 100.0,
             })
             .with(Movable{
-                velocity: Vector3::new(0.0,-120.0,0.0),
-                angular_velocity: 0.6,
+//                velocity: Vector3::new(0.0,-120.0,0.0),
+//                angular_velocity: 0.6,
+                velocity: Vector3::new(0.0,0.0,0.0),
+                angular_velocity: 0.,
                 mass: 150.0,
             })
             .with(Ship {
@@ -247,7 +261,7 @@ fn initialise_camera(world: &mut World) {
 }
 
 fn initialise_collision(world: &mut World) {
-    world.insert(CollisionEvents{events: Vec::new()});
+    world.insert(CollisionEvents::default());
 
 }
 

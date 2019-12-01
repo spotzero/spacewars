@@ -8,8 +8,8 @@ mod ui;
 pub use self::{
   assets::SpriteSheetManager,
   collision::CollisionEvents,
-  collision::CollisionKind,
-  collision::Collision,
+  collision::ForceCollision,
+  collision::TorpedoCollision,
   damage::Damage,
   damage::DamageKind,
   damage::DamageEvents,

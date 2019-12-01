@@ -20,6 +20,7 @@ pub use self::{
     ship::ShipSystem,
     torpedo::FireTorpedoSystem,
     torpedo::ExplodeTorpedoSystem,
+    torpedo::TorpedoCollisionResponseSystem,
     ui::StatusUpdateSystem,
     ui::StatusUiSystem,
 };

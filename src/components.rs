@@ -13,17 +13,16 @@ pub struct Movable {
 
 #[derive(Component, Debug)]
 pub struct Collidable {
-    pub kind: CollidableKind,
+    pub kind: u32,
     pub radius: f32,
 }
 
-#[derive(Debug)]
-pub enum CollidableKind {
-    Debris,
-    Explosion,
-    GravityWell,
-    Ship,
-    Torpedo,
+pub mod CollidableTypes {
+    pub const PLAYER: u32 = 1;
+    pub const DEBRIS: u32 = 2;
+    pub const EXPLOSION: u32 = 3;
+    pub const GRAVITYWELL: u32 = 4;
+    pub const TORPEDO: u32 = 5;
 }
 
 
@@ -81,7 +80,7 @@ pub struct DebrisCom;
 pub struct Torpedo {
     pub fired: f64,
     pub life: f64,
-    pub spawning: f64,
+    pub player: u32,
 }
 
 #[derive(Clone, Debug)]

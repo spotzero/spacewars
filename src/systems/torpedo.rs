@@ -5,7 +5,7 @@ use amethyst::{
     core::math::Vector3,
     derive::SystemDesc,
     renderer::palette::Srgba,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
+    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
     ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
     input::{InputHandler, StringBindings},
     renderer::{transparent::Transparent},
@@ -43,7 +43,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
         lazy_update,
         time
     ): Self::SystemData) {
-        for (transform, movable, player, energy) in (&transforms, &movables, &mut players, &mut energies).join() {
+        for (entity, transform, movable, player, energy) in (&entities, &transforms, &movables, &mut players, &mut energies).join() {
             let fire_torpedo = input.action_is_down(&format!("torpedo_p{}", player.id)).expect("Shoot action exists");
             if
                 fire_torpedo
@@ -52,7 +52,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
             {
                 energy.charge -= player.torpedo_energy;
                 player.last_torpedo = time.absolute_real_time_seconds();
-                spawn_torpedo(&transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time);
+                spawn_torpedo(&entity, &transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time);
             }
 
         }
@@ -67,7 +67,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
         Entities<'s>,
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Movable>,
-        ReadStorage<'s, Torpedo>,
+        WriteStorage<'s, Torpedo>,
         ReadExpect<'s, SpriteSheetManager>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
@@ -82,30 +82,76 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
         lazy_update,
         time
     ): Self::SystemData) {
-        for (entity, transform, movable, torpedo) in (&entities, &transforms, &movables, &torpedos).join() {
+        for (entity, transform, movable, torpedo) in (&entities, &transforms, &movables, &mut torpedos).join() {
             if (torpedo.fired + torpedo.life) <= time.absolute_real_time_seconds() {
-                generate_explosion(
-                    &transform,
-                    &movable,
-                    30.0,
-                    &entities,
-                    &sprite_sheet_manager,
-                    &lazy_update,
-                    &time,
-                    Explosion{vel: 150.0, dsp: 30.0}
-                );
-                let _ = entities.delete(entity);
-            } else if (torpedo.fired + torpedo.spawning) <= time.absolute_real_time_seconds() {
-                lazy_update.insert(entity, Collidable{
-                    kind: CollidableKind::Torpedo,
-                    radius: 10.0,
-                });
+                explode_torpedo (&transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time, entity);
             }
         }
     }
 }
 
+
+#[derive(SystemDesc)]
+pub struct TorpedoCollisionResponseSystem;
+
+impl<'s> System<'s> for TorpedoCollisionResponseSystem {
+    type SystemData = (
+        Entities<'s>,
+        ReadStorage<'s, Transform>,
+        ReadStorage<'s, Movable>,
+        ReadStorage<'s, Torpedo>,
+        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, LazyUpdate>,
+        WriteExpect<'s, CollisionEvents>,
+        Read<'s, Time>,
+    );
+
+    fn run(&mut self, (
+        entities,
+        transforms,
+        movables,
+        torpedos,
+        sprite_sheet_manager,
+        lazy_update,
+        mut collision_events,
+        time
+    ): Self::SystemData) {
+        for (entity, transform, movable, torpedo) in (&entities, &transforms, &movables, &torpedos).join() {
+            for i in 0..collision_events.torpedo_collisions.len() {
+                if collision_events.torpedo_collisions[i].torpedo == entity.id()
+                    && torpedo.player != collision_events.torpedo_collisions[i].collided {
+                    explode_torpedo (&transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time, entity);
+                }
+            }
+        }
+        collision_events.torpedo_collisions.clear();
+    }
+}
+
+fn explode_torpedo (
+    transform: &Transform,
+    movable: &Movable,
+    lazy_update: &LazyUpdate,
+    entities: &Read<EntitiesRes>,
+    sprite_sheet_manager: &SpriteSheetManager,
+    time: &Time,
+    entity: Entity,
+) {
+    generate_explosion(
+        &transform,
+        &movable,
+        30.0,
+        &entities,
+        &sprite_sheet_manager,
+        &lazy_update,
+        &time,
+        Explosion{vel: 150.0, dsp: 30.0}
+    );
+    let _ = entities.delete(entity);
+}
+
 fn spawn_torpedo(
+    entity: &Entity,
     transform: &Transform,
     movable: &Movable,
     lazy_update: &LazyUpdate,
@@ -124,6 +170,10 @@ fn spawn_torpedo(
     lazy_update.insert(part, pos);
     lazy_update.insert(part, ParticleCom);
     lazy_update.insert(part, Transparent);
+    lazy_update.insert(part, Collidable {
+        kind: CollidableTypes::TORPEDO,
+        radius: 20.0,
+    });
     lazy_update.insert(part, Ship {
         hull: 5.0,
         shield: 0.0,
@@ -134,16 +184,10 @@ fn spawn_torpedo(
         applying_thrust: 1.0,
         applying_torque: 0.0,
     });
-    lazy_update.insert(part, Collidable {kind: CollidableKind::Torpedo, radius: 5.0});
     lazy_update.insert(part, Torpedo {
         fired: time.absolute_real_time_seconds(),
         life: 2.0,
-        spawning: 0.5,
-
-    });
-    lazy_update.insert(part, Collidable {
-        kind: CollidableKind::Torpedo,
-        radius: 20.0,
+        player: entity.id(),
     });
     lazy_update.insert(part, Energy {
         charge: 50.0,
