@@ -120,6 +120,8 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
             for i in 0..collision_events.torpedo_collisions.len() {
                 if collision_events.torpedo_collisions[i].torpedo == entity.id()
                     && torpedo.player != collision_events.torpedo_collisions[i].collided {
+                    //let mut result_move = movable.clone();
+                    //result_move.velocity = result_move.velocity - (collision_events.torpedo_collisions[i].direction * 100.0);
                     explode_torpedo (&transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time, entity);
                 }
             }

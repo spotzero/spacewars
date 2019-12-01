@@ -30,3 +30,24 @@ impl<'s> System<'s> for ExplosionSystem {
         }
     }
 }
+
+#[derive(SystemDesc)]
+pub struct ExplosionCollisionResponseSystem;
+
+impl<'s> System<'s> for ExplosionCollisionResponseSystem {
+    type SystemData = (
+        ReadStorage<'s, Explosion>,
+        WriteStorage<'s, Collidable>,
+        Read<'s, Time>,
+    );
+
+    fn run(&mut self, (
+        explosions,
+        mut collidables,
+        time
+    ): Self::SystemData) {
+        for (explosion, mut collidable) in (&explosions, &mut collidables).join() {
+            collidable.radius += explosion.vel * time.delta_seconds();
+        }
+    }
+}

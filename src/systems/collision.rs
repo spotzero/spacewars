@@ -24,25 +24,25 @@ impl<'s> System<'s> for CollisionSystem {
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (entities, movable, transforms, colliables, mut collision_events, time): Self::SystemData) {
-        for (entity1, transform1, colliable1) in (&entities, &transforms, &colliables).join() {
+    fn run(&mut self, (entities, movables, transforms, colliables, mut collision_events, time): Self::SystemData) {
+        for (entity1, transform1, movable1, colliable1) in (&entities, &transforms, &movables, &colliables).join() {
             let mut skip = true;
-            for (entity2, transform2, collisble2) in (&entities, &transforms, &colliables).join() {
+            for (entity2, transform2, movable2, collisble2) in (&entities, &transforms, &movables, &colliables).join() {
                 if entity1 == entity2 {
                     skip = false;
                     continue;
                 }
 
-                if (skip) {
+                if skip {
                   continue;
                 }
 
                 let radius = colliable1.radius + collisble2.radius;
                 let distance_vec = transform1.translation() - transform2.translation();
-                if (distance_vec.norm() < radius) {
+                if distance_vec.norm() < radius {
                     collision_events.add_collision(
-                        &entity1, &transform1, &colliable1,
-                        &entity2, &transform2, &collisble2
+                        &entity1, &transform1, &movable1, &colliable1,
+                        &entity2, &transform2, &movable2, &collisble2
                     );
                 }
             }
