@@ -10,6 +10,7 @@ pub mod DamageTypes {
    pub const EXPLOSION: u32 = 1;
 }
 
+#[derive(Default)]
 pub struct DamageEvents {
    pub  events: Vec<Damage>,
 }

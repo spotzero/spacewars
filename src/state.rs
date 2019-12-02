@@ -262,6 +262,7 @@ fn initialise_camera(world: &mut World) {
 
 fn initialise_collision(world: &mut World) {
     world.insert(CollisionEvents::default());
+    world.insert(DamageEvents::default());
 
 }
 
