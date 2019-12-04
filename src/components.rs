@@ -17,7 +17,7 @@ pub struct Collidable {
     pub radius: f32,
 }
 
-pub mod CollidableTypes {
+pub mod collidable_types {
     pub const PLAYER: u32 = 1;
     pub const DEBRIS: u32 = 2;
     pub const EXPLOSION: u32 = 3;
@@ -54,6 +54,8 @@ pub struct Player {
     pub torpedo_energy: f32,
     pub last_hyperspace: f64,
     pub hyperspace_interval: f64,
+    pub dead: bool,
+    pub respawn: f64,
 }
 
 #[derive(Component, Debug)]

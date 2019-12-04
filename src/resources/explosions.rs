@@ -64,7 +64,7 @@ pub fn generate_explosion(
   let exploder: Entity = entities.create();
   lazy_update.insert(exploder, transform.clone());
   lazy_update.insert(exploder, mover.clone());
-  lazy_update.insert(exploder, Collidable { kind: CollidableTypes::EXPLOSION, radius: 0.1});
+  lazy_update.insert(exploder, Collidable { kind: collidable_types::EXPLOSION, radius: 0.1});
   lazy_update.insert(exploder, explosion);
   lazy_update.insert(exploder, Lifetime {
       start: time.absolute_real_time_seconds(),

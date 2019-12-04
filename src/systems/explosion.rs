@@ -53,6 +53,13 @@ impl<'s> System<'s> for ExplosionCollisionResponseSystem {
     ): Self::SystemData) {
         for (entity, explosion) in (&entities, &explosions).join() {
             for i in 0..collision_events.explosion_collisions.len() {
+                if entity.id() == collision_events.explosion_collisions[i].explosion {
+                    damage_events.events.push(Damage {
+                        player: collision_events.explosion_collisions[i].player,
+                        damage: explosion.dsp * time.delta_seconds(),
+                        kind: damage_types::EXPLOSION,
+                    });
+                }
             }
         }
         collision_events.explosion_collisions.clear();

@@ -12,7 +12,7 @@ pub use self::{
   collision::ForceCollision,
   collision::TorpedoCollision,
   damage::Damage,
-  damage::DamageTypes,
+  damage::damage_types,
   damage::DamageEvents,
   particle::emit_particle,
   explosions::generate_explosion,

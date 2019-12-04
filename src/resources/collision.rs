@@ -53,7 +53,7 @@ impl CollisionEvents {
         let dir2 = transform1.translation() - transform2.translation();
 
 
-        if colliable1.kind == CollidableTypes::TORPEDO {
+        if colliable1.kind == collidable_types::TORPEDO {
             self.torpedo_collisions.push(TorpedoCollision {
                 direction: unit_vector(&dir1),
                 torpedo: entity1.id(),
@@ -61,7 +61,7 @@ impl CollisionEvents {
             });
         }
 
-        if colliable2.kind == CollidableTypes::TORPEDO {
+        if colliable2.kind == collidable_types::TORPEDO {
             self.torpedo_collisions.push(TorpedoCollision {
                 direction: unit_vector(&dir2),
                 torpedo: entity2.id(),
@@ -70,19 +70,19 @@ impl CollisionEvents {
         }
 
         if (
-            colliable1.kind == CollidableTypes::PLAYER
-            && colliable2.kind == CollidableTypes::EXPLOSION
+            colliable1.kind == collidable_types::PLAYER
+            && colliable2.kind == collidable_types::EXPLOSION
         ) || (
-            colliable2.kind == CollidableTypes::PLAYER
-            && colliable1.kind == CollidableTypes::EXPLOSION
+            colliable2.kind == collidable_types::PLAYER
+            && colliable1.kind == collidable_types::EXPLOSION
         ) {
             self.explosion_collisions.push(ExplosionCollision {
-                explosion: if colliable1.kind == CollidableTypes::PLAYER {
+                explosion: if colliable1.kind == collidable_types::PLAYER {
                     entity2.id()
                 } else {
                     entity1.id()
                 },
-                player: if colliable1.kind == CollidableTypes::PLAYER {
+                player: if colliable1.kind == collidable_types::PLAYER {
                     entity1.id()
                 } else {
                     entity2.id()

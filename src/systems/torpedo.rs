@@ -149,7 +149,7 @@ fn explode_torpedo (
         &sprite_sheet_manager,
         &lazy_update,
         &time,
-        Explosion{vel: 200.0, dsp: 30.0}
+        Explosion{vel: 200.0, dsp: 60.0}
     );
     let _ = entities.delete(entity);
 }
@@ -175,7 +175,7 @@ fn spawn_torpedo(
     lazy_update.insert(part, ParticleCom);
     lazy_update.insert(part, Transparent);
     lazy_update.insert(part, Collidable {
-        kind: CollidableTypes::TORPEDO,
+        kind: collidable_types::TORPEDO,
         radius: 20.0,
     });
     lazy_update.insert(part, Ship {

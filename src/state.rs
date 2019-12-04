@@ -50,7 +50,7 @@ impl SimpleState for SpacewarsState {
             .with(gravitywell_transform)
             .with(Transparent)
             .with(Collidable {
-                kind: CollidableTypes::GRAVITYWELL,
+                kind: collidable_types::GRAVITYWELL,
                 radius: 25.0,
             })
             .build();
@@ -73,10 +73,10 @@ impl SimpleState for SpacewarsState {
                 max_charge: 100.0,
             })
             .with(Movable{
-                //velocity: Vector3::new(0.0,120.0,0.0),
-                //angular_velocity: 0.6,
-                velocity: Vector3::new(0.0,0.0,0.0),
-                angular_velocity: 0.,
+                velocity: Vector3::new(0.0,120.0,0.0),
+                angular_velocity: 0.6,
+                //velocity: Vector3::new(0.0,0.0,0.0),
+                //angular_velocity: 0.,
                 mass: 150.0,
             })
             .with(Ship {
@@ -90,7 +90,7 @@ impl SimpleState for SpacewarsState {
                 applying_torque: 0.0,
             })
             .with(Collidable{
-                kind: CollidableTypes::PLAYER,
+                kind: collidable_types::PLAYER,
                 radius: 25.0,
             })
             .with(debug_ship)
@@ -138,6 +138,8 @@ impl SimpleState for SpacewarsState {
                 torpedo_energy: 10.0,
                 last_hyperspace: 0.0,
                 hyperspace_interval: 5.0,
+                dead: false,
+                respawn: 0.
             })
             .build();
 
@@ -152,7 +154,7 @@ impl SimpleState for SpacewarsState {
             .with(ship_transform)
             .with(Transparent)
             .with(Collidable {
-                kind: CollidableTypes::PLAYER,
+                kind: collidable_types::PLAYER,
                 radius: 25.0,
             })
             .with(Energy {
@@ -161,10 +163,10 @@ impl SimpleState for SpacewarsState {
                 max_charge: 100.0,
             })
             .with(Movable{
-//                velocity: Vector3::new(0.0,-120.0,0.0),
-//                angular_velocity: 0.6,
-                velocity: Vector3::new(0.0,0.0,0.0),
-                angular_velocity: 0.,
+                velocity: Vector3::new(0.0,-120.0,0.0),
+                angular_velocity: 0.6,
+                //velocity: Vector3::new(0.0,0.0,0.0),
+                //angular_velocity: 0.,
                 mass: 150.0,
             })
             .with(Ship {
@@ -221,6 +223,8 @@ impl SimpleState for SpacewarsState {
                 torpedo_energy: 10.0,
                 last_hyperspace: 0.0,
                 hyperspace_interval: 5.0,
+                dead: false,
+                respawn: 0.
             })
             .build();
 

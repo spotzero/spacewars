@@ -1,12 +1,12 @@
 use amethyst::ecs::Entity;
 
 pub struct Damage {
-    pub target: u32,
-    pub amount: f32,
+    pub player: u32,
+    pub damage: f32,
     pub kind: u32,
 }
 
-pub mod DamageTypes {
+pub mod damage_types {
    pub const EXPLOSION: u32 = 1;
 }
 
