@@ -19,6 +19,8 @@ pub fn generate_explosion(
     transform: &Transform,
     mover: &Movable,
     mass: f32,
+    max_life: f64,
+    max_vel: f32,
     entities: &Read<EntitiesRes>,
     sprite_sheet_manager: &SpriteSheetManager,
     lazy_update: &LazyUpdate,
@@ -31,18 +33,17 @@ pub fn generate_explosion(
   let mut count = 0.0;
   let mut flip = false;
 
-  let min_life = 0.6;
-  let max_life = 1.0;
+  let min_life = max_life / 2.;
 
-  while count < mass / 2.0 {
+  while count < mass / 2. {
     count += 0.1;
     let angle = rng.gen_range(-3.14, 3.14);
     let mut thrustvector = if flip {
         flip = false;
-        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,rng.gen_range(0.0, 150.0),0.0))
+        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,rng.gen_range(0.0, max_vel),0.0))
     } else {
         flip = true;
-        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,150.0,0.0))
+        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,max_vel,0.0))
     };
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
@@ -53,7 +54,7 @@ pub fn generate_explosion(
         time.absolute_real_time_seconds(),
         rng.gen_range(min_life, max_life),
         pos,
-        mover.velocity + thrustvector,
+        (mover.velocity / 2.) + thrustvector,
         Tint(Srgba::new(1.0, 0.6, 0.0, 0.5)),
         &lazy_update,
         &entities,

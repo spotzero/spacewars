@@ -142,12 +142,14 @@ fn explode_torpedo (
     generate_explosion(
         &transform,
         &movable,
-        30.0,
+        50.0,
+        0.4,
+        200.,
         &entities,
         &sprite_sheet_manager,
         &lazy_update,
         &time,
-        Explosion{vel: 150.0, dsp: 30.0}
+        Explosion{vel: 200.0, dsp: 30.0}
     );
     let _ = entities.delete(entity);
 }
