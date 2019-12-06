@@ -149,7 +149,7 @@ fn explode_torpedo (
         &sprite_sheet_manager,
         &lazy_update,
         &time,
-        Explosion{vel: 200.0, dsp: 60.0}
+        Explosion{vel: 200.0, dsp: 200.0}
     );
     let _ = entities.delete(entity);
 }

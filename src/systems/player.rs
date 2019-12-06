@@ -27,6 +27,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
         WriteStorage<'s, Player>,
         ReadExpect<'s, SpriteSheetManager>,
         ReadExpect<'s, LazyUpdate>,
+        WriteExpect<'s, StatusOfPlayers>,
         Read<'s, Time>,
     );
 
@@ -38,21 +39,17 @@ impl<'s> System<'s> for PlayerDeathSystem {
         mut players,
         sprite_sheet_manager,
         lazy_update,
+        status_of_players,
         time,
     ): Self::SystemData) {
         for (transform, movable, ship, player) in (&mut transforms, &mut movables, &mut ships, &mut players).join() {
             if ship.hull <= 0. {
-                player.dead = true;
-                player.respawn = time.absolute_real_time_seconds() + 3.;
-                transform.set_translation_xyz(0., 0., 20.0);
-                movable.angular_velocity = 0.;
-                movable.velocity = Vector3::new(0.,0.,0.);
                 generate_explosion(
                     &transform,
                     &movable,
-                    movable.mass,
-                    2.,
-                    150.,
+                    movable.mass/2.,
+                    2.5,
+                    100.,
                     &entities,
                     &sprite_sheet_manager,
                     &lazy_update,
@@ -61,7 +58,13 @@ impl<'s> System<'s> for PlayerDeathSystem {
                         vel: 150.,
                         dsp: 10.,
                     },
-                )
+                );
+                let mut status = status_of_players.players.get_mut(&player.id).unwrap();
+                status.dead = true;
+                status.respawn = time.absolute_real_time_seconds() + 3.;
+                transform.set_translation_xyz(0., 0., 20.0);
+                movable.angular_velocity = 0.;
+                movable.velocity = Vector3::new(0.,0.,0.);
             }
         }
     }
@@ -90,7 +93,7 @@ impl<'s> System<'s> for PlayerRespawnSystem {
         time,
     ): Self::SystemData) {
         for (transform, movable, energy, ship, player) in (&mut transforms, &mut movables, &mut energies, &mut ships, &mut players).join() {
-            if player.dead && player.respawn >= time.absolute_real_time_seconds() {
+            if player.dead && player.respawn <= time.absolute_real_time_seconds() {
                 player.dead = false;
                 ship.hull = 50.;
                 ship.shield = 75.;

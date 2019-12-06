@@ -55,183 +55,10 @@ impl SimpleState for SpacewarsState {
             })
             .build();
 
-        let mut ship_transform = Transform::default();
-        ship_transform.set_translation_xyz(ARENA_WIDTH/4.0, ARENA_HEIGHT/2.0, 0.0);
-        ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
-
-        let mut debug_ship = DebugLinesComponent::with_capacity(16);
-        debug_ship.add_circle_2d(Point3::new(0.,0.,1.), 25.0, 16, Srgba::new(1.0,1.0,1.0,1.0));
-
-        let player1 = world
-            .create_entity()
-            .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
-            .with(ship_transform)
-            .with(Transparent)
-            .with(Energy {
-                charge: 100.0,
-                recharge_rate: 5.0,
-                max_charge: 100.0,
-            })
-            .with(Movable{
-                velocity: Vector3::new(0.0,120.0,0.0),
-                angular_velocity: 0.6,
-                //velocity: Vector3::new(0.0,0.0,0.0),
-                //angular_velocity: 0.,
-                mass: 150.0,
-            })
-            .with(Ship {
-                hull: 50.0,
-                shield: 75.0,
-                thrust: 50000.0,
-                torque: 600.0,
-                thrust_failure: false,
-                torque_failure: false,
-                applying_thrust: 0.0,
-                applying_torque: 0.0,
-            })
-            .with(Collidable{
-                kind: collidable_types::PLAYER,
-                radius: 25.0,
-            })
-            .with(debug_ship)
-            .with(ShipEngines {
-                engines: [
-                    Engine {
-                        location: Vector3::new(13.0, -18.0, 0.1),
-                        direction: 1,
-                        rotate: -1,
-                        tint: Srgba::new(0.6, 0.1, 0.1, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                    Engine {
-                        location: Vector3::new(-13.0, -18.0, 0.1),
-                        direction: 1,
-                        rotate: 1,
-                        tint: Srgba::new(0.6, 0.1, 0.1, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                    Engine {
-                        location: Vector3::new(13.0, 18.0, 0.1),
-                        direction: -1,
-                        rotate: 1,
-                        tint: Srgba::new(0.6, 0.1, 0.1, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                    Engine {
-                        location: Vector3::new(-13.0, 18.0, 0.1),
-                        direction: -1,
-                        rotate: -1,
-                        tint: Srgba::new(0.6, 0.1, 0.1, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                ].to_vec(),
-            })
-            .with(Player {
-                controllable: true,
-                id: 1,
-                last_torpedo: 0.0,
-                torpedo_interval: 1.5,
-                torpedo_energy: 10.0,
-                last_hyperspace: 0.0,
-                hyperspace_interval: 5.0,
-                dead: false,
-                respawn: 0.
-            })
-            .build();
-
-        let mut ship_transform = Transform::default();
-        ship_transform.set_translation_xyz(3.0*(ARENA_WIDTH/4.0), ARENA_HEIGHT/2.0, 0.0);
-        ship_transform.set_rotation_2d(135.0);
-        ship_transform.set_scale(Vector3::new(0.1,0.1,1.0));
-
-        let player2 = world
-            .create_entity()
-            .with(sprite_sheet_manager.get_render("ships/ship-001").unwrap())
-            .with(ship_transform)
-            .with(Transparent)
-            .with(Collidable {
-                kind: collidable_types::PLAYER,
-                radius: 25.0,
-            })
-            .with(Energy {
-                charge: 100.0,
-                recharge_rate: 5.0,
-                max_charge: 100.0,
-            })
-            .with(Movable{
-                velocity: Vector3::new(0.0,-120.0,0.0),
-                angular_velocity: 0.6,
-                //velocity: Vector3::new(0.0,0.0,0.0),
-                //angular_velocity: 0.,
-                mass: 150.0,
-            })
-            .with(Ship {
-                hull: 50.0,
-                shield: 75.0,
-                thrust: 50000.0,
-                torque: 600.0,
-                thrust_failure: false,
-                torque_failure: false,
-                applying_thrust: 0.0,
-                applying_torque: 0.0,
-            })
-            .with(ShipEngines {
-                engines: [
-                    Engine {
-                        location: Vector3::new(13.0, -18.0, 0.1),
-                        direction: 1,
-                        rotate: -1,
-                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                    Engine {
-                        location: Vector3::new(-13.0, -18.0, 0.1),
-                        direction: 1,
-                        rotate: 1,
-                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                    Engine {
-                        location: Vector3::new(13.0, 18.0, 0.1),
-                        direction: -1,
-                        rotate: 1,
-                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                    Engine {
-                        location: Vector3::new(-13.0, 18.0, 0.1),
-                        direction: -1,
-                        rotate: -1,
-                        tint: Srgba::new(0.1, 0.1, 0.6, 1.0),
-                        last_emit: 0.0,
-                        emit_rate: 0.02,
-                    },
-                ].to_vec(),
-            })
-            .with(Player {
-                controllable: true,
-                id: 2,
-                last_torpedo: 0.0,
-                torpedo_interval: 1.5,
-                torpedo_energy: 10.0,
-                last_hyperspace: 0.0,
-                hyperspace_interval: 5.0,
-                dead: false,
-                respawn: 0.
-            })
-            .build();
-
         // Place the camera
         initialise_camera(world);
         initialise_collision(world);
-        initialise_ui(world, &[player1, player2]);
+        initialise_ui(world);
         world.insert(sprite_sheet_manager);
     }
 
@@ -270,7 +97,7 @@ fn initialise_collision(world: &mut World) {
 
 }
 
-fn initialise_ui(world: &mut World, players: &[Entity]) {
+fn initialise_ui(world: &mut World) {
 
     let font = world.read_resource::<Loader>().load(
         "font/UbuntuMono-R.ttf",
@@ -397,7 +224,21 @@ fn initialise_ui(world: &mut World, players: &[Entity]) {
         .build();
 
     let mut sop = StatusOfPlayers::default();
-    sop.players.insert(1, StatusOfPlayer{energy: 0.0, shields: 0.0, hull: 0.0});
-    sop.players.insert(2, StatusOfPlayer{energy: 0.0, shields: 0.0, hull: 0.0});
+    sop.players.insert(1, StatusOfPlayer{
+        energy: 0.,
+        shields: 0.,
+        hull: 0.,
+        dead: true,
+        lives: 5,
+        respawn: 0.,
+    });
+    sop.players.insert(2, StatusOfPlayer{
+        energy: 0.,
+        shields: 0.,
+        hull: 0.,
+        dead: true,
+        lives: 5,
+        respawn: 0.,
+    });
     world.insert(sop);
 }

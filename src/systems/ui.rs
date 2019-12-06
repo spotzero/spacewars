@@ -30,8 +30,6 @@ impl<'s> System<'s> for StatusUpdateSystem {
     }
 }
 
-
-
 #[derive(SystemDesc)]
 pub struct StatusUiSystem;
 
