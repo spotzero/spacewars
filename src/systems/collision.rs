@@ -1,10 +1,13 @@
 use amethyst::{
+    core::math::Point3,
     core::timing::Time,
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
     ecs::Entities,
+    renderer::palette::Srgba,
+    renderer::debug_drawing::DebugLinesComponent,
 };
 
 use crate::components::*;
@@ -34,7 +37,7 @@ impl<'s> System<'s> for CollisionSystem {
                 }
 
                 if skip {
-                  continue;
+                    continue;
                 }
 
                 let radius = colliable1.radius + collisble2.radius;
@@ -50,13 +53,21 @@ impl<'s> System<'s> for CollisionSystem {
     }
 }
 
-/*
 #[derive(SystemDesc)]
-pub struct ExplosionCollisionResponseSystem;
+pub struct DebugCollisionSystem;
 
-#[derive(SystemDesc)]
-pub struct GravityWellCollisionResponseSystem;
+impl<'s> System<'s> for DebugCollisionSystem {
+    type SystemData = (
+        ReadStorage<'s, Transform>,
+        ReadStorage<'s, Collidable>,
+        WriteStorage<'s, DebugLinesComponent>,
+    );
 
-#[derive(SystemDesc)]
-pub struct PlayerCollisionResponseSystem;
-*/
+    fn run(&mut self, (transforms, colliables, mut debug_lines): Self::SystemData) {
+        for (transform, colliable, debug_line) in (&transforms, &colliables, &mut debug_lines).join() {
+            debug_line.clear();
+            let t = transform.translation();
+            debug_line.add_circle_2d(Point3::new(t[0],t[1],t[2]), colliable.radius, 16, Srgba::new(1.0, 0.0, 0.0, 1.0));
+        }
+    }
+}

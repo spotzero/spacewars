@@ -1,9 +1,10 @@
 use amethyst::{
     core::transform::Transform,
+    core::math::Point3,
     core::math::Vector3,
     ecs::prelude::Read,
     ecs::{Entity, LazyUpdate, world::EntitiesRes},
-    renderer::{transparent::Transparent, palette::Srgba},
+    renderer::{transparent::Transparent, palette::Srgba, debug_drawing::{DebugLines, DebugLinesComponent, DebugLinesParams},},
 };
 
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
@@ -43,6 +44,7 @@ pub fn spawn_player(
         recharge_rate: 5.0,
         max_charge: 100.0,
     });
+    lazy_update.insert(player, DebugLinesComponent::with_capacity(16));
     lazy_update.insert(player, movable);
     lazy_update.insert(player, Ship {
         hull: 50.0,

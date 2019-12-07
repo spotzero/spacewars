@@ -12,6 +12,7 @@ mod ui;
 
 pub use self::{
     collision::CollisionSystem,
+    collision::DebugCollisionSystem,
     damage::DamageSystem,
     energy::RechargeSystem,
     explosion::ExplosionCollisionResponseSystem,

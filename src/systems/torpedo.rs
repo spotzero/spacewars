@@ -9,6 +9,7 @@ use amethyst::{
     ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
     input::{InputHandler, StringBindings},
     renderer::{transparent::Transparent},
+    renderer::debug_drawing::DebugLinesComponent,
 };
 
 use crate::{
@@ -178,6 +179,7 @@ fn spawn_torpedo(
         kind: collidable_types::TORPEDO,
         radius: 20.0,
     });
+    lazy_update.insert(part, DebugLinesComponent::with_capacity(16));
     lazy_update.insert(part, Ship {
         hull: 5.0,
         shield: 0.0,

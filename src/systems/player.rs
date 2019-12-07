@@ -53,7 +53,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
                     &lazy_update,
                     &time,
                     Explosion {
-                        vel: 150.,
+                        vel: 100.,
                         dsp: 10.,
                     },
                 );
@@ -64,7 +64,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
                 transform.set_translation_xyz(0., 0., 20.0);
                 movable.angular_velocity = 0.;
                 movable.velocity = Vector3::new(0.,0.,0.);
-                entities.delete(entity);
+                let _ = entities.delete(entity);
             }
         }
     }

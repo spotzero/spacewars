@@ -8,6 +8,7 @@ use amethyst::{
     ecs::world::EntitiesRes,
     renderer::resources::Tint,
     renderer::palette::Srgba,
+    renderer::debug_drawing::DebugLinesComponent,
     ecs::Entity,
 };
 use rand::Rng;
@@ -65,6 +66,7 @@ pub fn generate_explosion(
   lazy_update.insert(exploder, transform.clone());
   lazy_update.insert(exploder, mover.clone());
   lazy_update.insert(exploder, Collidable { kind: collidable_types::EXPLOSION, radius: 0.1});
+  lazy_update.insert(exploder, DebugLinesComponent::with_capacity(16));
   lazy_update.insert(exploder, explosion);
   lazy_update.insert(exploder, Lifetime {
       start: time.absolute_real_time_seconds(),
