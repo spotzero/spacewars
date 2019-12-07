@@ -4,6 +4,7 @@ mod damage;
 mod explosions;
 mod math;
 mod particle;
+mod player;
 mod ui;
 
 pub use self::{
@@ -11,12 +12,13 @@ pub use self::{
     collision::CollisionEvents,
     collision::ForceCollision,
     collision::TorpedoCollision,
-    damage::Damage,
     damage::damage_types,
+    damage::Damage,
     damage::DamageEvents,
     explosions::generate_explosion,
-    particle::emit_particle,
     math::unit_vector,
+    particle::emit_particle,
+    player::spawn_player,
     ui::StatusOfPlayer,
     ui::StatusOfPlayers,
 };

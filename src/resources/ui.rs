@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 pub struct StatusOfPlayer {
+    pub id: u8,
     pub energy: f32,
     pub shields: f32,
     pub hull: f32,

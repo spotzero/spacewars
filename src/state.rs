@@ -225,6 +225,7 @@ fn initialise_ui(world: &mut World) {
 
     let mut sop = StatusOfPlayers::default();
     sop.players.insert(1, StatusOfPlayer{
+        id: 1,
         energy: 0.,
         shields: 0.,
         hull: 0.,
@@ -233,6 +234,7 @@ fn initialise_ui(world: &mut World) {
         respawn: 0.,
     });
     sop.players.insert(2, StatusOfPlayer{
+        id: 2,
         energy: 0.,
         shields: 0.,
         hull: 0.,

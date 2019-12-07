@@ -1,7 +1,7 @@
 mod collision;
 mod damage;
-mod explosion;
 mod energy;
+mod explosion;
 mod input;
 mod particle;
 mod physics;
@@ -14,18 +14,18 @@ pub use self::{
     collision::CollisionSystem,
     damage::DamageSystem,
     energy::RechargeSystem,
-    explosion::ExplosionSystem,
     explosion::ExplosionCollisionResponseSystem,
+    explosion::ExplosionSystem,
     input::ShipInputSystem,
-    particle::ParticleSystem,
     particle::EngineParticleSystem,
+    particle::ParticleSystem,
     physics::PhysicsSystem,
     player::PlayerDeathSystem,
     player::PlayerRespawnSystem,
     ship::ShipSystem,
-    torpedo::FireTorpedoSystem,
     torpedo::ExplodeTorpedoSystem,
+    torpedo::FireTorpedoSystem,
     torpedo::TorpedoCollisionResponseSystem,
-    ui::StatusUpdateSystem,
     ui::StatusUiSystem,
+    ui::StatusUpdateSystem,
 };

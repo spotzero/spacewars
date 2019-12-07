@@ -13,8 +13,6 @@ use crate::{
     resources::*,
 };
 
-use crate::{ARENA_HEIGHT, ARENA_WIDTH};
-
 #[derive(SystemDesc)]
 pub struct PlayerDeathSystem;
 
@@ -39,10 +37,10 @@ impl<'s> System<'s> for PlayerDeathSystem {
         mut players,
         sprite_sheet_manager,
         lazy_update,
-        status_of_players,
+        mut status_of_players,
         time,
     ): Self::SystemData) {
-        for (transform, movable, ship, player) in (&mut transforms, &mut movables, &mut ships, &mut players).join() {
+        for (entity, transform, movable, ship, player) in (&entities, &mut transforms, &mut movables, &mut ships, &mut players).join() {
             if ship.hull <= 0. {
                 generate_explosion(
                     &transform,
@@ -62,9 +60,11 @@ impl<'s> System<'s> for PlayerDeathSystem {
                 let mut status = status_of_players.players.get_mut(&player.id).unwrap();
                 status.dead = true;
                 status.respawn = time.absolute_real_time_seconds() + 3.;
+                status.lives -= 1;
                 transform.set_translation_xyz(0., 0., 20.0);
                 movable.angular_velocity = 0.;
                 movable.velocity = Vector3::new(0.,0.,0.);
+                entities.delete(entity);
             }
         }
     }
@@ -76,36 +76,24 @@ pub struct PlayerRespawnSystem;
 
 impl<'s> System<'s> for PlayerRespawnSystem {
     type SystemData = (
-        WriteStorage<'s, Transform>,
-        WriteStorage<'s, Movable>,
-        WriteStorage<'s, Energy>,
-        WriteStorage<'s, Ship>,
-        WriteStorage<'s, Player>,
+        Entities<'s>,
+        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, LazyUpdate>,
+        WriteExpect<'s, StatusOfPlayers>,
         Read<'s, Time>,
     );
 
     fn run(&mut self, (
-        mut transforms,
-        mut movables,
-        mut energies,
-        mut ships,
-        mut players,
+        entities,
+        sprite_sheet_manager,
+        lazy_update,
+        mut status_of_players,
         time,
     ): Self::SystemData) {
-        for (transform, movable, energy, ship, player) in (&mut transforms, &mut movables, &mut energies, &mut ships, &mut players).join() {
-            if player.dead && player.respawn <= time.absolute_real_time_seconds() {
-                player.dead = false;
-                ship.hull = 50.;
-                ship.shield = 75.;
-                energy.charge= 100.;
-                movable.angular_velocity = 0.6;
-                if player.id == 1 {
-                    transform.set_translation_xyz(ARENA_WIDTH/4.0, ARENA_HEIGHT/2.0, 0.0);
-                    movable.velocity = Vector3::new(0.,120.,0.);
-                } else if player.id == 2 {
-                    transform.set_translation_xyz(3.0*(ARENA_WIDTH/4.0), ARENA_HEIGHT/2.0, 0.0);
-                    movable.velocity = Vector3::new(0.,-120.,0.);
-                }
+        for mut status in status_of_players.players.values_mut() {
+            if status.dead && status.respawn <= time.absolute_real_time_seconds() {
+                status.dead = false;
+                spawn_player(status.id, &lazy_update, &entities, &sprite_sheet_manager);
             }
         }
     }

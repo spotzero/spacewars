@@ -3,11 +3,12 @@ use amethyst::{
     core::math::Vector3,
     ecs::prelude::Read,
     ecs::{Entity, LazyUpdate, world::EntitiesRes},
-    renderer::{transparent::Transparent, resources::Tint},
+    renderer::{transparent::Transparent, palette::Srgba},
 };
 
-use crate::components::{Lifetime, Movable, ParticleCom};
-use crate::resources::{SpriteSheetManager};
+use crate::{ARENA_HEIGHT, ARENA_WIDTH};
+use crate::components::*;
+use crate::resources::*;
 
 pub fn spawn_player(
     id: u8,
@@ -30,14 +31,14 @@ pub fn spawn_player(
         transform.set_translation_xyz(3.0*(ARENA_WIDTH/4.0), ARENA_HEIGHT/2.0, 0.0);
         transform.set_rotation_2d(135.0);
         movable.velocity.y = -120.0;
-        tint = tint: Srgba::new(0.1, 0.1, 0.6, 1.0);
+        tint = Srgba::new(0.1, 0.1, 0.6, 1.0);
     }
 
     let player: Entity = entities.create();
     lazy_update.insert(player, sprite_sheet_manager.get_render("ships/ship-001").unwrap());
     lazy_update.insert(player, transform);
-    lazy_update.insert(part, Transparent);
-    lazy_update.insert(part, Energy {
+    lazy_update.insert(player, Transparent);
+    lazy_update.insert(player, Energy {
         charge: 100.0,
         recharge_rate: 5.0,
         max_charge: 100.0,
