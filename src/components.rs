@@ -109,4 +109,5 @@ pub enum StatusUiKind {
     Energy,
     Shields,
     Hull,
+    Score,
 }

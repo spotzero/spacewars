@@ -54,7 +54,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
                     &time,
                     Explosion {
                         vel: 100.,
-                        dsp: 10.,
+                        dsp: 0.,
                     },
                 );
                 let mut status = status_of_players.players.get_mut(&player.id).unwrap();

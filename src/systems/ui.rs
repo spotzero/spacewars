@@ -49,6 +49,7 @@ impl<'s> System<'s> for StatusUiSystem {
                 StatusUiKind::Energy => format!("Energy: {}", status.energy as u8),
                 StatusUiKind::Shields => format!("Shields: {}", status.shields as u8),
                 StatusUiKind::Hull => format!("Hull: {}", status.hull as u8),
+                StatusUiKind::Score => format!("Score: {}", status.lives as u8),
             };
         }
     }
