@@ -58,7 +58,7 @@ pub fn spawn_player(
     });
     lazy_update.insert(player, Collidable{
         kind: collidable_types::PLAYER,
-        radius: 25.0,
+        radius: 26.0,
     });
     lazy_update.insert(player, ShipEngines {
         engines: [

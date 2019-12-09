@@ -164,6 +164,22 @@ fn initialise_ui(world: &mut World) {
         })
         .build();
 
+    p1_transform.local_y -= 50.0;
+    world
+        .create_entity()
+        .with(p1_transform.clone())
+        .with(UiText::new(
+            font.clone(),
+            "".to_string(),
+            [1.0, 0.0, 0.0, 1.0],
+            50.,
+        ))
+        .with(StatusUi{
+            data: StatusUiKind::Score,
+            player: 1,
+        })
+        .build();
+
 
     let mut p2_transform = UiTransform::new(
         "p2-stats".to_string(),
@@ -219,6 +235,22 @@ fn initialise_ui(world: &mut World) {
         ))
         .with(StatusUi{
             data: StatusUiKind::Hull,
+            player: 2,
+        })
+        .build();
+
+    p2_transform.local_y -= 50.0;
+    world
+        .create_entity()
+        .with(p2_transform.clone())
+        .with(UiText::new(
+            font.clone(),
+            "".to_string(),
+             [0.0, 0.0, 1.0, 1.0],
+            50.,
+        ))
+        .with(StatusUi{
+            data: StatusUiKind::Score,
             player: 2,
         })
         .build();
