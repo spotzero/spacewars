@@ -1,6 +1,8 @@
 use amethyst::{
     core::timing::Time,
     core::SystemDesc,
+    core::transform::Transform,
+    core::math::Vector3,
     derive::SystemDesc,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
     ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
@@ -17,17 +19,24 @@ pub struct ExplosionSystem;
 impl<'s> System<'s> for ExplosionSystem {
     type SystemData = (
         ReadStorage<'s, Explosion>,
+        ReadStorage<'s, Lifetime>,
+        WriteStorage<'s, Transform>,
         WriteStorage<'s, Collidable>,
         Read<'s, Time>,
     );
 
     fn run(&mut self, (
         explosions,
+        lifetimes,
+        mut transforms,
         mut collidables,
         time
     ): Self::SystemData) {
-        for (explosion, mut collidable) in (&explosions, &mut collidables).join() {
+        for (explosion, lifetime, mut transform, mut collidable) in (&explosions, &lifetimes, &mut transforms, &mut collidables).join() {
             collidable.radius += explosion.vel * time.delta_seconds();
+            let radius = (time.absolute_real_time_seconds() - lifetime.start) * explosion.vel as f64;
+            let s = radius / 50.;
+            transform.set_scale(Vector3::new(s,s,s));
         }
     }
 }

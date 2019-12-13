@@ -46,7 +46,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
                     &transform,
                     &movable,
                     movable.mass/2.,
-                    2.5,
+                    1.75,
                     100.,
                     &entities,
                     &sprite_sheet_manager,

@@ -9,6 +9,7 @@ use amethyst::{
     renderer::resources::Tint,
     renderer::palette::Srgba,
     renderer::debug_drawing::DebugLinesComponent,
+    renderer::transparent::Transparent,
     ecs::Entity,
 };
 use rand::Rng;
@@ -44,7 +45,7 @@ pub fn generate_explosion(
         UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,rng.gen_range(0.0, max_vel),0.0))
     } else {
         flip = true;
-        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,max_vel,0.0))
+        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,max_vel*1.25,0.0))
     };
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
@@ -55,7 +56,7 @@ pub fn generate_explosion(
         time.absolute_real_time_seconds(),
         rng.gen_range(min_life, max_life),
         pos,
-        (mover.velocity / 2.) + thrustvector,
+        mover.velocity + thrustvector,
         Tint(Srgba::new(1.0, 0.6, 0.0, 0.5)),
         &lazy_update,
         &entities,
@@ -68,6 +69,9 @@ pub fn generate_explosion(
   lazy_update.insert(exploder, Collidable { kind: collidable_types::EXPLOSION, radius: 0.1});
   lazy_update.insert(exploder, DebugLinesComponent::with_capacity(16));
   lazy_update.insert(exploder, explosion);
+  lazy_update.insert(exploder, Transparent);
+  lazy_update.insert(exploder, Tint(Srgba::new(1., 0.6, 0., 0.3)));
+  lazy_update.insert(exploder, sprite_sheet_manager.get_render("particles/particle0").unwrap());
   lazy_update.insert(exploder, Lifetime {
       start: time.absolute_real_time_seconds(),
       life: max_life,
