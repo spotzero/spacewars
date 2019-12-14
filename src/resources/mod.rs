@@ -15,6 +15,7 @@ pub use self::{
     damage::damage_types,
     damage::Damage,
     damage::DamageEvents,
+    damage::calculate_damage,
     explosions::generate_explosion,
     math::unit_vector,
     particle::emit_particle,

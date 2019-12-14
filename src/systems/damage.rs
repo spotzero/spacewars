@@ -29,7 +29,8 @@ impl<'s> System<'s> for DamageSystem {
         for (entity, ship) in (&entities, &mut ships).join() {
             for i in 0..damage_events.events.len() {
                 if entity.id() == damage_events.events[i].player {
-                    ship.hull -= damage_events.events[i].damage;
+                    let event = damage_events.events[i];
+                    (ship.hull, ship.shield) = calculate_damage(event.kind, event.damage, ship.hull, ship.shield);
                 }
             }
         }
