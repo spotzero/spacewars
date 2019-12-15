@@ -42,7 +42,7 @@ pub fn spawn_player(
 
     let player_shield: Entity = entities.create();
     let player: Entity = entities.create();
-    lazy_update.insert(player, sprite_sheet_manager.get_render("ships/ship-001").unwrap());
+    lazy_update.insert(player, sprite_sheet_manager.get_render(&format!("ships/ship-00{}", id)).unwrap());
     lazy_update.insert(player, transform);
     lazy_update.insert(player, Transparent);
     lazy_update.insert(player, Energy {

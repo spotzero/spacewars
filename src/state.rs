@@ -27,6 +27,7 @@ impl SimpleState for SpacewarsState {
         sprite_sheet_manager.insert(&mut world, "backgrounds/background-2");
         sprite_sheet_manager.insert(&mut world, "backgrounds/gravity-well");
         sprite_sheet_manager.insert(&mut world, "ships/ship-001");
+        sprite_sheet_manager.insert(&mut world, "ships/ship-002");
         sprite_sheet_manager.insert(&mut world, "ships/shields");
         sprite_sheet_manager.insert(&mut world, "particles/particle0");
         sprite_sheet_manager.insert(&mut world, "particles/debris");
