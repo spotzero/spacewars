@@ -43,7 +43,7 @@ pub fn spawn_player(
     let player_shield: Entity = entities.create();
     let player: Entity = entities.create();
     lazy_update.insert(player, sprite_sheet_manager.get_render("ships/ship-001").unwrap());
-    lazy_update.insert(player, transform.clone());
+    lazy_update.insert(player, transform);
     lazy_update.insert(player, Transparent);
     lazy_update.insert(player, Energy {
         charge: 100.0,
@@ -114,8 +114,10 @@ pub fn spawn_player(
         hyperspace_interval: 5.0,
     });
 
+    let mut shield_transform = Transform::default();
+    shield_transform.set_scale(Vector3::new(0.15,0.15,1.0));
     lazy_update.insert(player_shield, sprite_sheet_manager.get_render("ships/shields").unwrap());
-    lazy_update.insert(player_shield, transform.clone());
+    lazy_update.insert(player_shield, shield_transform);
     lazy_update.insert(player_shield, Transparent);
     lazy_update.insert(player_shield, Shield {target: player});
     lazy_update.insert(player_shield, Tint(Srgba::new(0.0, 0.6, 1.0, 1.)));

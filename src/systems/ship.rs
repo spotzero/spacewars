@@ -6,6 +6,7 @@ use amethyst::{
     core::math::Vector3,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
     ecs::Entities,
+    renderer::palette::Srgba,
     renderer::resources::Tint,
 };
 
@@ -77,17 +78,23 @@ impl<'s> System<'s> for ShieldSystem {
     );
 
     fn run(&mut self, (entities, shields, ships, mut transforms, mut tints): Self::SystemData) {
-        for (entity, shield) in (&entities, &shields).join() {
-/*
-            let mut shield_amount = 0.;
-            shield_amount = match ships.get(shield.target) {
+        for (entity, shield, tint) in (&entities, &shields, &mut tints).join() {
+
+            let shield_amount = match ships.get(shield.target) {
                 Some(s) => s.shield / s.max_shield,
                 None => 0.,
             };
-*/
-            let mut t = transforms.get(shield.target).cloned().unwrap_or_default();
-            t.move_forward(5.);
-            *transforms.get_mut(entity).unwrap() = t;
+
+            *tint = Tint(Srgba::new(1.0 - shield_amount, 0.0, shield_amount, 1.));
+
+            let ship_transform = transforms.get(shield.target).cloned().unwrap_or_default();
+            let shield_transform = transforms.get_mut(entity).unwrap();
+            shield_transform.set_translation(ship_transform.translation().clone());
+
+            if shield_amount <= 0. {
+                shield_transform.set_translation_z(100.);
+            }
+
         }
     }
 }
