@@ -57,6 +57,9 @@ impl<'s> System<'s> for PlayerDeathSystem {
                         dsp: 0.,
                     },
                 );
+                if ship.shield_entity.is_some() {
+                    let _ = entities.delete(ship.shield_entity.unwrap());
+                }
                 let mut status = status_of_players.players.get_mut(&player.id).unwrap();
                 status.dead = true;
                 status.respawn = time.absolute_real_time_seconds() + 3.;

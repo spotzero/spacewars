@@ -37,12 +37,14 @@ pub struct Energy {
 pub struct Ship {
     pub hull: f32,
     pub shield: f32,
+    pub max_shield: f32,
     pub thrust: f32,
     pub torque: f32,
     pub thrust_failure: bool,
     pub torque_failure: bool,
     pub applying_thrust: f32,
     pub applying_torque: f32,
+    pub shield_entity: Option<Entity>,
 }
 
 #[derive(Component, Debug)]
@@ -91,6 +93,11 @@ pub struct Engine {
     pub tint: Srgba,
     pub last_emit: f64,
     pub emit_rate: f64,
+}
+
+#[derive(Component, Debug)]
+pub struct Shield {
+    pub target: Entity,
 }
 
 #[derive(Component, Debug)]

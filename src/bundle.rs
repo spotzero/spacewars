@@ -32,6 +32,7 @@ impl<'a, 'b> SystemBundle<'a, 'b> for SpacewarsBundle {
         builder.add(DamageSystem, "damage_system", &["explosion_collision_response_system"]);
         builder.add(PlayerDeathSystem, "player_death_system", &["damage_system"]);
         builder.add(PlayerRespawnSystem, "player_respawn_system", &[]);
+        builder.add(ShieldSystem, "shield_system", &[]);
         builder.add(StatusUpdateSystem, "status_update_system", &[]);
         builder.add(StatusUiSystem, "status_ui_system", &["status_update_system"]);
         Ok(())

@@ -4,7 +4,12 @@ use amethyst::{
     core::math::Vector3,
     ecs::prelude::Read,
     ecs::{Entity, LazyUpdate, world::EntitiesRes},
-    renderer::{transparent::Transparent, palette::Srgba, debug_drawing::{DebugLines, DebugLinesComponent, DebugLinesParams},},
+    renderer::{
+        transparent::Transparent,
+        palette::Srgba,
+        debug_drawing::{DebugLines, DebugLinesComponent, DebugLinesParams},
+        resources::Tint,
+    },
 };
 
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
@@ -35,9 +40,10 @@ pub fn spawn_player(
         tint = Srgba::new(0.1, 0.1, 0.6, 1.0);
     }
 
+    let player_shield: Entity = entities.create();
     let player: Entity = entities.create();
     lazy_update.insert(player, sprite_sheet_manager.get_render("ships/ship-001").unwrap());
-    lazy_update.insert(player, transform);
+    lazy_update.insert(player, transform.clone());
     lazy_update.insert(player, Transparent);
     lazy_update.insert(player, Energy {
         charge: 100.0,
@@ -49,12 +55,14 @@ pub fn spawn_player(
     lazy_update.insert(player, Ship {
         hull: 50.0,
         shield: 75.0,
+        max_shield: 75.0,
         thrust: 50000.0,
         torque: 600.0,
         thrust_failure: false,
         torque_failure: false,
         applying_thrust: 0.0,
         applying_torque: 0.0,
+        shield_entity: Some(player_shield),
     });
     lazy_update.insert(player, Collidable{
         kind: collidable_types::PLAYER,
@@ -105,4 +113,10 @@ pub fn spawn_player(
         last_hyperspace: 0.0,
         hyperspace_interval: 5.0,
     });
+
+    lazy_update.insert(player_shield, sprite_sheet_manager.get_render("ships/shields").unwrap());
+    lazy_update.insert(player_shield, transform.clone());
+    lazy_update.insert(player_shield, Transparent);
+    lazy_update.insert(player_shield, Shield {target: player});
+    lazy_update.insert(player_shield, Tint(Srgba::new(0.0, 0.6, 1.0, 1.)));
 }

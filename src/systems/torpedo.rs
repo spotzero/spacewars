@@ -183,12 +183,14 @@ fn spawn_torpedo(
     lazy_update.insert(part, Ship {
         hull: 5.0,
         shield: 0.0,
+        max_shield: 0.0,
         thrust: 2000.0,
         torque: 0.0,
         thrust_failure: false,
         torque_failure: false,
         applying_thrust: 1.0,
         applying_torque: 0.0,
+        shield_entity: None,
     });
     lazy_update.insert(part, Torpedo {
         fired: time.absolute_real_time_seconds(),

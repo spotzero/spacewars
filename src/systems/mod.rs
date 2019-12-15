@@ -24,6 +24,7 @@ pub use self::{
     player::PlayerDeathSystem,
     player::PlayerRespawnSystem,
     ship::ShipSystem,
+    ship::ShieldSystem,
     torpedo::ExplodeTorpedoSystem,
     torpedo::FireTorpedoSystem,
     torpedo::TorpedoCollisionResponseSystem,

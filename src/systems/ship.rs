@@ -5,6 +5,8 @@ use amethyst::{
     derive::SystemDesc,
     core::math::Vector3,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
+    ecs::Entities,
+    renderer::resources::Tint,
 };
 
 use crate::components::*;
@@ -57,6 +59,35 @@ impl<'s> System<'s> for ShipSystem {
                     ship.torque_failure = true;
                 }
             }
+        }
+    }
+}
+
+
+#[derive(SystemDesc)]
+pub struct ShieldSystem;
+
+impl<'s> System<'s> for ShieldSystem {
+    type SystemData = (
+        Entities<'s>,
+        ReadStorage<'s, Shield>,
+        ReadStorage<'s, Ship>,
+        WriteStorage<'s, Transform>,
+        WriteStorage<'s, Tint>,
+    );
+
+    fn run(&mut self, (entities, shields, ships, mut transforms, mut tints): Self::SystemData) {
+        for (entity, shield) in (&entities, &shields).join() {
+/*
+            let mut shield_amount = 0.;
+            shield_amount = match ships.get(shield.target) {
+                Some(s) => s.shield / s.max_shield,
+                None => 0.,
+            };
+*/
+            let mut t = transforms.get(shield.target).cloned().unwrap_or_default();
+            t.move_forward(5.);
+            *transforms.get_mut(entity).unwrap() = t;
         }
     }
 }
