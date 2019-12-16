@@ -27,14 +27,15 @@ pub struct ExplosionCollision {
 }
 
 pub struct GravityWellCollision {
-
+    pub player: u32,
 }
 
 #[derive(Default)]
 pub struct CollisionEvents {
     pub torpedo_collisions: Vec<TorpedoCollision>,
     pub player_collisions: Vec<ForceCollision>,
-    pub explosion_collisions: Vec<ExplosionCollision>
+    pub explosion_collisions: Vec<ExplosionCollision>,
+    pub gravity_well_collision: Vec<GravityWellCollision>,
 }
 
 impl CollisionEvents {
@@ -52,13 +53,14 @@ impl CollisionEvents {
         let dir1 = transform1.translation() - transform2.translation();
         let dir2 = transform1.translation() - transform2.translation();
 
-
+        // Collision between anything and torpedo.
         if colliable1.kind == collidable_types::TORPEDO {
             self.torpedo_collisions.push(TorpedoCollision {
                 direction: unit_vector(&dir1),
                 torpedo: entity1.id(),
                 collided: entity2.id(),
             });
+            return;
         }
 
         if colliable2.kind == collidable_types::TORPEDO {
@@ -67,8 +69,10 @@ impl CollisionEvents {
                 torpedo: entity2.id(),
                 collided: entity1.id(),
             });
+            return;
         }
 
+        // Collision between player and explosions.
         if (
             colliable1.kind == collidable_types::PLAYER
             && colliable2.kind == collidable_types::EXPLOSION
@@ -89,6 +93,25 @@ impl CollisionEvents {
                 },
                 distance: (transform1.translation() - transform2.translation()).norm(),
             });
+            return;
+        }
+
+        // Collision between player and the grav well.
+        if (
+            colliable1.kind == collidable_types::PLAYER
+            && colliable2.kind == collidable_types::GRAVITYWELL
+        ) || (
+            colliable2.kind == collidable_types::PLAYER
+            && colliable1.kind == collidable_types::GRAVITYWELL
+        ) {
+            self.gravity_well_collision.push(GravityWellCollision {
+                player: if colliable1.kind == collidable_types::PLAYER {
+                    entity1.id()
+                } else {
+                    entity2.id()
+                }
+            });
+            return;
         }
     }
 }
