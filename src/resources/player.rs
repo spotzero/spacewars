@@ -53,7 +53,8 @@ pub fn spawn_player(
     lazy_update.insert(player, DebugLinesComponent::with_capacity(16));
     lazy_update.insert(player, movable);
     lazy_update.insert(player, Ship {
-        hull: 50.0,
+        hull: 50.,
+        max_hull: 50.,
         shield: 75.0,
         max_shield: 75.0,
         thrust: 50000.0,

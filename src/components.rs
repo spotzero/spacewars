@@ -36,6 +36,7 @@ pub struct Energy {
 #[derive(Component, Debug)]
 pub struct Ship {
     pub hull: f32,
+    pub max_hull: f32,
     pub shield: f32,
     pub max_shield: f32,
     pub thrust: f32,

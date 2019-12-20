@@ -181,7 +181,8 @@ fn spawn_torpedo(
     });
     lazy_update.insert(part, DebugLinesComponent::with_capacity(16));
     lazy_update.insert(part, Ship {
-        hull: 5.0,
+        hull: 5.,
+        max_hull: 5.,
         shield: 0.0,
         max_shield: 0.0,
         thrust: 2000.0,
