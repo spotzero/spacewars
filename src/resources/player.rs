@@ -111,6 +111,9 @@ pub fn spawn_player(
         last_torpedo: 0.0,
         torpedo_interval: 1.5,
         torpedo_energy: 10.0,
+        last_railgun: 0.0,
+        railgun_interval: 0.1,
+        railgun_energy: 1.0,
         last_hyperspace: 0.0,
         hyperspace_interval: 5.0,
     });

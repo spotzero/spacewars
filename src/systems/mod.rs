@@ -6,6 +6,7 @@ mod input;
 mod particle;
 mod physics;
 mod player;
+mod railgun;
 mod ship;
 mod torpedo;
 mod ui;
@@ -23,6 +24,7 @@ pub use self::{
     physics::PhysicsSystem,
     player::PlayerDeathSystem,
     player::PlayerRespawnSystem,
+    railgun::FireRailGunSystem,
     ship::ShipSystem,
     ship::ShieldSystem,
     torpedo::ExplodeTorpedoSystem,

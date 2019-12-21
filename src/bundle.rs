@@ -27,6 +27,7 @@ impl<'a, 'b> SystemBundle<'a, 'b> for SpacewarsBundle {
         builder.add(FireTorpedoSystem, "fire_torpedo_system", &["input_system"]);
         builder.add(ExplodeTorpedoSystem, "explode_torpedo_system", &[]);
         builder.add(ExplosionSystem, "explosion_system", &[]);
+        builder.add(FireRailGunSystem, "fire_rail_gun_system", &[]);
         builder.add(TorpedoCollisionResponseSystem, "torpedo_collision_response_system", &["collision_system"]);
         builder.add(ExplosionCollisionResponseSystem, "explosion_collision_response_system", &["collision_system", "explosion_system"]);
         builder.add(DamageSystem, "damage_system", &["explosion_collision_response_system"]);

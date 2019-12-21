@@ -55,6 +55,9 @@ pub struct Player {
     pub last_torpedo: f64,
     pub torpedo_interval: f64,
     pub torpedo_energy: f32,
+    pub last_railgun: f64,
+    pub railgun_interval: f64,
+    pub railgun_energy: f32,
     pub last_hyperspace: f64,
     pub hyperspace_interval: f64,
 }

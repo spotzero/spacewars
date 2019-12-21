@@ -20,13 +20,13 @@
     actions: {
         "laser_p1": [[Key(Q)]],
         "torpedo_p1": [[Key(E)]],
-        "missle_p1":  [[Key(Z)]],
+        "railgun_p1":  [[Key(Z)]],
         "recharge_p1":  [[Key(X)]],
         "hyperspace_p1": [[Key(C)]],
 
         "laser_p2": [[Key(Numpad7)]],
         "torpedo_p2": [[Key(Numpad9)]],
-        "missle_p2":  [[Key(Numpad1)]],
+        "railgun_p2":  [[Key(Numpad1)]],
         "recharge_p2": [[Key(Numpad2)]],
         "hyperspace_p2": [[Key(Numpad3)]],
     },
