@@ -15,7 +15,7 @@ pub struct TorpedoCollision {
 ///
 /// Anything with mass colliding, or colliding with an explosion takes damage and gets a push away.
 pub struct ForceCollision {
-    pub target: u32,
+    pub target: Entity,
     pub damage: f32,
     pub force: Vector3<f32>,
 }
@@ -113,5 +113,33 @@ impl CollisionEvents {
             });
             return;
         }
+
+        // Collision between player and the debris.
+        if colliable1.kind == collidable_types::PLAYER
+           && colliable2.kind == collidable_types::DEBRIS {
+            self.player_collisions.push(get_force_collision_from_debris(
+                entity1,
+                movable1,
+                movable2,
+            ));
+        }
+
+        if colliable2.kind == collidable_types::PLAYER
+           && colliable1.kind == collidable_types::DEBRIS {
+            self.player_collisions.push(get_force_collision_from_debris(
+                entity2,
+                movable2,
+                movable1,
+            ));
+        }
+    }
+}
+
+fn get_force_collision_from_debris(player: &Entity, player_move: &Movable, debris_move: &Movable) -> ForceCollision {
+    let force = (player_move.velocity - debris_move.velocity) * debris_move.mass;
+    ForceCollision {
+        target: *player,
+        damage: force.norm(),
+        force: force,
     }
 }

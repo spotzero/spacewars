@@ -78,10 +78,6 @@ pub struct Explosion {
 #[storage(NullStorage)]
 pub struct ParticleCom;
 
-#[derive(Component, Default)]
-#[storage(NullStorage)]
-pub struct DebrisCom;
-
 #[derive(Component, Debug)]
 pub struct Torpedo {
     pub fired: f64,

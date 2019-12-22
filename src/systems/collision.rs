@@ -4,8 +4,10 @@ use amethyst::{
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, Read, ReadExpect, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
     ecs::Entities,
+    ecs::Entity,
+    ecs::LazyUpdate,
     renderer::palette::Srgba,
     renderer::debug_drawing::DebugLinesComponent,
 };
@@ -30,7 +32,7 @@ impl<'s> System<'s> for CollisionSystem {
     fn run(&mut self, (entities, movables, transforms, colliables, mut collision_events, time): Self::SystemData) {
         for (entity1, transform1, movable1, colliable1) in (&entities, &transforms, &movables, &colliables).join() {
             let mut skip = true;
-            for (entity2, transform2, movable2, collisble2) in (&entities, &transforms, &movables, &colliables).join() {
+            for (entity2, transform2, movable2, colliable2) in (&entities, &transforms, &movables, &colliables).join() {
                 if entity1 == entity2 {
                     skip = false;
                     continue;
@@ -40,13 +42,22 @@ impl<'s> System<'s> for CollisionSystem {
                     continue;
                 }
 
-                let radius = colliable1.radius + collisble2.radius;
+                let radius = colliable1.radius + colliable2.radius;
                 let distance_vec = transform1.translation() - transform2.translation();
                 if distance_vec.norm() < radius {
                     collision_events.add_collision(
                         &entity1, &transform1, &movable1, &colliable1,
-                        &entity2, &transform2, &movable2, &collisble2
+                        &entity2, &transform2, &movable2, &colliable2
                     );
+
+                    // If a collision member is debris, delete it.
+                    if colliable1.kind == collidable_types::DEBRIS {
+                      let _ = entities.delete(entity1);
+                    }
+
+                    if colliable2.kind == collidable_types::DEBRIS {
+                      let _ = entities.delete(entity2);
+                    }
                 }
             }
         }

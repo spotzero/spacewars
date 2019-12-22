@@ -72,8 +72,8 @@ fn spawn_railgun(
     let mut thrustvector = Vector3::new(0.0, 600.0,0.0);
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
+    pos.set_translation(pos.translation() + pos.rotation().transform_vector(&Vector3::new(0.,21.,0.)));
     pos.set_scale(Vector3::new(0.06,0.2,1.0));
-    pos.move_forward(10.);
     let part: Entity = entities.create();
     lazy_update.insert(part, sprite_sheet_manager.get_render("particles/particle0").unwrap());
     lazy_update.insert(part, pos);
@@ -86,7 +86,7 @@ fn spawn_railgun(
     lazy_update.insert(part, DebugLinesComponent::with_capacity(16));
     lazy_update.insert(part, Lifetime {
         start: time.absolute_real_time_seconds(),
-        life: 0.8,
+        life: 1.,
     });
     lazy_update.insert(part, Movable {
         velocity: movable.velocity + thrustvector,

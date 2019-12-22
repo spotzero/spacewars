@@ -8,8 +8,8 @@ pub struct Damage {
 
 pub mod damage_types {
     pub const EXPLOSION: u32 = 1;
-    pub const ENERGY: u32 = 1;
-    pub const KINETIC: u32 = 1;
+    pub const ENERGY: u32 = 2;
+    pub const KINETIC: u32 = 3;
 }
 
 #[derive(Default)]
