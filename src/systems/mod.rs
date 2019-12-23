@@ -24,6 +24,7 @@ pub use self::{
     physics::PhysicsSystem,
     player::PlayerDeathSystem,
     player::PlayerRespawnSystem,
+    player::PlayerCollisionResponseSystem,
     railgun::FireRailGunSystem,
     ship::ShipSystem,
     ship::ShieldSystem,

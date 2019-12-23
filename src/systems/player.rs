@@ -101,3 +101,40 @@ impl<'s> System<'s> for PlayerRespawnSystem {
         }
     }
 }
+
+
+#[derive(SystemDesc)]
+pub struct PlayerCollisionResponseSystem;
+
+impl<'s> System<'s> for PlayerCollisionResponseSystem {
+    type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, Movable>,
+        WriteExpect<'s, CollisionEvents>,
+        WriteExpect<'s, DamageEvents>,
+    );
+
+    fn run(&mut self, (
+        entities,
+        mut movables,
+        mut collision_events,
+        mut damage_events,
+    ): Self::SystemData) {
+        for (entity, movable) in (&entities, &mut movables).join() {
+            for i in 0..collision_events.player_collisions.len() {
+                if collision_events.player_collisions[i].target == entity {
+                    // Adjust the velocity ship.
+                    movable.velocity += collision_events.player_collisions[i].force;
+
+                    // Create new damage event.
+                    damage_events.events.push(Damage {
+                        player: collision_events.player_collisions[i].target.id(),
+                        damage: collision_events.player_collisions[i].damage,
+                        kind: damage_types::KINETIC,
+                    });
+                }
+            }
+        }
+        collision_events.player_collisions.clear();
+    }
+}
