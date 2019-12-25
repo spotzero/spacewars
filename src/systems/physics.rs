@@ -47,7 +47,7 @@ impl<'s> System<'s> for PhysicsSystem {
             let gravity = if dis > 200.0 {
                 dir.normalize() * (80.0 * time.delta_seconds())
             } else {
-                ( (100000.0 * dir.normalize()) / dis) * time.delta_seconds()
+                ( (75000.0 * dir.normalize()) / dis) * time.delta_seconds()
             };
             mover.velocity += gravity;
 

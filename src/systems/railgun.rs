@@ -72,7 +72,7 @@ fn spawn_railgun(
     let mut thrustvector = Vector3::new(0.0, 600.0,0.0);
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();
-    pos.set_translation(pos.translation() + pos.rotation().transform_vector(&Vector3::new(0.,21.,0.)));
+    pos.set_translation(pos.translation() + pos.rotation().transform_vector(&Vector3::new(0.,24.,0.)));
     pos.set_scale(Vector3::new(0.06,0.2,1.0));
     let part: Entity = entities.create();
     lazy_update.insert(part, sprite_sheet_manager.get_render("particles/particle0").unwrap());
