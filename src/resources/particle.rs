@@ -36,3 +36,20 @@ pub fn emit_particle(
         mass: 0.1,
     });
 }
+
+
+pub fn emit_spark(
+    emit_time: f64,
+    life_time: f64,
+    mut pos: Transform,
+    mut vel: Vector3<f32>,
+    colour: Tint,
+    lazy_update: &LazyUpdate,
+    entities: &Read<EntitiesRes>,
+    sprite_sheet_manager: &SpriteSheetManager
+) {
+    let mut scale = pos.scale_mut();
+    scale[1] = scale[1] * 4.;
+    vel = pos.rotation().transform_vector(&vel);
+    emit_particle(emit_time, life_time, pos, vel, colour, lazy_update, entities, sprite_sheet_manager);
+}
