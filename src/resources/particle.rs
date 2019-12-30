@@ -42,14 +42,15 @@ pub fn emit_spark(
     emit_time: f64,
     life_time: f64,
     mut pos: Transform,
-    mut vel: Vector3<f32>,
+    thrust: Vector3<f32>,
+    vel: Vector3<f32>,
     colour: Tint,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
     sprite_sheet_manager: &SpriteSheetManager
 ) {
-    let mut scale = pos.scale_mut();
-    scale[1] = scale[1] * 4.;
-    vel = pos.rotation().transform_vector(&vel);
-    emit_particle(emit_time, life_time, pos, vel, colour, lazy_update, entities, sprite_sheet_manager);
+    let scale = pos.scale_mut();
+    scale[1] = scale[1] * 3.;
+    pos.set_rotation_2d(thrust.angle(&Vector3::new(0.,1.,0.)));
+    emit_particle(emit_time, life_time, pos, vel + thrust, colour, lazy_update, entities, sprite_sheet_manager);
 }

@@ -52,7 +52,7 @@ pub fn generate_explosion(
     pos.append_translation(Vector3::new(0.0,0.0,0.2));
     pos.set_scale(Vector3::new(0.1,0.1,1.0));
 
-    emit_spark(
+    emit_particle(
         time.absolute_real_time_seconds(),
         rng.gen_range(min_life, max_life),
         pos,
