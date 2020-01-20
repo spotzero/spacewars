@@ -54,7 +54,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
                     &time,
                     Explosion {
                         vel: 100.,
-                        dsp: 0.,
+                        dsp: 10.,
                     },
                 );
                 if ship.shield_entity.is_some() {
@@ -132,6 +132,7 @@ impl<'s> System<'s> for PlayerCollisionResponseSystem {
                         damage: collision_events.player_collisions[i].damage,
                         kind: damage_types::KINETIC,
                     });
+                    println!("Did {} damage to player {}", collision_events.player_collisions[i].damage, collision_events.player_collisions[i].target.id());
                 }
             }
 

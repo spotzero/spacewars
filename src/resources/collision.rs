@@ -160,7 +160,7 @@ fn get_force_collision_from_debris(player: &Entity, player_move: &Movable, debri
     let force = (debris_move.velocity - player_move.velocity) * debris_move.mass;
     ForceCollision {
         target: *player,
-        damage: force.norm() / 20.,
-        force: force,
+        damage: force.norm() / 100.,
+        force: force * 4.,
     }
 }

@@ -186,7 +186,7 @@ fn spawn_torpedo(
         max_hull: 5.,
         shield: 0.0,
         max_shield: 0.0,
-        thrust: 8000.0,
+        thrust: 4000.0,
         torque: 0.0,
         thrust_failure: false,
         torque_failure: false,

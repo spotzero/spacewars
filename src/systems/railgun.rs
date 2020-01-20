@@ -92,7 +92,7 @@ fn spawn_railgun(
     lazy_update.insert(part, Movable {
         velocity: movable.velocity + thrustvector,
         angular_velocity: 0.,
-        mass: 0.05,
+        mass: 0.5,
         apply_physics: true,
     });
 }
