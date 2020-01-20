@@ -207,6 +207,7 @@ fn spawn_torpedo(
         velocity: movable.velocity + thrustvector,
         angular_velocity: movable.angular_velocity / 2.,
         mass: 10.0,
+        apply_physics: true,
     });
     lazy_update.insert(part, ShipEngines {
         engines: [

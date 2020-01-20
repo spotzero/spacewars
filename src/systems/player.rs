@@ -134,6 +134,16 @@ impl<'s> System<'s> for PlayerCollisionResponseSystem {
                     });
                 }
             }
+
+            for i in 0..collision_events.gravity_well_collision.len() {
+                if collision_events.gravity_well_collision[i].target == entity {
+                    damage_events.events.push(Damage {
+                        player: collision_events.gravity_well_collision[i].target.id(),
+                        damage: 2.,
+                        kind: damage_types::KINETIC,
+                    });
+                }
+            }
         }
         collision_events.player_collisions.clear();
     }

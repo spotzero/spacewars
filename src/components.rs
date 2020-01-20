@@ -9,6 +9,7 @@ pub struct Movable {
     pub velocity: Vector3<f32>,
     pub angular_velocity: f32,
     pub mass: f32,
+    pub apply_physics: bool,
 }
 
 #[derive(Component, Debug)]

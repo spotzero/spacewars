@@ -27,7 +27,7 @@ pub struct ExplosionCollision {
 }
 
 pub struct GravityWellCollision {
-    pub player: u32,
+    pub target: Entity,
 }
 
 #[derive(Default)]
@@ -60,7 +60,6 @@ impl CollisionEvents {
                 torpedo: entity1.id(),
                 collided: entity2.id(),
             });
-            return;
         }
 
         if colliable2.kind == collidable_types::TORPEDO {
@@ -69,7 +68,6 @@ impl CollisionEvents {
                 torpedo: entity2.id(),
                 collided: entity1.id(),
             });
-            return;
         }
 
         // Collision between player and explosions.
@@ -105,10 +103,10 @@ impl CollisionEvents {
             && colliable1.kind == collidable_types::GRAVITYWELL
         ) {
             self.gravity_well_collision.push(GravityWellCollision {
-                player: if colliable1.kind == collidable_types::PLAYER {
-                    entity1.id()
+                target: if colliable1.kind == collidable_types::PLAYER {
+                    *entity1
                 } else {
-                    entity2.id()
+                    *entity2
                 }
             });
             return;
@@ -116,7 +114,11 @@ impl CollisionEvents {
 
         // Collision between player and the debris.
         if colliable1.kind == collidable_types::PLAYER
-           && colliable2.kind == collidable_types::DEBRIS {
+            && (
+                colliable2.kind == collidable_types::DEBRIS
+                || colliable2.kind == collidable_types::TORPEDO
+            )
+        {
             self.player_collisions.push(get_force_collision_from_debris(
                 entity1,
                 movable1,
@@ -125,7 +127,11 @@ impl CollisionEvents {
         }
 
         if colliable2.kind == collidable_types::PLAYER
-           && colliable1.kind == collidable_types::DEBRIS {
+            && (
+                colliable1.kind == collidable_types::DEBRIS
+                || colliable1.kind == collidable_types::TORPEDO
+            )
+        {
             self.player_collisions.push(get_force_collision_from_debris(
                 entity2,
                 movable2,

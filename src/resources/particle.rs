@@ -34,6 +34,7 @@ pub fn emit_particle(
         velocity: vel,
         angular_velocity: 0.0,
         mass: 0.1,
+        apply_physics: true,
     });
 }
 

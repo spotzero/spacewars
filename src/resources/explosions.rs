@@ -45,7 +45,8 @@ pub fn generate_explosion(
         UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,rng.gen_range(0.0, max_vel),0.0))
     } else {
         flip = true;
-        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,max_vel*1.25,0.0))
+        //UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,max_vel*1.25,0.0))
+        UnitQuaternion::from_euler_angles(0.0,0.0, angle).transform_vector(&Vector3::new(0.0,rng.gen_range(max_vel / 2., max_vel),0.0))
     };
     thrustvector = transform.rotation().transform_vector(&thrustvector);
     let mut pos = transform.clone();

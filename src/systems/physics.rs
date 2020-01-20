@@ -24,6 +24,10 @@ impl<'s> System<'s> for PhysicsSystem {
         let gravitywell = Vector3::new(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, 0.0);
 
         for (mover, transform) in (&mut movable, &mut transforms).join() {
+            if !mover.apply_physics {
+                continue;
+            }
+
             transform.prepend_translation(mover.velocity * time.delta_seconds());
             if mover.angular_velocity != 0.0 {
                 transform.rotate_2d(mover.angular_velocity * time.delta_seconds());
@@ -44,12 +48,10 @@ impl<'s> System<'s> for PhysicsSystem {
             // Apply gravity.
             let dir = gravitywell - transform.translation();
             let dis = dir.magnitude();
-            let gravity = if dis > 200.0 {
-                dir.normalize() * (80.0 * time.delta_seconds())
-            } else {
-                ( (75000.0 * dir.normalize()) / dis) * time.delta_seconds()
-            };
-            mover.velocity += gravity;
+            if dis > 20. {
+              let gravity = ( (5000000.0 * dir.normalize()) / (dis * dis)) * time.delta_seconds();
+              mover.velocity += gravity;
+            }
 
         }
     }

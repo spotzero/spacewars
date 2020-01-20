@@ -43,7 +43,7 @@ impl SimpleState for SpacewarsState {
             .build();
 
         let mut gravitywell_transform = Transform::default();
-        gravitywell_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -9.0);
+        gravitywell_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -3.0);
         gravitywell_transform.set_scale(Vector3::new(0.5,0.5,1.0));
 
         world
@@ -55,6 +55,13 @@ impl SimpleState for SpacewarsState {
                 kind: collidable_types::GRAVITYWELL,
                 radius: 25.0,
             })
+            .with(Movable {
+                velocity: Vector3::new(0.,0.,0.),
+                angular_velocity: 0.,
+                mass: 1000000.,
+                apply_physics: false,
+            })
+            .with(DebugLinesComponent::with_capacity(16))
             .build();
 
         // Place the camera

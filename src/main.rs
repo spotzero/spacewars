@@ -44,7 +44,7 @@ fn main() -> amethyst::Result<()> {
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(RenderToWindow::from_config_path(display_config).with_clear([0.0, 0.0, 0.0, 1.0]))
                 .with_plugin(RenderFlat2D::default())
-//                .with_plugin(RenderDebugLines::default())
+                //.with_plugin(RenderDebugLines::default())
                 .with_plugin(RenderUi::default()),
         )?;
 

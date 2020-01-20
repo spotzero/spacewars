@@ -92,5 +92,6 @@ fn spawn_railgun(
         velocity: movable.velocity + thrustvector,
         angular_velocity: 0.,
         mass: 0.05,
+        apply_physics: true,
     });
 }

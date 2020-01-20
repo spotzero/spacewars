@@ -27,6 +27,7 @@ pub fn spawn_player(
         velocity: Vector3::new(0.0,120.0,0.0),
         angular_velocity: 0.6,
         mass: 150.0,
+        apply_physics: true,
     };
     let mut tint = Srgba::new(0.6, 0.1, 0.1, 1.0);
     transform.set_scale(Vector3::new(0.1,0.1,1.0));
