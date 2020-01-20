@@ -132,7 +132,6 @@ impl<'s> System<'s> for PlayerCollisionResponseSystem {
                         damage: collision_events.player_collisions[i].damage,
                         kind: damage_types::KINETIC,
                     });
-                    println!("Did {} damage to player {}", collision_events.player_collisions[i].damage, collision_events.player_collisions[i].target.id());
                 }
             }
 
