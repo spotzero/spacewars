@@ -82,6 +82,7 @@ fn spawn_railgun(
     lazy_update.insert(part, Collidable {
         kind: collidable_types::DEBRIS,
         radius: 2.0,
+        ignore: None,
     });
     lazy_update.insert(part, DebugLinesComponent::with_capacity(16));
     lazy_update.insert(part, Lifetime {

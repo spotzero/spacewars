@@ -124,7 +124,7 @@ impl<'s> System<'s> for PlayerCollisionResponseSystem {
             for i in 0..collision_events.player_collisions.len() {
                 if collision_events.player_collisions[i].target == entity {
                     // Adjust the velocity ship.
-                    movable.velocity += collision_events.player_collisions[i].force;
+                    movable.velocity += collision_events.player_collisions[i].force / movable.mass;
 
                     // Create new damage event.
                     damage_events.events.push(Damage {

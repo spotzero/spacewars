@@ -67,7 +67,7 @@ pub fn generate_explosion(
   let exploder: Entity = entities.create();
   lazy_update.insert(exploder, transform.clone());
   lazy_update.insert(exploder, mover.clone());
-  lazy_update.insert(exploder, Collidable { kind: collidable_types::EXPLOSION, radius: 0.1});
+  lazy_update.insert(exploder, Collidable { kind: collidable_types::EXPLOSION, radius: 0.1, ignore: None,});
   lazy_update.insert(exploder, DebugLinesComponent::with_capacity(16));
   lazy_update.insert(exploder, explosion);
   lazy_update.insert(exploder, Transparent);

@@ -178,6 +178,7 @@ fn spawn_torpedo(
     lazy_update.insert(part, Collidable {
         kind: collidable_types::TORPEDO,
         radius: 20.0,
+        ignore: Some(*entity),
     });
     lazy_update.insert(part, DebugLinesComponent::with_capacity(16));
     lazy_update.insert(part, Ship {
@@ -185,7 +186,7 @@ fn spawn_torpedo(
         max_hull: 5.,
         shield: 0.0,
         max_shield: 0.0,
-        thrust: 2000.0,
+        thrust: 8000.0,
         torque: 0.0,
         thrust_failure: false,
         torque_failure: false,

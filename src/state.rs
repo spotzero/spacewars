@@ -54,6 +54,7 @@ impl SimpleState for SpacewarsState {
             .with(Collidable {
                 kind: collidable_types::GRAVITYWELL,
                 radius: 25.0,
+                ignore: None,
             })
             .with(Movable {
                 velocity: Vector3::new(0.,0.,0.),

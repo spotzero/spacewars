@@ -16,6 +16,7 @@ pub struct Movable {
 pub struct Collidable {
     pub kind: u32,
     pub radius: f32,
+    pub ignore: Option<Entity>,
 }
 
 pub mod collidable_types {

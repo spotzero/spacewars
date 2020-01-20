@@ -50,6 +50,21 @@ impl CollisionEvents {
         movable2: &Movable,
         colliable2: &Collidable
     ) {
+       match colliable1.ignore {
+            None => {},
+            Some(ignore) => if ignore == *entity2 {
+                return;
+            },
+       }
+
+       match colliable2.ignore {
+        None => {},
+        Some(ignore) => if ignore == *entity1 {
+            return;
+        },
+   }
+
+
         let dir1 = transform1.translation() - transform2.translation();
         let dir2 = transform1.translation() - transform2.translation();
 
@@ -145,7 +160,7 @@ fn get_force_collision_from_debris(player: &Entity, player_move: &Movable, debri
     let force = (debris_move.velocity - player_move.velocity) * debris_move.mass;
     ForceCollision {
         target: *player,
-        damage: force.norm() / 8.,
+        damage: force.norm() / 20.,
         force: force,
     }
 }
