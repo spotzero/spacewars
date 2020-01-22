@@ -34,8 +34,9 @@ impl SimpleState for SpacewarsState {
         sprite_sheet_manager.insert(&mut world, "weapons/missle-001");
 
         let mut bg_transform = Transform::default();
+        let scale = ARENA_WIDTH / 1000.0;
         bg_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -10.0);
-
+        bg_transform.set_scale(Vector3::new(scale, scale, scale));
         world
             .create_entity()
             .with(sprite_sheet_manager.get_render("backgrounds/background-2").unwrap())

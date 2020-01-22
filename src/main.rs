@@ -21,8 +21,8 @@ mod resources;
 
 use crate::bundle::SpacewarsBundle;
 
-const ARENA_HEIGHT: f32 = 1000.0;
-const ARENA_WIDTH: f32 = 1000.0;
+const ARENA_HEIGHT: f32 = 960.0;
+const ARENA_WIDTH: f32 = 1280.0;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
