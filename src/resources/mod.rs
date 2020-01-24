@@ -1,6 +1,7 @@
 mod assets;
 mod collision;
 mod damage;
+mod debris;
 mod explosions;
 mod math;
 mod particle;
@@ -16,6 +17,7 @@ pub use self::{
     damage::damage_types,
     damage::Damage,
     damage::DamageEvents,
+    debris::generate_debris,
     explosions::generate_explosion,
     math::unit_vector,
     particle::emit_particle,
