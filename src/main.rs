@@ -2,22 +2,22 @@ extern crate amethyst;
 
 use amethyst::{
     core::transform::TransformBundle,
+    input::{InputBundle, StringBindings},
     prelude::*,
     renderer::{
         plugins::{RenderDebugLines, RenderFlat2D, RenderToWindow},
         types::DefaultBackend,
         RenderingBundle,
     },
-    input::{InputBundle, StringBindings},
-    utils::application_root_dir,
     ui::{RenderUi, UiBundle},
+    utils::application_root_dir,
 };
 
 mod bundle;
 mod components;
+mod resources;
 mod state;
 mod systems;
-mod resources;
 
 use crate::bundle::SpacewarsBundle;
 
@@ -35,9 +35,11 @@ fn main() -> amethyst::Result<()> {
     let key_bindings_path = resources.join("config/bindings.ron");
 
     let mut rendering_bundle = RenderingBundle::<DefaultBackend>::new()
-      .with_plugin(RenderToWindow::from_config_path(display_config).with_clear([0.0, 0.0, 0.0, 1.0]))
-      .with_plugin(RenderFlat2D::default())
-      .with_plugin(RenderUi::default());
+        .with_plugin(
+            RenderToWindow::from_config_path(display_config).with_clear([0.0, 0.0, 0.0, 1.0]),
+        )
+        .with_plugin(RenderFlat2D::default())
+        .with_plugin(RenderUi::default());
 
     if DEBUG_MODE {
         rendering_bundle = rendering_bundle.with_plugin(RenderDebugLines::default());

@@ -1,9 +1,9 @@
-use amethyst::ecs::Entity;
 use amethyst::core::math::Vector3;
 use amethyst::core::Transform;
+use amethyst::ecs::Entity;
 
-use crate::resources::*;
 use crate::components::*;
+use crate::resources::*;
 
 pub struct TorpedoCollision {
     pub torpedo: u32,
@@ -48,22 +48,25 @@ impl CollisionEvents {
         entity2: &Entity,
         transform2: &Transform,
         movable2: &Movable,
-        colliable2: &Collidable
+        colliable2: &Collidable,
     ) {
-       match colliable1.ignore {
-            None => {},
-            Some(ignore) => if ignore == *entity2 {
-                return;
-            },
-       }
+        match colliable1.ignore {
+            None => {}
+            Some(ignore) => {
+                if ignore == *entity2 {
+                    return;
+                }
+            }
+        }
 
-       match colliable2.ignore {
-        None => {},
-        Some(ignore) => if ignore == *entity1 {
-            return;
-        },
-   }
-
+        match colliable2.ignore {
+            None => {}
+            Some(ignore) => {
+                if ignore == *entity1 {
+                    return;
+                }
+            }
+        }
 
         let dir1 = transform1.translation() - transform2.translation();
         let dir2 = transform1.translation() - transform2.translation();
@@ -86,13 +89,11 @@ impl CollisionEvents {
         }
 
         // Collision between player and explosions.
-        if (
-            colliable1.kind == collidable_types::PLAYER
-            && colliable2.kind == collidable_types::EXPLOSION
-        ) || (
-            colliable2.kind == collidable_types::PLAYER
-            && colliable1.kind == collidable_types::EXPLOSION
-        ) {
+        if (colliable1.kind == collidable_types::PLAYER
+            && colliable2.kind == collidable_types::EXPLOSION)
+            || (colliable2.kind == collidable_types::PLAYER
+                && colliable1.kind == collidable_types::EXPLOSION)
+        {
             self.explosion_collisions.push(ExplosionCollision {
                 explosion: if colliable1.kind == collidable_types::PLAYER {
                     entity2.id()
@@ -110,53 +111,45 @@ impl CollisionEvents {
         }
 
         // Collision between player and the grav well.
-        if (
-            colliable1.kind == collidable_types::PLAYER
-            && colliable2.kind == collidable_types::GRAVITYWELL
-        ) || (
-            colliable2.kind == collidable_types::PLAYER
-            && colliable1.kind == collidable_types::GRAVITYWELL
-        ) {
+        if (colliable1.kind == collidable_types::PLAYER
+            && colliable2.kind == collidable_types::GRAVITYWELL)
+            || (colliable2.kind == collidable_types::PLAYER
+                && colliable1.kind == collidable_types::GRAVITYWELL)
+        {
             self.gravity_well_collision.push(GravityWellCollision {
                 target: if colliable1.kind == collidable_types::PLAYER {
                     *entity1
                 } else {
                     *entity2
-                }
+                },
             });
             return;
         }
 
         // Collision between player and the debris.
         if colliable1.kind == collidable_types::PLAYER
-            && (
-                colliable2.kind == collidable_types::DEBRIS
-                || colliable2.kind == collidable_types::TORPEDO
-            )
+            && (colliable2.kind == collidable_types::DEBRIS
+                || colliable2.kind == collidable_types::TORPEDO)
         {
-            self.player_collisions.push(get_force_collision_from_debris(
-                entity1,
-                movable1,
-                movable2,
-            ));
+            self.player_collisions
+                .push(get_force_collision_from_debris(entity1, movable1, movable2));
         }
 
         if colliable2.kind == collidable_types::PLAYER
-            && (
-                colliable1.kind == collidable_types::DEBRIS
-                || colliable1.kind == collidable_types::TORPEDO
-            )
+            && (colliable1.kind == collidable_types::DEBRIS
+                || colliable1.kind == collidable_types::TORPEDO)
         {
-            self.player_collisions.push(get_force_collision_from_debris(
-                entity2,
-                movable2,
-                movable1,
-            ));
+            self.player_collisions
+                .push(get_force_collision_from_debris(entity2, movable2, movable1));
         }
     }
 }
 
-fn get_force_collision_from_debris(player: &Entity, player_move: &Movable, debris_move: &Movable) -> ForceCollision {
+fn get_force_collision_from_debris(
+    player: &Entity,
+    player_move: &Movable,
+    debris_move: &Movable,
+) -> ForceCollision {
     let force = (debris_move.velocity - player_move.velocity) * debris_move.mass;
     ForceCollision {
         target: *player,

@@ -21,7 +21,7 @@ impl<'s> System<'s> for PhysicsSystem {
     );
 
     fn run(&mut self, (mut movable, mut transforms, time): Self::SystemData) {
-        let gravitywell = Vector3::new(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, 0.0);
+        let gravitywell = Vector3::new(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, 0.0);
 
         for (mover, transform) in (&mut movable, &mut transforms).join() {
             if !mover.apply_physics {
@@ -49,10 +49,9 @@ impl<'s> System<'s> for PhysicsSystem {
             let dir = gravitywell - transform.translation();
             let dis = dir.magnitude();
             if dis > 20. {
-              let gravity = ( (5000000.0 * dir.normalize()) / (dis * dis)) * time.delta_seconds();
-              mover.velocity += gravity;
+                let gravity = ((5000000.0 * dir.normalize()) / (dis * dis)) * time.delta_seconds();
+                mover.velocity += gravity;
             }
-
         }
     }
 }

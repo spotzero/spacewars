@@ -1,8 +1,4 @@
-use amethyst::{
-    core::math::Vector3,
-    ecs::*,
-    renderer::palette::Srgba,
-};
+use amethyst::{core::math::Vector3, ecs::*, renderer::palette::Srgba};
 
 #[derive(Component, Clone, Debug)]
 pub struct Movable {
@@ -26,7 +22,6 @@ pub mod collidable_types {
     pub const GRAVITYWELL: u32 = 4;
     pub const TORPEDO: u32 = 5;
 }
-
 
 #[derive(Component, Debug)]
 pub struct Energy {
@@ -72,8 +67,8 @@ pub struct Lifetime {
 
 #[derive(Component, Debug)]
 pub struct Explosion {
-  pub dsp: f32,
-  pub vel: f32,
+    pub dsp: f32,
+    pub vel: f32,
 }
 
 #[derive(Component, Default)]

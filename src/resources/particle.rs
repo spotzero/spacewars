@@ -1,13 +1,13 @@
 use amethyst::{
-    core::transform::Transform,
     core::math::Vector3,
+    core::transform::Transform,
     ecs::prelude::Read,
-    ecs::{Entity, LazyUpdate, world::EntitiesRes},
-    renderer::{transparent::Transparent, resources::Tint},
+    ecs::{world::EntitiesRes, Entity, LazyUpdate},
+    renderer::{resources::Tint, transparent::Transparent},
 };
 
 use crate::components::{Lifetime, Movable, ParticleCom};
-use crate::resources::{SpriteSheetManager};
+use crate::resources::SpriteSheetManager;
 
 pub fn emit_particle(
     emit_time: f64,
@@ -17,25 +17,35 @@ pub fn emit_particle(
     colour: Tint,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager
-)
-{
+    sprite_sheet_manager: &SpriteSheetManager,
+) {
     let part: Entity = entities.create();
-    lazy_update.insert(part, sprite_sheet_manager.get_render("particles/particle0").unwrap());
+    lazy_update.insert(
+        part,
+        sprite_sheet_manager
+            .get_render("particles/particle0")
+            .unwrap(),
+    );
     lazy_update.insert(part, pos);
     lazy_update.insert(part, ParticleCom);
     lazy_update.insert(part, Transparent);
     lazy_update.insert(part, colour);
-    lazy_update.insert(part, Lifetime {
-        start: emit_time,
-        life: life_time,
-    });
-    lazy_update.insert(part, Movable {
-        velocity: vel,
-        angular_velocity: 0.0,
-        mass: 0.1,
-        apply_physics: true,
-    });
+    lazy_update.insert(
+        part,
+        Lifetime {
+            start: emit_time,
+            life: life_time,
+        },
+    );
+    lazy_update.insert(
+        part,
+        Movable {
+            velocity: vel,
+            angular_velocity: 0.0,
+            mass: 0.1,
+            apply_physics: true,
+        },
+    );
 }
 
 /*

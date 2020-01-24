@@ -1,17 +1,14 @@
 use amethyst::{
-    core::timing::Time,
-    core::SystemDesc,
-    core::transform::Transform,
     core::math::Vector3,
+    core::timing::Time,
+    core::transform::Transform,
+    core::SystemDesc,
     derive::SystemDesc,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
-    ecs::{Entities},
+    ecs::Entities,
 };
 
-use crate::{
-    components::*,
-    resources::*,
-};
+use crate::{components::*, resources::*};
 
 #[derive(SystemDesc)]
 pub struct ExplosionSystem;
@@ -25,18 +22,18 @@ impl<'s> System<'s> for ExplosionSystem {
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (
-        explosions,
-        lifetimes,
-        mut transforms,
-        mut collidables,
-        time
-    ): Self::SystemData) {
-        for (explosion, lifetime, transform, mut collidable) in (&explosions, &lifetimes, &mut transforms, &mut collidables).join() {
+    fn run(
+        &mut self,
+        (explosions, lifetimes, mut transforms, mut collidables, time): Self::SystemData,
+    ) {
+        for (explosion, lifetime, transform, mut collidable) in
+            (&explosions, &lifetimes, &mut transforms, &mut collidables).join()
+        {
             collidable.radius += explosion.vel * time.delta_seconds();
-            let radius = (time.absolute_real_time_seconds() - lifetime.start) * explosion.vel as f64;
+            let radius =
+                (time.absolute_real_time_seconds() - lifetime.start) * explosion.vel as f64;
             let s = radius / 50.;
-            transform.set_scale(Vector3::new(s,s,s));
+            transform.set_scale(Vector3::new(s, s, s));
         }
     }
 }
@@ -53,13 +50,10 @@ impl<'s> System<'s> for ExplosionCollisionResponseSystem {
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (
-        entities,
-        explosions,
-        mut collision_events,
-        mut damage_events,
-        time
-    ): Self::SystemData) {
+    fn run(
+        &mut self,
+        (entities, explosions, mut collision_events, mut damage_events, time): Self::SystemData,
+    ) {
         for (entity, explosion) in (&entities, &explosions).join() {
             for i in 0..collision_events.explosion_collisions.len() {
                 if entity.id() == collision_events.explosion_collisions[i].explosion {

@@ -11,10 +11,7 @@ use crate::components::*;
 pub struct RechargeSystem;
 
 impl<'s> System<'s> for RechargeSystem {
-    type SystemData = (
-        WriteStorage<'s, Energy>,
-        Read<'s, Time>,
-    );
+    type SystemData = (WriteStorage<'s, Energy>, Read<'s, Time>);
 
     fn run(&mut self, (mut energies, time): Self::SystemData) {
         for energy in (&mut energies).join() {

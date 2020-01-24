@@ -4,20 +4,19 @@ use amethyst::{
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
-    renderer::{Camera, Transparent},
     renderer::debug_drawing::DebugLinesComponent,
+    renderer::{Camera, Transparent},
     ui::{Anchor, TtfFormat, UiText, UiTransform},
-//    window::ScreenDimensions,
+    //    window::ScreenDimensions,
 };
 
-use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::components::*;
 use crate::resources::*;
+use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
 pub struct SpacewarsState;
 
 impl SimpleState for SpacewarsState {
-
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let mut world = data.world;
         let mut sprite_sheet_manager = SpriteSheetManager::default();
@@ -32,21 +31,29 @@ impl SimpleState for SpacewarsState {
 
         let mut bg_transform = Transform::default();
         let scale = ARENA_WIDTH / 1000.0;
-        bg_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -10.0);
+        bg_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -10.0);
         bg_transform.set_scale(Vector3::new(scale, scale, scale));
         world
             .create_entity()
-            .with(sprite_sheet_manager.get_render("backgrounds/background-2").unwrap())
+            .with(
+                sprite_sheet_manager
+                    .get_render("backgrounds/background-2")
+                    .unwrap(),
+            )
             .with(bg_transform)
             .build();
 
         let mut gravitywell_transform = Transform::default();
-        gravitywell_transform.set_translation_xyz(ARENA_WIDTH/2.0, ARENA_HEIGHT/2.0, -3.0);
-        gravitywell_transform.set_scale(Vector3::new(0.5,0.5,1.0));
+        gravitywell_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -3.0);
+        gravitywell_transform.set_scale(Vector3::new(0.5, 0.5, 1.0));
 
         world
             .create_entity()
-            .with(sprite_sheet_manager.get_render("backgrounds/gravity-well").unwrap())
+            .with(
+                sprite_sheet_manager
+                    .get_render("backgrounds/gravity-well")
+                    .unwrap(),
+            )
             .with(gravitywell_transform)
             .with(Transparent)
             .with(Collidable {
@@ -55,7 +62,7 @@ impl SimpleState for SpacewarsState {
                 ignore: None,
             })
             .with(Movable {
-                velocity: Vector3::new(0.,0.,0.),
+                velocity: Vector3::new(0., 0., 0.),
                 angular_velocity: 0.,
                 mass: 1000000.,
                 apply_physics: false,
@@ -102,11 +109,9 @@ fn initialise_camera(world: &mut World) {
 fn initialise_collision(world: &mut World) {
     world.insert(CollisionEvents::default());
     world.insert(DamageEvents::default());
-
 }
 
 fn initialise_ui(world: &mut World) {
-
     let font = world.read_resource::<Loader>().load(
         "font/UbuntuMono-R.ttf",
         TtfFormat,
@@ -134,7 +139,7 @@ fn initialise_ui(world: &mut World) {
             [1.0, 0.0, 0.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Energy,
             player: 1,
         })
@@ -150,7 +155,7 @@ fn initialise_ui(world: &mut World) {
             [1.0, 0.0, 0.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Shields,
             player: 1,
         })
@@ -166,7 +171,7 @@ fn initialise_ui(world: &mut World) {
             [1.0, 0.0, 0.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Hull,
             player: 1,
         })
@@ -182,12 +187,11 @@ fn initialise_ui(world: &mut World) {
             [1.0, 0.0, 0.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Score,
             player: 1,
         })
         .build();
-
 
     let mut p2_transform = UiTransform::new(
         "p2-stats".to_string(),
@@ -209,7 +213,7 @@ fn initialise_ui(world: &mut World) {
             [0.0, 0.0, 1.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Energy,
             player: 2,
         })
@@ -225,7 +229,7 @@ fn initialise_ui(world: &mut World) {
             [0.0, 0.0, 1.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Shields,
             player: 2,
         })
@@ -241,7 +245,7 @@ fn initialise_ui(world: &mut World) {
             [0.0, 0.0, 1.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Hull,
             player: 2,
         })
@@ -254,33 +258,39 @@ fn initialise_ui(world: &mut World) {
         .with(UiText::new(
             font.clone(),
             "".to_string(),
-             [0.0, 0.0, 1.0, 1.0],
+            [0.0, 0.0, 1.0, 1.0],
             50.,
         ))
-        .with(StatusUi{
+        .with(StatusUi {
             data: StatusUiKind::Score,
             player: 2,
         })
         .build();
 
     let mut sop = StatusOfPlayers::default();
-    sop.players.insert(1, StatusOfPlayer{
-        id: 1,
-        energy: 0.,
-        shields: 0.,
-        hull: 0.,
-        dead: true,
-        lives: 5,
-        respawn: 0.,
-    });
-    sop.players.insert(2, StatusOfPlayer{
-        id: 2,
-        energy: 0.,
-        shields: 0.,
-        hull: 0.,
-        dead: true,
-        lives: 5,
-        respawn: 0.,
-    });
+    sop.players.insert(
+        1,
+        StatusOfPlayer {
+            id: 1,
+            energy: 0.,
+            shields: 0.,
+            hull: 0.,
+            dead: true,
+            lives: 5,
+            respawn: 0.,
+        },
+    );
+    sop.players.insert(
+        2,
+        StatusOfPlayer {
+            id: 2,
+            energy: 0.,
+            shields: 0.,
+            hull: 0.,
+            dead: true,
+            lives: 5,
+            respawn: 0.,
+        },
+    );
     world.insert(sop);
 }

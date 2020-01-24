@@ -12,7 +12,7 @@ pub mod damage_types {
 
 #[derive(Default)]
 pub struct DamageEvents {
-    pub  events: Vec<Damage>,
+    pub events: Vec<Damage>,
 }
 
 pub fn calculate_damage(kind: u32, amount: f32, mut hull: f32, mut shield: f32) -> (f32, f32) {

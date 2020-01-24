@@ -1,9 +1,9 @@
 use amethyst::{
+    core::math::Vector3,
     core::timing::Time,
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    core::math::Vector3,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
     ecs::Entities,
     renderer::palette::Srgba,
@@ -25,10 +25,11 @@ impl<'s> System<'s> for ShipSystem {
     );
 
     fn run(&mut self, (mut ships, transforms, mut movables, mut energies, time): Self::SystemData) {
-        for (ship, transform, movable, energy) in (&mut ships, &transforms, &mut movables, &mut energies).join() {
-
+        for (ship, transform, movable, energy) in
+            (&mut ships, &transforms, &mut movables, &mut energies).join()
+        {
             if ship.applying_thrust != 0.0 {
-                let mut thrust = (ship.thrust * time.delta_seconds()) /  movable.mass;
+                let mut thrust = (ship.thrust * time.delta_seconds()) / movable.mass;
                 if energy.charge > thrust {
                     ship.thrust_failure = false;
 
@@ -38,7 +39,7 @@ impl<'s> System<'s> for ShipSystem {
                         thrust *= -1.0;
                     }
 
-                    let mut thrustvector = Vector3::new(0.0,thrust,0.0);
+                    let mut thrustvector = Vector3::new(0.0, thrust, 0.0);
                     thrustvector = transform.rotation().transform_vector(&thrustvector);
                     movable.velocity += thrustvector;
                 } else {
@@ -47,7 +48,7 @@ impl<'s> System<'s> for ShipSystem {
             }
 
             if ship.applying_torque != 0.0 {
-                let mut torque = (ship.torque * time.delta_seconds()) /  movable.mass;
+                let mut torque = (ship.torque * time.delta_seconds()) / movable.mass;
                 if energy.charge > torque {
                     energy.charge -= torque * 2.0;
                     ship.thrust_failure = false;
@@ -64,7 +65,6 @@ impl<'s> System<'s> for ShipSystem {
     }
 }
 
-
 #[derive(SystemDesc)]
 pub struct ShieldSystem;
 
@@ -79,7 +79,6 @@ impl<'s> System<'s> for ShieldSystem {
 
     fn run(&mut self, (entities, shields, ships, mut transforms, mut tints): Self::SystemData) {
         for (entity, shield, tint) in (&entities, &shields, &mut tints).join() {
-
             let shield_amount = match ships.get(shield.target) {
                 Some(s) => s.shield / s.max_shield,
                 None => 0.,
@@ -94,7 +93,6 @@ impl<'s> System<'s> for ShieldSystem {
             if shield_amount <= 0. {
                 shield_transform.set_translation_z(100.);
             }
-
         }
     }
 }

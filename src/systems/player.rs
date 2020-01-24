@@ -8,10 +8,7 @@ use amethyst::{
     ecs::{Entities, LazyUpdate, ReadExpect},
 };
 
-use crate::{
-    components::*,
-    resources::*,
-};
+use crate::{components::*, resources::*};
 
 #[derive(SystemDesc)]
 pub struct PlayerDeathSystem;
@@ -29,23 +26,34 @@ impl<'s> System<'s> for PlayerDeathSystem {
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (
-        entities,
-        mut transforms,
-        mut movables,
-        mut ships,
-        mut players,
-        sprite_sheet_manager,
-        lazy_update,
-        mut status_of_players,
-        time,
-    ): Self::SystemData) {
-        for (entity, transform, movable, ship, player) in (&entities, &mut transforms, &mut movables, &mut ships, &mut players).join() {
+    fn run(
+        &mut self,
+        (
+            entities,
+            mut transforms,
+            mut movables,
+            mut ships,
+            mut players,
+            sprite_sheet_manager,
+            lazy_update,
+            mut status_of_players,
+            time,
+        ): Self::SystemData,
+    ) {
+        for (entity, transform, movable, ship, player) in (
+            &entities,
+            &mut transforms,
+            &mut movables,
+            &mut ships,
+            &mut players,
+        )
+            .join()
+        {
             if ship.hull <= 0. {
                 generate_explosion(
                     &transform,
                     &movable,
-                    movable.mass/2.,
+                    movable.mass / 2.,
                     1.75,
                     100.,
                     &entities,
@@ -66,13 +74,12 @@ impl<'s> System<'s> for PlayerDeathSystem {
                 status.lives -= 1;
                 transform.set_translation_xyz(0., 0., 20.0);
                 movable.angular_velocity = 0.;
-                movable.velocity = Vector3::new(0.,0.,0.);
+                movable.velocity = Vector3::new(0., 0., 0.);
                 let _ = entities.delete(entity);
             }
         }
     }
 }
-
 
 #[derive(SystemDesc)]
 pub struct PlayerRespawnSystem;
@@ -86,13 +93,16 @@ impl<'s> System<'s> for PlayerRespawnSystem {
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (
+    fn run(
+        &mut self,
+        (
         entities,
         sprite_sheet_manager,
         lazy_update,
         mut status_of_players,
         time,
-    ): Self::SystemData) {
+    ): Self::SystemData,
+    ) {
         for mut status in status_of_players.players.values_mut() {
             if status.dead && status.respawn <= time.absolute_real_time_seconds() {
                 status.dead = false;
@@ -101,7 +111,6 @@ impl<'s> System<'s> for PlayerRespawnSystem {
         }
     }
 }
-
 
 #[derive(SystemDesc)]
 pub struct PlayerCollisionResponseSystem;
@@ -114,12 +123,10 @@ impl<'s> System<'s> for PlayerCollisionResponseSystem {
         WriteExpect<'s, DamageEvents>,
     );
 
-    fn run(&mut self, (
-        entities,
-        mut movables,
-        mut collision_events,
-        mut damage_events,
-    ): Self::SystemData) {
+    fn run(
+        &mut self,
+        (entities, mut movables, mut collision_events, mut damage_events): Self::SystemData,
+    ) {
         for (entity, movable) in (&entities, &mut movables).join() {
             for i in 0..collision_events.player_collisions.len() {
                 if collision_events.player_collisions[i].target == entity {

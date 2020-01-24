@@ -1,13 +1,14 @@
 use amethyst::{
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, ReadExpect, ReadStorage, System, SystemData, World, WriteStorage, WriteExpect},
+    ecs::prelude::{
+        Join, ReadExpect, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage,
+    },
     ui::UiText,
 };
 
 use crate::components::*;
 use crate::resources::*;
-
 
 #[derive(SystemDesc)]
 pub struct StatusUpdateSystem;
@@ -20,7 +21,7 @@ impl<'s> System<'s> for StatusUpdateSystem {
         WriteExpect<'s, StatusOfPlayers>,
     );
 
-    fn run( &mut self, (players, energies, ships, mut status_of_players): Self::SystemData) {
+    fn run(&mut self, (players, energies, ships, mut status_of_players): Self::SystemData) {
         for (player, energy, ship) in (&players, &energies, &ships).join() {
             let mut status = status_of_players.players.get_mut(&player.id).unwrap();
             status.energy = energy.charge;
@@ -40,7 +41,7 @@ impl<'s> System<'s> for StatusUiSystem {
         WriteStorage<'s, UiText>,
     );
 
-    fn run( &mut self, (stat_uis, status_of_players, mut ui_texts): Self::SystemData) {
+    fn run(&mut self, (stat_uis, status_of_players, mut ui_texts): Self::SystemData) {
         for (stat_ui, ui_text) in (&stat_uis, &mut ui_texts).join() {
             let status = status_of_players.players.get(&stat_ui.player).unwrap();
 

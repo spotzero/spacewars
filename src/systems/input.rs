@@ -22,8 +22,12 @@ impl<'s> System<'s> for ShipInputSystem {
 
         for (player, ship) in (&players, &mut ships).join() {
             if player.controllable {
-                ship.applying_torque = input.axis_value(&format!("torque_p{}", player.id)).unwrap_or(0.0);
-                ship.applying_thrust = input.axis_value(&format!("thrust_p{}", player.id)).unwrap_or(0.0);
+                ship.applying_torque = input
+                    .axis_value(&format!("torque_p{}", player.id))
+                    .unwrap_or(0.0);
+                ship.applying_thrust = input
+                    .axis_value(&format!("thrust_p{}", player.id))
+                    .unwrap_or(0.0);
             }
         }
     }
