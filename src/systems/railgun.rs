@@ -4,8 +4,7 @@ use amethyst::{
     core::SystemDesc,
     core::math::Vector3,
     derive::SystemDesc,
-    renderer::palette::Srgba,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
     ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
     input::{InputHandler, StringBindings},
     renderer::{transparent::Transparent},
@@ -44,7 +43,7 @@ impl<'s> System<'s> for FireRailGunSystem {
         lazy_update,
         time
     ): Self::SystemData) {
-        for (entity, transform, movable, player, energy) in (&entities, &transforms, &movables, &mut players, &mut energies).join() {
+        for (transform, movable, player, energy) in (&transforms, &movables, &mut players, &mut energies).join() {
             let fire_railgun = input.action_is_down(&format!("railgun_p{}", player.id)).expect("Shoot action exists");
             if
                 fire_railgun
@@ -53,7 +52,7 @@ impl<'s> System<'s> for FireRailGunSystem {
             {
                 energy.charge -= player.railgun_energy;
                 player.last_railgun = time.absolute_real_time_seconds();
-                spawn_railgun(&entity, &transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time);
+                spawn_railgun(&transform, &movable, &lazy_update, &entities, &sprite_sheet_manager, &time);
             }
 
         }
@@ -61,7 +60,6 @@ impl<'s> System<'s> for FireRailGunSystem {
 }
 
 fn spawn_railgun(
-    entity: &Entity,
     transform: &Transform,
     movable: &Movable,
     lazy_update: &LazyUpdate,

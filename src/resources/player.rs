@@ -1,13 +1,12 @@
 use amethyst::{
     core::transform::Transform,
-    core::math::Point3,
     core::math::Vector3,
     ecs::prelude::Read,
     ecs::{Entity, LazyUpdate, world::EntitiesRes},
     renderer::{
         transparent::Transparent,
         palette::Srgba,
-        debug_drawing::{DebugLines, DebugLinesComponent, DebugLinesParams},
+        debug_drawing::DebugLinesComponent,
         resources::Tint,
     },
 };

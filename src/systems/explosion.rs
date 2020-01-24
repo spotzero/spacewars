@@ -5,7 +5,7 @@ use amethyst::{
     core::math::Vector3,
     derive::SystemDesc,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
-    ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
+    ecs::{Entities},
 };
 
 use crate::{
@@ -32,7 +32,7 @@ impl<'s> System<'s> for ExplosionSystem {
         mut collidables,
         time
     ): Self::SystemData) {
-        for (explosion, lifetime, mut transform, mut collidable) in (&explosions, &lifetimes, &mut transforms, &mut collidables).join() {
+        for (explosion, lifetime, transform, mut collidable) in (&explosions, &lifetimes, &mut transforms, &mut collidables).join() {
             collidable.radius += explosion.vel * time.delta_seconds();
             let radius = (time.absolute_real_time_seconds() - lifetime.start) * explosion.vel as f64;
             let s = radius / 50.;

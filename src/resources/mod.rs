@@ -19,7 +19,7 @@ pub use self::{
     explosions::generate_explosion,
     math::unit_vector,
     particle::emit_particle,
-    particle::emit_spark,
+    //particle::emit_spark,
     player::spawn_player,
     ui::StatusOfPlayer,
     ui::StatusOfPlayers,

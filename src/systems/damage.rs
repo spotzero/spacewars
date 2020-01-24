@@ -1,9 +1,8 @@
 use amethyst::{
-    core::timing::Time,
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
-    ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
+    ecs::prelude::{Join, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::Entities,
 };
 
 use crate::{

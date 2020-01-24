@@ -1,5 +1,3 @@
-use amethyst::ecs::Entity;
-
 pub struct Damage {
     pub player: u32,
     pub damage: f32,

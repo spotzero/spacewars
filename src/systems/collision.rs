@@ -1,13 +1,10 @@
 use amethyst::{
     core::math::Point3,
-    core::timing::Time,
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadExpect, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
     ecs::Entities,
-    ecs::Entity,
-    ecs::LazyUpdate,
     renderer::palette::Srgba,
     renderer::debug_drawing::DebugLinesComponent,
 };
@@ -26,10 +23,9 @@ impl<'s> System<'s> for CollisionSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Collidable>,
         WriteExpect<'s, CollisionEvents>,
-        Read<'s, Time>,
     );
 
-    fn run(&mut self, (entities, movables, transforms, colliables, mut collision_events, time): Self::SystemData) {
+    fn run(&mut self, (entities, movables, transforms, colliables, mut collision_events): Self::SystemData) {
         for (entity1, transform1, movable1, colliable1) in (&entities, &transforms, &movables, &colliables).join() {
             let mut skip = true;
             for (entity2, transform2, movable2, colliable2) in (&entities, &transforms, &movables, &colliables).join() {
@@ -52,11 +48,11 @@ impl<'s> System<'s> for CollisionSystem {
 
                     // If a collision member is debris, delete it.
                     if colliable1.kind == collidable_types::DEBRIS {
-                      let _ = entities.delete(entity1);
+                        let _ = entities.delete(entity1);
                     }
 
                     if colliable2.kind == collidable_types::DEBRIS {
-                      let _ = entities.delete(entity2);
+                        let _ = entities.delete(entity2);
                     }
                 }
             }

@@ -1,8 +1,8 @@
 use amethyst::{
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadExpect, ReadStorage, System, SystemData, World, WriteStorage, WriteExpect},
-    ui::{UiText, UiTransform},
+    ecs::prelude::{Join, ReadExpect, ReadStorage, System, SystemData, World, WriteStorage, WriteExpect},
+    ui::UiText,
 };
 
 use crate::components::*;
@@ -36,12 +36,11 @@ pub struct StatusUiSystem;
 impl<'s> System<'s> for StatusUiSystem {
     type SystemData = (
         ReadStorage<'s, StatusUi>,
-        ReadStorage<'s, UiTransform>,
         ReadExpect<'s, StatusOfPlayers>,
         WriteStorage<'s, UiText>,
     );
 
-    fn run( &mut self, (stat_uis, ui_transforms, status_of_players, mut ui_texts): Self::SystemData) {
+    fn run( &mut self, (stat_uis, status_of_players, mut ui_texts): Self::SystemData) {
         for (stat_ui, ui_text) in (&stat_uis, &mut ui_texts).join() {
             let status = status_of_players.players.get(&stat_ui.player).unwrap();
 

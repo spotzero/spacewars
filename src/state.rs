@@ -1,14 +1,11 @@
 use amethyst::{
     assets::Loader,
-    ecs::Entity,
-    core::math::Point3,
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, Transparent},
-    renderer::debug_drawing::{DebugLines, DebugLinesComponent, DebugLinesParams},
-    renderer::palette::Srgba,
+    renderer::debug_drawing::DebugLinesComponent,
     ui::{Anchor, TtfFormat, UiText, UiTransform},
 //    window::ScreenDimensions,
 };

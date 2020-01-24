@@ -4,8 +4,8 @@ use amethyst::{
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
-    ecs::{Entities, Entity, LazyUpdate, ReadExpect, world::EntitiesRes},
+    ecs::prelude::{Join, Read, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::{Entities, LazyUpdate, ReadExpect},
 };
 
 use crate::{

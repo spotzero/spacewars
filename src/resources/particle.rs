@@ -38,7 +38,7 @@ pub fn emit_particle(
     });
 }
 
-
+/*
 pub fn emit_spark(
     emit_time: f64,
     life_time: f64,
@@ -55,3 +55,4 @@ pub fn emit_spark(
     pos.set_rotation_2d(thrust.angle(&Vector3::new(0.,1.,0.)));
     emit_particle(emit_time, life_time, pos, vel + thrust, colour, lazy_update, entities, sprite_sheet_manager);
 }
+*/
