@@ -196,6 +196,7 @@ fn explode_torpedo(
             vel: 200.0,
             dsp: 200.0,
         },
+        0,
     );
     let _ = entities.delete(entity);
 }

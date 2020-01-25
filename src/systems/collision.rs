@@ -49,6 +49,7 @@ impl<'s> System<'s> for CollisionSystem {
                 let distance_vec = transform1.translation() - transform2.translation();
                 if distance_vec.norm() < radius {
                     collision_events.add_collision(
+                        &entities,
                         &entity1,
                         &transform1,
                         &movable1,
@@ -58,15 +59,6 @@ impl<'s> System<'s> for CollisionSystem {
                         &movable2,
                         &colliable2,
                     );
-
-                    // If a collision member is debris, delete it.
-                    if colliable1.kind == collidable_types::DEBRIS {
-                        let _ = entities.delete(entity1);
-                    }
-
-                    if colliable2.kind == collidable_types::DEBRIS {
-                        let _ = entities.delete(entity2);
-                    }
                 }
             }
         }

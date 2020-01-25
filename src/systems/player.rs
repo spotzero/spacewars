@@ -64,6 +64,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
                         vel: 100.,
                         dsp: 10.,
                     },
+                    4,
                 );
                 if ship.shield_entity.is_some() {
                     let _ = entities.delete(ship.shield_entity.unwrap());

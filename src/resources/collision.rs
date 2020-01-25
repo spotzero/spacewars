@@ -1,6 +1,7 @@
 use amethyst::core::math::Vector3;
 use amethyst::core::Transform;
 use amethyst::ecs::Entity;
+use amethyst::ecs::Entities;
 
 use crate::components::*;
 use crate::resources::*;
@@ -41,6 +42,7 @@ pub struct CollisionEvents {
 impl CollisionEvents {
     pub fn add_collision(
         &mut self,
+        entities: &Entities,
         entity1: &Entity,
         transform1: &Transform,
         movable1: &Movable,
@@ -126,6 +128,20 @@ impl CollisionEvents {
             return;
         }
 
+        // Collision between debris and the grav well.
+        if (colliable1.kind == collidable_types::DEBRIS
+            && colliable2.kind == collidable_types::GRAVITYWELL)
+            || (colliable2.kind == collidable_types::DEBRIS
+                && colliable1.kind == collidable_types::GRAVITYWELL)
+        {
+            if colliable1.kind == collidable_types::DEBRIS {
+                let _ = entities.delete(*entity1);
+            } else {
+                let _ = entities.delete(*entity2);
+            }
+            return;
+        }
+
         // Collision between player and the debris.
         if colliable1.kind == collidable_types::PLAYER
             && (colliable2.kind == collidable_types::DEBRIS
@@ -133,6 +149,10 @@ impl CollisionEvents {
         {
             self.player_collisions
                 .push(get_force_collision_from_debris(entity1, movable1, movable2));
+            if colliable2.kind == collidable_types::DEBRIS {
+               let _ = entities.delete(*entity2);
+            }
+            return;
         }
 
         if colliable2.kind == collidable_types::PLAYER
@@ -141,6 +161,10 @@ impl CollisionEvents {
         {
             self.player_collisions
                 .push(get_force_collision_from_debris(entity2, movable2, movable1));
+            if colliable1.kind == collidable_types::DEBRIS {
+               let _ = entities.delete(*entity1);
+            }
+            return;
         }
     }
 }

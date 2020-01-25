@@ -20,6 +20,7 @@ pub fn generate_explosion(
     lazy_update: &LazyUpdate,
     time: &Time,
     explosion: Explosion,
+    debris: i8,
 ) {
     let mut rng = rand::thread_rng();
 
@@ -64,14 +65,15 @@ pub fn generate_explosion(
         );
     }
 
-    let mut debris_count = (mass / 100.0) as i32;
-    println!("{} - {}", debris_count, mass);
-    while debris_count > 0 {
-        debris_count -= 1;
-        generate_debris(transform, mover, mass / 100.0, max_vel, entities, sprite_sheet_manager, lazy_update);
+    let exploder: Entity = entities.create();
+    if debris > 0 {
+        let mut debris_count = debris + rng.gen_range(-1, 1);
+        while debris_count > 0 {
+            debris_count -= 1;
+            generate_debris(transform, mover, mass / (2 * debris) as f32, max_vel, entities, sprite_sheet_manager, lazy_update, &exploder);
+        }
     }
 
-    let exploder: Entity = entities.create();
     lazy_update.insert(exploder, transform.clone());
     lazy_update.insert(exploder, mover.clone());
     lazy_update.insert(
