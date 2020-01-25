@@ -25,7 +25,7 @@ pub fn generate_debris(
     let angle = rng.gen_range(-3.14, 3.14);
     let mut debris_mover = mover.clone();
     let mut debris_transform = transform.clone();
-    debris_transform.set_scale(Vector3::new(0.25, 0.25, 1.0));
+    debris_transform.set_scale(Vector3::new(0.275, 0.275, 1.0));
 
     debris_mover.velocity += transform.rotation().transform_vector(&UnitQuaternion::from_euler_angles(0.0, 0.0, angle).transform_vector(&Vector3::new( 0.0, rng.gen_range(max_vel / 2., max_vel), 0.0)));
     debris_mover.angular_velocity *= 3.;
@@ -37,7 +37,7 @@ pub fn generate_debris(
         debris,
         Collidable {
             kind: collidable_types::DEBRIS,
-            radius: 8.0,
+            radius: 10.0,
             ignore: Some(*exploder),
         },
     );
