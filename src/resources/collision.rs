@@ -1,7 +1,7 @@
 use amethyst::core::math::Vector3;
 use amethyst::core::Transform;
-use amethyst::ecs::Entity;
 use amethyst::ecs::Entities;
+use amethyst::ecs::Entity;
 
 use crate::components::*;
 use crate::resources::*;
@@ -150,7 +150,7 @@ impl CollisionEvents {
             self.player_collisions
                 .push(get_force_collision_from_debris(entity1, movable1, movable2));
             if colliable2.kind == collidable_types::DEBRIS {
-               let _ = entities.delete(*entity2);
+                let _ = entities.delete(*entity2);
             }
             return;
         }
@@ -162,7 +162,7 @@ impl CollisionEvents {
             self.player_collisions
                 .push(get_force_collision_from_debris(entity2, movable2, movable1));
             if colliable1.kind == collidable_types::DEBRIS {
-               let _ = entities.delete(*entity1);
+                let _ = entities.delete(*entity1);
             }
             return;
         }

@@ -1,8 +1,7 @@
 use amethyst::{
-    core::math::UnitQuaternion, core::math::Vector3,
-    core::transform::Transform, ecs::prelude::Read, ecs::world::EntitiesRes, ecs::Entity,
-    ecs::LazyUpdate, renderer::debug_drawing::DebugLinesComponent,
-    renderer::transparent::Transparent,
+    core::math::UnitQuaternion, core::math::Vector3, core::transform::Transform,
+    ecs::prelude::Read, ecs::world::EntitiesRes, ecs::Entity, ecs::LazyUpdate,
+    renderer::debug_drawing::DebugLinesComponent, renderer::transparent::Transparent,
 };
 use rand::Rng;
 
@@ -27,7 +26,13 @@ pub fn generate_debris(
     let mut debris_transform = transform.clone();
     debris_transform.set_scale(Vector3::new(0.275, 0.275, 1.0));
 
-    debris_mover.velocity += transform.rotation().transform_vector(&UnitQuaternion::from_euler_angles(0.0, 0.0, angle).transform_vector(&Vector3::new( 0.0, rng.gen_range(max_vel / 2., max_vel), 0.0)));
+    debris_mover.velocity += transform.rotation().transform_vector(
+        &UnitQuaternion::from_euler_angles(0.0, 0.0, angle).transform_vector(&Vector3::new(
+            0.0,
+            rng.gen_range(max_vel / 2., max_vel),
+            0.0,
+        )),
+    );
     debris_mover.angular_velocity *= 3.;
 
     debris_mover.mass = mass;

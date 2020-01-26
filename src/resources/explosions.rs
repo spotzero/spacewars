@@ -70,7 +70,16 @@ pub fn generate_explosion(
         let mut debris_count = debris + rng.gen_range(-1, 1);
         while debris_count > 0 {
             debris_count -= 1;
-            generate_debris(transform, mover, mass / (2 * debris) as f32, max_vel, entities, sprite_sheet_manager, lazy_update, &exploder);
+            generate_debris(
+                transform,
+                mover,
+                mass / (2 * debris) as f32,
+                max_vel,
+                entities,
+                sprite_sheet_manager,
+                lazy_update,
+                &exploder,
+            );
         }
     }
 

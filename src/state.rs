@@ -28,58 +28,13 @@ impl SimpleState for SpacewarsState {
         sprite_sheet_manager.insert(&mut world, "particles/particle0");
         sprite_sheet_manager.insert(&mut world, "particles/debris");
         sprite_sheet_manager.insert(&mut world, "weapons/missle-001");
-
-        let mut bg_transform = Transform::default();
-        let scale = ARENA_WIDTH / 1000.0;
-        bg_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -10.0);
-        bg_transform.set_scale(Vector3::new(scale, scale, scale));
-        world
-            .create_entity()
-            .with(
-                sprite_sheet_manager
-                    .get_render("backgrounds/background-2")
-                    .unwrap(),
-            )
-            .with(bg_transform)
-            .build();
-
-        let mut gravitywell_transform = Transform::default();
-        gravitywell_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -3.0);
-        gravitywell_transform.set_scale(Vector3::new(0.5, 0.5, 1.0));
-
-        world
-            .create_entity()
-            .with(
-                sprite_sheet_manager
-                    .get_render("backgrounds/gravity-well")
-                    .unwrap(),
-            )
-            .with(gravitywell_transform)
-            .with(Transparent)
-            .with(Collidable {
-                kind: collidable_types::GRAVITYWELL,
-                radius: 25.0,
-                ignore: None,
-            })
-            .with(Movable {
-                velocity: Vector3::new(0., 0., 0.),
-                angular_velocity: 0.,
-                mass: 1000000.,
-                apply_physics: false,
-            })
-            .with(DebugLinesComponent::with_capacity(16))
-            .build();
-
-        // Place the camera
-        initialise_camera(world);
-        initialise_collision(world);
-        initialise_ui(world);
         world.insert(sprite_sheet_manager);
+        reset_game(world);
     }
 
     fn handle_event(
         &mut self,
-        mut _data: StateData<'_, GameData<'_, '_>>,
+        data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
         if let StateEvent::Window(event) = &event {
@@ -87,10 +42,65 @@ impl SimpleState for SpacewarsState {
             if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
                 return Trans::Quit;
             }
+
+            if is_key_down(&event, VirtualKeyCode::R) {
+                reset_game(data.world);
+            }
         }
+
+        //for world.fetch::<StatusOfPlayers>()
+        
         // Keep going
         Trans::None
     }
+}
+
+fn reset_game(world: &mut World) {
+    world.delete_all();
+    initialise_entities(world);
+    initialise_camera(world);
+    initialise_collision(world);
+    initialise_ui(world);
+}
+
+fn initialise_entities(world: &mut World) {
+    let bg_ss = world
+        .fetch::<SpriteSheetManager>()
+        .get_render("backgrounds/background-2")
+        .unwrap();
+    let gw_ss = world
+        .fetch::<SpriteSheetManager>()
+        .get_render("backgrounds/gravity-well")
+        .unwrap();
+
+    let mut bg_transform = Transform::default();
+    let scale = ARENA_WIDTH / 1000.0;
+    bg_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -10.0);
+    bg_transform.set_scale(Vector3::new(scale, scale, scale));
+    world.create_entity().with(bg_ss).with(bg_transform).build();
+
+    let mut gravitywell_transform = Transform::default();
+    gravitywell_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -3.0);
+    gravitywell_transform.set_scale(Vector3::new(0.5, 0.5, 1.0));
+
+    world
+        .create_entity()
+        .with(gw_ss)
+        .with(gravitywell_transform)
+        .with(Transparent)
+        .with(Collidable {
+            kind: collidable_types::GRAVITYWELL,
+            radius: 20.0,
+            ignore: None,
+        })
+        .with(Movable {
+            velocity: Vector3::new(0., 0., 0.),
+            angular_velocity: 0.,
+            mass: 1000000.,
+            apply_physics: false,
+        })
+        .with(DebugLinesComponent::with_capacity(16))
+        .build();
 }
 
 /// Initialise the camera.
