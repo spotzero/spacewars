@@ -1,5 +1,7 @@
 use amethyst::{
+    GameData, SimpleState, SimpleTrans, StateData, Trans,
     assets::Loader,
+    assets::ProgressCounter,
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
@@ -14,9 +16,12 @@ use crate::components::*;
 use crate::resources::*;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
-pub struct SpacewarsState;
+#[derive(Default)]
+pub struct LoadingState {
+    pub progress: ProgressCounter,
+}
 
-impl SimpleState for SpacewarsState {
+impl SimpleState for LoadingState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let mut world = data.world;
         let mut sprite_sheet_manager = SpriteSheetManager::default();
@@ -29,7 +34,21 @@ impl SimpleState for SpacewarsState {
         sprite_sheet_manager.insert(&mut world, "particles/debris");
         sprite_sheet_manager.insert(&mut world, "weapons/missle-001");
         world.insert(sprite_sheet_manager);
-        reset_game(world);
+    }
+
+    fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        if self.progress.is_complete() {
+            Trans::Switch(Box::new(SpacewarsState))
+        }
+        Trans::None
+    }
+}
+
+pub struct SpacewarsState;
+
+impl SimpleState for SpacewarsState {
+    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        reset_game(data.world);
     }
 
     fn handle_event(
