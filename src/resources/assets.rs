@@ -46,7 +46,11 @@ impl SpriteSheetManager {
     }
 }
 
-fn load_sprite_sheet(world: &World, texture: &str, progress: &mut ProgressCounter,) -> Handle<SpriteSheet> {
+fn load_sprite_sheet(
+    world: &World,
+    texture: &str,
+    progress: &mut ProgressCounter,
+) -> Handle<SpriteSheet> {
     let mut sampler = SamplerInfo::new(Filter::Linear, WrapMode::Clamp);
     sampler.lod_bias = Lod::from(0.1);
     sampler.anisotropic = Anisotropic::On(100);
@@ -70,7 +74,6 @@ fn load_sprite_sheet(world: &World, texture: &str, progress: &mut ProgressCounte
             &texture_storage,
         )
     };
-
 
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();

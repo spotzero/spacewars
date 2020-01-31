@@ -1,5 +1,4 @@
 use amethyst::{
-    GameData, SimpleState, SimpleTrans, StateData, Trans,
     assets::Loader,
     core::math::Vector3,
     core::transform::Transform,
@@ -9,6 +8,11 @@ use amethyst::{
     renderer::{Camera, Transparent},
     ui::{Anchor, TtfFormat, UiText, UiTransform},
     //    window::ScreenDimensions,
+    GameData,
+    SimpleState,
+    SimpleTrans,
+    StateData,
+    Trans,
 };
 
 use crate::components::*;
@@ -28,7 +32,7 @@ impl SimpleState for LoadingState {
         let sprite_sheet_manager = data.world.fetch::<SpriteSheetManager>();
         if sprite_sheet_manager.progress.is_complete() {
             println!("Loaded");
-            return SimpleTrans::Switch(Box::new(SpacewarsState))
+            return SimpleTrans::Switch(Box::new(SpacewarsState));
         }
         Trans::None
     }
