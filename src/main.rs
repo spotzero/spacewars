@@ -54,7 +54,7 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(SpacewarsBundle)?
         .with_bundle(rendering_bundle)?;
 
-    let mut game = Application::new(resources, state::LoadingState::default(), game_data)?;
+    let mut game = Application::new(resources, state::LoadingState, game_data)?;
     game.run();
 
     Ok(())

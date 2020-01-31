@@ -16,4 +16,4 @@ rand = "0.7"
 # shred = {features=["nightly"]}
 
 [profile.dev]
-debug = 0
+debug = 1

@@ -1,7 +1,6 @@
 use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, Trans,
     assets::Loader,
-    assets::ProgressCounter,
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
@@ -16,35 +15,38 @@ use crate::components::*;
 use crate::resources::*;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
-#[derive(Default)]
-pub struct LoadingState {
-    pub progress: ProgressCounter,
-}
+pub struct LoadingState;
+pub struct SpacewarsState;
 
 impl SimpleState for LoadingState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        let mut world = data.world;
-        let mut sprite_sheet_manager = SpriteSheetManager::default();
-        sprite_sheet_manager.insert(&mut world, "backgrounds/background-2");
-        sprite_sheet_manager.insert(&mut world, "backgrounds/gravity-well");
-        sprite_sheet_manager.insert(&mut world, "ships/ship-001");
-        sprite_sheet_manager.insert(&mut world, "ships/ship-002");
-        sprite_sheet_manager.insert(&mut world, "ships/shields");
-        sprite_sheet_manager.insert(&mut world, "particles/particle0");
-        sprite_sheet_manager.insert(&mut world, "particles/debris");
-        sprite_sheet_manager.insert(&mut world, "weapons/missle-001");
-        world.insert(sprite_sheet_manager);
+        initialise_resources(data.world);
+        load_assets(data.world);
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        if self.progress.is_complete() {
-            Trans::Switch(Box::new(SpacewarsState))
+        let sprite_sheet_manager = data.world.fetch::<SpriteSheetManager>();
+        if sprite_sheet_manager.progress.is_complete() {
+            println!("Loaded");
+            return SimpleTrans::Switch(Box::new(SpacewarsState))
+        }
+        Trans::None
+    }
+
+    fn handle_event(
+        &mut self,
+        _data: StateData<'_, GameData<'_, '_>>,
+        event: StateEvent,
+    ) -> SimpleTrans {
+        if let StateEvent::Window(event) = &event {
+            // Check if the window should be closed
+            if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
+                return Trans::Quit;
+            }
         }
         Trans::None
     }
 }
-
-pub struct SpacewarsState;
 
 impl SimpleState for SpacewarsState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
@@ -68,17 +70,28 @@ impl SimpleState for SpacewarsState {
         }
 
         //for world.fetch::<StatusOfPlayers>()
-        
+
         // Keep going
         Trans::None
     }
+}
+
+fn load_assets(world: &mut World) {
+    let mut sprite_sheet_manager = world.fetch_mut::<SpriteSheetManager>();
+    sprite_sheet_manager.insert(world, "backgrounds/background-2");
+    sprite_sheet_manager.insert(world, "backgrounds/gravity-well");
+    sprite_sheet_manager.insert(world, "ships/ship-001");
+    sprite_sheet_manager.insert(world, "ships/ship-002");
+    sprite_sheet_manager.insert(world, "ships/shields");
+    sprite_sheet_manager.insert(world, "particles/particle0");
+    sprite_sheet_manager.insert(world, "particles/debris");
+    sprite_sheet_manager.insert(world, "weapons/missle-001");
 }
 
 fn reset_game(world: &mut World) {
     world.delete_all();
     initialise_entities(world);
     initialise_camera(world);
-    initialise_collision(world);
     initialise_ui(world);
 }
 
@@ -135,7 +148,9 @@ fn initialise_camera(world: &mut World) {
         .build();
 }
 
-fn initialise_collision(world: &mut World) {
+fn initialise_resources(world: &mut World) {
+    world.insert(StatusOfPlayers::default());
+    world.insert(SpriteSheetManager::default());
     world.insert(CollisionEvents::default());
     world.insert(DamageEvents::default());
 }
