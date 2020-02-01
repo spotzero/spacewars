@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use amethyst::{
+    audio::SourceHandle,
     assets::{AssetStorage, Handle, Loader, ProgressCounter},
     ecs::prelude::*,
     renderer::rendy::hal::image::{Anisotropic, Filter, Lod, SamplerInfo, WrapMode},
@@ -16,14 +17,27 @@ use amethyst::{
 pub struct SpriteSheetManager {
     pub progress: ProgressCounter,
     sprites: HashMap<String, Handle<SpriteSheet>>,
+    sounds: HashMap<String, SourceHandle>,
 }
 
+#[derive(Debug)]
+pub enum AssetKind {
+    Sprite,
+    Sound,
+}
+
+
 impl SpriteSheetManager {
-    pub fn insert(&mut self, world: &World, name: &str) {
-        self.sprites.insert(
-            name.to_string(),
-            load_sprite_sheet(world, &name.to_string(), &mut self.progress),
-        );
+    pub fn insert(&mut self, world: &World, name: &str, kind: AssetKind) {
+        match kind {
+            AssetKind::Sprite => {
+                self.sprites.insert(
+                    name.to_string(),
+                    load_sprite_sheet(world, &name.to_string(), &mut self.progress),
+                );
+            }
+            AssetKind::Sound => {}
+        }
     }
 
     pub fn get_handle(&self, name: &str) -> Option<&SpriteSheetHandle> {

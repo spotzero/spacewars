@@ -30,13 +30,13 @@ fn main() -> amethyst::Result<()> {
 
     let app_root = application_root_dir()?;
 
-    let resources = app_root.join("resources");
+    let resources = app_root.join("resources/");
     let display_config = resources.join("config/display_config.ron");
     let key_bindings_path = resources.join("config/bindings.ron");
 
     let mut rendering_bundle = RenderingBundle::<DefaultBackend>::new()
         .with_plugin(
-            RenderToWindow::from_config_path(display_config).with_clear([0.0, 0.0, 0.0, 1.0]),
+            RenderToWindow::from_config_path(display_config)?.with_clear([0.0, 0.0, 0.0, 1.0]),
         )
         .with_plugin(RenderFlat2D::default())
         .with_plugin(RenderUi::default());

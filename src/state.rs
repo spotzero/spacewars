@@ -82,14 +82,14 @@ impl SimpleState for SpacewarsState {
 
 fn load_assets(world: &mut World) {
     let mut sprite_sheet_manager = world.fetch_mut::<SpriteSheetManager>();
-    sprite_sheet_manager.insert(world, "backgrounds/background-2");
-    sprite_sheet_manager.insert(world, "backgrounds/gravity-well");
-    sprite_sheet_manager.insert(world, "ships/ship-001");
-    sprite_sheet_manager.insert(world, "ships/ship-002");
-    sprite_sheet_manager.insert(world, "ships/shields");
-    sprite_sheet_manager.insert(world, "particles/particle0");
-    sprite_sheet_manager.insert(world, "particles/debris");
-    sprite_sheet_manager.insert(world, "weapons/missle-001");
+    sprite_sheet_manager.insert(world, "backgrounds/background-2", AssetKind::Sprite);
+    sprite_sheet_manager.insert(world, "backgrounds/gravity-well", AssetKind::Sprite);
+    sprite_sheet_manager.insert(world, "ships/ship-001", AssetKind::Sprite);
+    sprite_sheet_manager.insert(world, "ships/ship-002", AssetKind::Sprite);
+    sprite_sheet_manager.insert(world, "ships/shields", AssetKind::Sprite);
+    sprite_sheet_manager.insert(world, "particles/particle0", AssetKind::Sprite);
+    sprite_sheet_manager.insert(world, "particles/debris", AssetKind::Sprite);
+    sprite_sheet_manager.insert(world, "weapons/missle-001", AssetKind::Sprite);
 }
 
 fn reset_game(world: &mut World) {

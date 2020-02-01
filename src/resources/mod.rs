@@ -10,6 +10,7 @@ mod ui;
 
 pub use self::{
     assets::SpriteSheetManager,
+    assets::AssetKind,
     collision::CollisionEvents,
     collision::ForceCollision,
     collision::TorpedoCollision,
