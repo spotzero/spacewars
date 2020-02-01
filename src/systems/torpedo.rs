@@ -25,7 +25,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
         WriteStorage<'s, Player>,
         WriteStorage<'s, Energy>,
         Read<'s, InputHandler<StringBindings>>,
-        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
     );
@@ -39,7 +39,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
             mut players,
             mut energies,
             input,
-            sprite_sheet_manager,
+            asset_manager,
             lazy_update,
             time,
         ): Self::SystemData,
@@ -68,7 +68,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
                     &movable,
                     &lazy_update,
                     &entities,
-                    &sprite_sheet_manager,
+                    &asset_manager,
                     &time,
                 );
             }
@@ -85,7 +85,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Movable>,
         WriteStorage<'s, Torpedo>,
-        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
     );
@@ -97,7 +97,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
         transforms,
         movables,
         mut torpedos,
-        sprite_sheet_manager,
+        asset_manager,
         lazy_update,
         time
     ): Self::SystemData,
@@ -111,7 +111,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
                     &movable,
                     &lazy_update,
                     &entities,
-                    &sprite_sheet_manager,
+                    &asset_manager,
                     &time,
                     entity,
                 );
@@ -129,7 +129,7 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Movable>,
         ReadStorage<'s, Torpedo>,
-        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, CollisionEvents>,
         Read<'s, Time>,
@@ -142,7 +142,7 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
             transforms,
             movables,
             torpedos,
-            sprite_sheet_manager,
+            asset_manager,
             lazy_update,
             mut collision_events,
             time,
@@ -162,7 +162,7 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
                         &movable,
                         &lazy_update,
                         &entities,
-                        &sprite_sheet_manager,
+                        &asset_manager,
                         &time,
                         entity,
                     );
@@ -178,7 +178,7 @@ fn explode_torpedo(
     movable: &Movable,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
     time: &Time,
     entity: Entity,
 ) {
@@ -189,7 +189,7 @@ fn explode_torpedo(
         0.4,
         200.,
         &entities,
-        &sprite_sheet_manager,
+        &asset_manager,
         &lazy_update,
         &time,
         Explosion {
@@ -207,7 +207,7 @@ fn spawn_torpedo(
     movable: &Movable,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
     time: &Time,
 ) {
     let mut thrustvector = Vector3::new(0.0, 40.0, 0.0);
@@ -218,7 +218,7 @@ fn spawn_torpedo(
     let part: Entity = entities.create();
     lazy_update.insert(
         part,
-        sprite_sheet_manager
+        asset_manager
             .get_render("weapons/missle-001")
             .unwrap(),
     );

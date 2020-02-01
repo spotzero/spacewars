@@ -17,7 +17,7 @@ pub fn spawn_player(
     id: u8,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
 ) {
     let mut transform = Transform::default();
     let mut movable = Movable {
@@ -42,7 +42,7 @@ pub fn spawn_player(
     let player: Entity = entities.create();
     lazy_update.insert(
         player,
-        sprite_sheet_manager
+        asset_manager
             .get_render(&format!("ships/ship-00{}", id))
             .unwrap(),
     );
@@ -142,7 +142,7 @@ pub fn spawn_player(
     shield_transform.set_scale(Vector3::new(0.15, 0.15, 1.0));
     lazy_update.insert(
         player_shield,
-        sprite_sheet_manager.get_render("ships/shields").unwrap(),
+        asset_manager.get_render("ships/shields").unwrap(),
     );
     lazy_update.insert(player_shield, shield_transform);
     lazy_update.insert(player_shield, Transparent);

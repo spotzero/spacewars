@@ -16,7 +16,7 @@ pub fn generate_explosion(
     max_life: f64,
     max_vel: f32,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
     lazy_update: &LazyUpdate,
     time: &Time,
     explosion: Explosion,
@@ -61,7 +61,7 @@ pub fn generate_explosion(
             Tint(Srgba::new(1.0, 0.6, 0.0, 0.5)),
             &lazy_update,
             &entities,
-            &sprite_sheet_manager,
+            &asset_manager,
         );
     }
 
@@ -76,7 +76,7 @@ pub fn generate_explosion(
                 mass / (2 * debris) as f32,
                 max_vel,
                 entities,
-                sprite_sheet_manager,
+                asset_manager,
                 lazy_update,
                 &exploder,
             );
@@ -99,7 +99,7 @@ pub fn generate_explosion(
     lazy_update.insert(exploder, Tint(Srgba::new(1., 0.6, 0., 0.3)));
     lazy_update.insert(
         exploder,
-        sprite_sheet_manager
+        asset_manager
             .get_render("particles/particle0")
             .unwrap(),
     );

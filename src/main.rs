@@ -1,6 +1,7 @@
 extern crate amethyst;
 
 use amethyst::{
+    audio::{AudioBundle},
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
     prelude::*,
@@ -51,6 +52,7 @@ fn main() -> amethyst::Result<()> {
             InputBundle::<StringBindings>::new().with_bindings_from_file(key_bindings_path)?,
         )?
         .with_bundle(UiBundle::<StringBindings>::new())?
+        .with_bundle(AudioBundle::default())?
         .with_bundle(SpacewarsBundle)?
         .with_bundle(rendering_bundle)?;
 

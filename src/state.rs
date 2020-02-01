@@ -29,8 +29,8 @@ impl SimpleState for LoadingState {
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        let sprite_sheet_manager = data.world.fetch::<SpriteSheetManager>();
-        if sprite_sheet_manager.progress.is_complete() {
+        let asset_manager = data.world.fetch::<AssetManager>();
+        if asset_manager.progress.is_complete() {
             println!("Loaded");
             return SimpleTrans::Switch(Box::new(SpacewarsState));
         }
@@ -81,15 +81,19 @@ impl SimpleState for SpacewarsState {
 }
 
 fn load_assets(world: &mut World) {
-    let mut sprite_sheet_manager = world.fetch_mut::<SpriteSheetManager>();
-    sprite_sheet_manager.insert(world, "backgrounds/background-2", AssetKind::Sprite);
-    sprite_sheet_manager.insert(world, "backgrounds/gravity-well", AssetKind::Sprite);
-    sprite_sheet_manager.insert(world, "ships/ship-001", AssetKind::Sprite);
-    sprite_sheet_manager.insert(world, "ships/ship-002", AssetKind::Sprite);
-    sprite_sheet_manager.insert(world, "ships/shields", AssetKind::Sprite);
-    sprite_sheet_manager.insert(world, "particles/particle0", AssetKind::Sprite);
-    sprite_sheet_manager.insert(world, "particles/debris", AssetKind::Sprite);
-    sprite_sheet_manager.insert(world, "weapons/missle-001", AssetKind::Sprite);
+    let mut asset_manager = world.fetch_mut::<AssetManager>();
+    asset_manager.insert(world, "backgrounds/background-2", AssetKind::Sprite);
+    asset_manager.insert(world, "backgrounds/gravity-well", AssetKind::Sprite);
+    asset_manager.insert(world, "ships/ship-001", AssetKind::Sprite);
+    asset_manager.insert(world, "ships/ship-002", AssetKind::Sprite);
+    asset_manager.insert(world, "ships/shields", AssetKind::Sprite);
+    asset_manager.insert(world, "particles/particle0", AssetKind::Sprite);
+    asset_manager.insert(world, "particles/debris", AssetKind::Sprite);
+    asset_manager.insert(world, "weapons/missle-001", AssetKind::Sprite);
+
+    asset_manager.insert(world, "engine", AssetKind::Sound);
+    asset_manager.insert(world, "explosion", AssetKind::Sound);
+    asset_manager.insert(world, "railgun", AssetKind::Sound);
 }
 
 fn reset_game(world: &mut World) {
@@ -101,11 +105,11 @@ fn reset_game(world: &mut World) {
 
 fn initialise_entities(world: &mut World) {
     let bg_ss = world
-        .fetch::<SpriteSheetManager>()
+        .fetch::<AssetManager>()
         .get_render("backgrounds/background-2")
         .unwrap();
     let gw_ss = world
-        .fetch::<SpriteSheetManager>()
+        .fetch::<AssetManager>()
         .get_render("backgrounds/gravity-well")
         .unwrap();
 
@@ -154,7 +158,7 @@ fn initialise_camera(world: &mut World) {
 
 fn initialise_resources(world: &mut World) {
     world.insert(StatusOfPlayers::default());
-    world.insert(SpriteSheetManager::default());
+    world.insert(AssetManager::default());
     world.insert(CollisionEvents::default());
     world.insert(DamageEvents::default());
 }

@@ -14,7 +14,7 @@ pub fn generate_debris(
     mass: f32,
     max_vel: f32,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
     lazy_update: &LazyUpdate,
     exploder: &Entity,
 ) {
@@ -50,7 +50,7 @@ pub fn generate_debris(
     lazy_update.insert(debris, Transparent);
     lazy_update.insert(
         debris,
-        sprite_sheet_manager
+        asset_manager
             .get_render_sprite("particles/debris", rng.gen_range(0, 7))
             .unwrap(),
     );

@@ -7,7 +7,7 @@ use amethyst::{
 };
 
 use crate::components::{Lifetime, Movable, ParticleCom};
-use crate::resources::SpriteSheetManager;
+use crate::resources::AssetManager;
 
 pub fn emit_particle(
     emit_time: f64,
@@ -17,12 +17,12 @@ pub fn emit_particle(
     colour: Tint,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
 ) {
     let part: Entity = entities.create();
     lazy_update.insert(
         part,
-        sprite_sheet_manager
+        asset_manager
             .get_render("particles/particle0")
             .unwrap(),
     );
@@ -58,11 +58,11 @@ pub fn emit_spark(
     colour: Tint,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager
+    asset_manager: &AssetManager
 ) {
     let scale = pos.scale_mut();
     scale[1] = scale[1] * 3.;
     pos.set_rotation_2d(thrust.angle(&Vector3::new(0.,1.,0.)));
-    emit_particle(emit_time, life_time, pos, vel + thrust, colour, lazy_update, entities, sprite_sheet_manager);
+    emit_particle(emit_time, life_time, pos, vel + thrust, colour, lazy_update, entities, asset_manager);
 }
 */

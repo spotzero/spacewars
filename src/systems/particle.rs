@@ -46,7 +46,7 @@ impl<'s> System<'s> for EngineParticleSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Movable>,
         WriteStorage<'s, ShipEngines>,
-        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
     );
@@ -59,7 +59,7 @@ impl<'s> System<'s> for EngineParticleSystem {
             transforms,
             movables,
             mut ship_engines,
-            sprite_sheet_manager,
+            asset_manager,
             lazy_update,
             time,
         ): Self::SystemData,
@@ -78,7 +78,7 @@ impl<'s> System<'s> for EngineParticleSystem {
                                 transform,
                                 mover,
                                 &entities,
-                                &sprite_sheet_manager,
+                                &asset_manager,
                             );
                         }
                     }
@@ -108,7 +108,7 @@ fn emit_particle_for<'a>(
     transform: &Transform,
     mover: &Movable,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
 ) {
     let mut rng = rand::thread_rng();
     engine.last_emit = time.absolute_real_time_seconds();
@@ -134,6 +134,6 @@ fn emit_particle_for<'a>(
         Tint(engine.tint.clone()),
         &lazy_update,
         &entities,
-        &sprite_sheet_manager,
+        &asset_manager,
     );
 }

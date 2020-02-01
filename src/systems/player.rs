@@ -20,7 +20,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
         WriteStorage<'s, Movable>,
         WriteStorage<'s, Ship>,
         WriteStorage<'s, Player>,
-        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, StatusOfPlayers>,
         Read<'s, Time>,
@@ -34,7 +34,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
             mut movables,
             mut ships,
             mut players,
-            sprite_sheet_manager,
+            asset_manager,
             lazy_update,
             mut status_of_players,
             time,
@@ -57,7 +57,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
                     1.75,
                     100.,
                     &entities,
-                    &sprite_sheet_manager,
+                    &asset_manager,
                     &lazy_update,
                     &time,
                     Explosion {
@@ -88,7 +88,7 @@ pub struct PlayerRespawnSystem;
 impl<'s> System<'s> for PlayerRespawnSystem {
     type SystemData = (
         Entities<'s>,
-        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, StatusOfPlayers>,
         Read<'s, Time>,
@@ -98,7 +98,7 @@ impl<'s> System<'s> for PlayerRespawnSystem {
         &mut self,
         (
         entities,
-        sprite_sheet_manager,
+        asset_manager,
         lazy_update,
         mut status_of_players,
         time,
@@ -107,7 +107,7 @@ impl<'s> System<'s> for PlayerRespawnSystem {
         for mut status in status_of_players.players.values_mut() {
             if status.dead && status.respawn <= time.absolute_real_time_seconds() {
                 status.dead = false;
-                spawn_player(status.id, &lazy_update, &entities, &sprite_sheet_manager);
+                spawn_player(status.id, &lazy_update, &entities, &asset_manager);
             }
         }
     }

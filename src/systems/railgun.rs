@@ -1,4 +1,5 @@
 use amethyst::{
+    audio::output::Output,
     core::math::Vector3,
     core::timing::Time,
     core::transform::Transform,
@@ -24,7 +25,7 @@ impl<'s> System<'s> for FireRailGunSystem {
         WriteStorage<'s, Player>,
         WriteStorage<'s, Energy>,
         Read<'s, InputHandler<StringBindings>>,
-        ReadExpect<'s, SpriteSheetManager>,
+        ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
     );
@@ -38,7 +39,7 @@ impl<'s> System<'s> for FireRailGunSystem {
             mut players,
             mut energies,
             input,
-            sprite_sheet_manager,
+            asset_manager,
             lazy_update,
             time,
         ): Self::SystemData,
@@ -60,7 +61,7 @@ impl<'s> System<'s> for FireRailGunSystem {
                     &movable,
                     &lazy_update,
                     &entities,
-                    &sprite_sheet_manager,
+                    &asset_manager,
                     &time,
                 );
             }
@@ -73,7 +74,7 @@ fn spawn_railgun(
     movable: &Movable,
     lazy_update: &LazyUpdate,
     entities: &Read<EntitiesRes>,
-    sprite_sheet_manager: &SpriteSheetManager,
+    asset_manager: &AssetManager,
     time: &Time,
 ) {
     let mut thrustvector = Vector3::new(0.0, 600.0, 0.0);
@@ -86,7 +87,7 @@ fn spawn_railgun(
     let part: Entity = entities.create();
     lazy_update.insert(
         part,
-        sprite_sheet_manager
+        asset_manager
             .get_render("particles/particle0")
             .unwrap(),
     );

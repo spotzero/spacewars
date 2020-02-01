@@ -9,7 +9,7 @@ mod player;
 mod ui;
 
 pub use self::{
-    assets::SpriteSheetManager,
+    assets::AssetManager,
     assets::AssetKind,
     collision::CollisionEvents,
     collision::ForceCollision,
