@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use amethyst::{
-    audio::{SourceHandle, WavFormat},
+    audio::{SourceHandle, Source, WavFormat, output::Output},
     assets::{AssetStorage, Handle, Loader, ProgressCounter},
     ecs::prelude::*,
     renderer::rendy::hal::image::{Anisotropic, Filter, Lod, SamplerInfo, WrapMode},
@@ -47,6 +47,12 @@ impl AssetManager {
 
     pub fn get_wav(&self, name: &str) -> Option<&SourceHandle> {
         self.sounds.get(name)
+    }
+
+    pub fn play_wav(&self, name: &str, storage: &AssetStorage<Source>, output: &Output) {
+            if let Some(sound) = storage.get(self.get_wav(name).expect("Invalid sound loaded")) {
+                output.play_once(sound, 1.0);
+            }
     }
 
     pub fn get_handle(&self, name: &str) -> Option<&SpriteSheetHandle> {

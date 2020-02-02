@@ -1,5 +1,6 @@
 use amethyst::{
-    audio::output::Output,
+    assets::AssetStorage,
+    audio::{output::Output, Source},
     core::math::Vector3,
     core::timing::Time,
     core::transform::Transform,
@@ -26,6 +27,8 @@ impl<'s> System<'s> for FireRailGunSystem {
         WriteStorage<'s, Energy>,
         Read<'s, InputHandler<StringBindings>>,
         ReadExpect<'s, AssetManager>,
+        Read<'s, AssetStorage<Source>>,
+        Read<'s, Output>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
     );
@@ -40,6 +43,8 @@ impl<'s> System<'s> for FireRailGunSystem {
             mut energies,
             input,
             asset_manager,
+            storage,
+            audio_output,
             lazy_update,
             time,
         ): Self::SystemData,
@@ -56,6 +61,7 @@ impl<'s> System<'s> for FireRailGunSystem {
             {
                 energy.charge -= player.railgun_energy;
                 player.last_railgun = time.absolute_real_time_seconds();
+                asset_manager.play_wav("railgun", &storage, &audio_output);
                 spawn_railgun(
                     &transform,
                     &movable,
