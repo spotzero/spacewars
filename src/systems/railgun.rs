@@ -7,7 +7,7 @@ use amethyst::{
     core::SystemDesc,
     derive::SystemDesc,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
-    ecs::{world::EntitiesRes, Entities, Entity, LazyUpdate, ReadExpect},
+    ecs::{world::EntitiesRes, Entities, Entity, LazyUpdate, ReadExpect, WriteExpect},
     input::{InputHandler, StringBindings},
     renderer::debug_drawing::DebugLinesComponent,
     renderer::transparent::Transparent,
@@ -27,10 +27,9 @@ impl<'s> System<'s> for FireRailGunSystem {
         WriteStorage<'s, Energy>,
         Read<'s, InputHandler<StringBindings>>,
         ReadExpect<'s, AssetManager>,
-        Read<'s, AssetStorage<Source>>,
-        Read<'s, Output>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
+        WriteExpect<'s, AudioEvents>,
     );
 
     fn run(
@@ -43,10 +42,9 @@ impl<'s> System<'s> for FireRailGunSystem {
             mut energies,
             input,
             asset_manager,
-            storage,
-            audio_output,
             lazy_update,
             time,
+            mut audio_events,
         ): Self::SystemData,
     ) {
         for (transform, movable, player, energy) in
@@ -61,7 +59,7 @@ impl<'s> System<'s> for FireRailGunSystem {
             {
                 energy.charge -= player.railgun_energy;
                 player.last_railgun = time.absolute_real_time_seconds();
-                asset_manager.play_wav("railgun", &storage, &audio_output);
+                audio_events.events.push(AudioEvent::Railgun);
                 spawn_railgun(
                     &transform,
                     &movable,

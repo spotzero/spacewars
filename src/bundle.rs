@@ -61,6 +61,11 @@ impl<'a, 'b> SystemBundle<'a, 'b> for SpacewarsBundle {
             "status_ui_system",
             &["status_update_system"],
         );
+        builder.add(
+            AudioManagerSystem,
+            "audio_manager_system",
+            &[],
+        );
         Ok(())
     }
 }

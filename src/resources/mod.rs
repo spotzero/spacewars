@@ -1,4 +1,5 @@
 mod assets;
+mod audio;
 mod collision;
 mod damage;
 mod debris;
@@ -11,6 +12,8 @@ mod ui;
 pub use self::{
     assets::AssetManager,
     assets::AssetKind,
+    audio::AudioEvent,
+    audio::AudioEvents,
     collision::CollisionEvents,
     collision::ForceCollision,
     collision::TorpedoCollision,

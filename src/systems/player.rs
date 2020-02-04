@@ -23,6 +23,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
         ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, StatusOfPlayers>,
+        WriteExpect<'s, AudioEvents>,
         Read<'s, Time>,
     );
 
@@ -37,6 +38,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
             asset_manager,
             lazy_update,
             mut status_of_players,
+            mut audio_events,
             time,
         ): Self::SystemData,
     ) {
@@ -50,6 +52,7 @@ impl<'s> System<'s> for PlayerDeathSystem {
             .join()
         {
             if ship.hull <= 0. {
+                audio_events.events.push(AudioEvent::ExplosionPlayer);
                 generate_explosion(
                     &transform,
                     &movable,

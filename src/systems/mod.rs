@@ -1,3 +1,4 @@
+mod audio;
 mod collision;
 mod damage;
 mod energy;
@@ -12,6 +13,7 @@ mod torpedo;
 mod ui;
 
 pub use self::{
+    audio::AudioManagerSystem,
     collision::CollisionSystem, collision::DebugCollisionSystem, damage::DamageSystem,
     energy::RechargeSystem, explosion::ExplosionCollisionResponseSystem,
     explosion::ExplosionSystem, input::ShipInputSystem, particle::EngineParticleSystem,

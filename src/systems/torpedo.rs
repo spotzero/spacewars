@@ -4,7 +4,7 @@ use amethyst::{
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, Write, WriteExpect, WriteStorage},
     ecs::{world::EntitiesRes, Entities, Entity, LazyUpdate, ReadExpect},
     input::{InputHandler, StringBindings},
     renderer::debug_drawing::DebugLinesComponent,
@@ -27,6 +27,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
         Read<'s, InputHandler<StringBindings>>,
         ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
+        WriteExpect<'s, AudioEvents>,
         Read<'s, Time>,
     );
 
@@ -41,6 +42,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
             input,
             asset_manager,
             lazy_update,
+            mut audio_events,
             time,
         ): Self::SystemData,
     ) {
@@ -62,6 +64,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
             {
                 energy.charge -= player.torpedo_energy;
                 player.last_torpedo = time.absolute_real_time_seconds();
+                audio_events.events.push(AudioEvent::Torpedo);
                 spawn_torpedo(
                     &entity,
                     &transform,
@@ -87,6 +90,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
         WriteStorage<'s, Torpedo>,
         ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
+        WriteExpect<'s, AudioEvents>,
         Read<'s, Time>,
     );
 
@@ -99,6 +103,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
         mut torpedos,
         asset_manager,
         lazy_update,
+        mut audio_events,
         time
     ): Self::SystemData,
     ) {
@@ -106,6 +111,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
             (&entities, &transforms, &movables, &mut torpedos).join()
         {
             if (torpedo.fired + torpedo.life) <= time.absolute_real_time_seconds() {
+                audio_events.events.push(AudioEvent::ExplosionTorpedo);
                 explode_torpedo(
                     &transform,
                     &movable,
@@ -132,6 +138,7 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
         ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, CollisionEvents>,
+        WriteExpect<'s, AudioEvents>,
         Read<'s, Time>,
     );
 
@@ -145,6 +152,7 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
             asset_manager,
             lazy_update,
             mut collision_events,
+            mut audio_events,
             time,
         ): Self::SystemData,
     ) {
@@ -157,6 +165,7 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
                 {
                     //let mut result_move = movable.clone();
                     //result_move.velocity = result_move.velocity - (collision_events.torpedo_collisions[i].direction * 100.0);
+                    audio_events.events.push(AudioEvent::ExplosionTorpedo);
                     explode_torpedo(
                         &transform,
                         &movable,

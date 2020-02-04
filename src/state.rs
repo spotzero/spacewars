@@ -91,8 +91,10 @@ fn load_assets(world: &mut World) {
     asset_manager.insert(world, "particles/debris", AssetKind::Sprite);
     asset_manager.insert(world, "weapons/missle-001", AssetKind::Sprite);
 
-    asset_manager.insert(world, "engine", AssetKind::Sound);
-    asset_manager.insert(world, "explosion", AssetKind::Sound);
+    asset_manager.insert(world, "engine-pulse", AssetKind::Sound);
+    asset_manager.insert(world, "torpedo", AssetKind::Sound);
+    asset_manager.insert(world, "explosion-player", AssetKind::Sound);
+    asset_manager.insert(world, "explosion-torpedo", AssetKind::Sound);
     asset_manager.insert(world, "railgun", AssetKind::Sound);
 }
 
@@ -161,6 +163,7 @@ fn initialise_resources(world: &mut World) {
     world.insert(AssetManager::default());
     world.insert(CollisionEvents::default());
     world.insert(DamageEvents::default());
+    world.insert(AudioEvents::default());
 }
 
 fn initialise_ui(world: &mut World) {
