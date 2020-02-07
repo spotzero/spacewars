@@ -21,6 +21,7 @@ pub struct AudioManagerSystem;
 impl<'s> System<'s> for AudioManagerSystem {
     type SystemData = (
         WriteExpect<'s, AudioEvents>,
+        WriteExpect<'s, AudioState>,
         ReadExpect<'s, AssetManager>,
         Read<'s, AssetStorage<Source>>,
         Read<'s, Output>,
@@ -30,6 +31,7 @@ impl<'s> System<'s> for AudioManagerSystem {
         &mut self,
         (
         mut audio_events,
+        mut audio_state,
         asset_manager,
         storage,
         audio_output,
@@ -37,7 +39,9 @@ impl<'s> System<'s> for AudioManagerSystem {
     ) {
         for i in 0..audio_events.events.len() {
             match audio_events.events[i] {
-                AudioEvent::Engine => asset_manager.play_wav("engine-pulse", &storage, &audio_output),
+                AudioEvent::Engine { player, state } => {
+                    asset_manager.play_wav("engine-pulse", &storage, &audio_output);
+                },
                 AudioEvent::ExplosionPlayer => asset_manager.play_wav("explosion-player", &storage, &audio_output),
                 AudioEvent::ExplosionTorpedo => asset_manager.play_wav("explosion-torpedo", &storage, &audio_output),
                 AudioEvent::Railgun => asset_manager.play_wav("railgun", &storage, &audio_output),

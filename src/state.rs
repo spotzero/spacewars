@@ -164,6 +164,7 @@ fn initialise_resources(world: &mut World) {
     world.insert(CollisionEvents::default());
     world.insert(DamageEvents::default());
     world.insert(AudioEvents::default());
+    world.insert(AudioState::default());
 }
 
 fn initialise_ui(world: &mut World) {

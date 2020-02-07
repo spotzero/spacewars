@@ -14,6 +14,7 @@ pub use self::{
     assets::AssetKind,
     audio::AudioEvent,
     audio::AudioEvents,
+    audio::AudioState,
     collision::CollisionEvents,
     collision::ForceCollision,
     collision::TorpedoCollision,
