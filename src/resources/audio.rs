@@ -10,5 +10,12 @@ pub enum AudioEvent {
     ShieldHit,
     ExplosionTorpedo,
     ExplosionPlayer,
-    Engine,
+    Engine {
+        player: u8,
+        state: bool,
+    },
+}
+
+pub struct AudioState {
+
 }
