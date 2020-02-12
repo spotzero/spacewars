@@ -1,10 +1,11 @@
 use amethyst::{
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
+    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
     input::{InputHandler, StringBindings},
 };
 
+use crate::resources::*;
 use crate::components::*;
 
 #[derive(SystemDesc)]
@@ -15,10 +16,11 @@ impl<'s> System<'s> for ShipInputSystem {
         ReadStorage<'s, Player>,
         WriteStorage<'s, Ship>,
         Read<'s, InputHandler<StringBindings>>,
+        WriteExpect<'s, AudioEvents>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (players, mut ships, input) = data;
+        let (players, mut ships, input, mut audio_events) = data;
 
         for (player, ship) in (&players, &mut ships).join() {
             if player.controllable {
@@ -28,6 +30,10 @@ impl<'s> System<'s> for ShipInputSystem {
                 ship.applying_thrust = input
                     .axis_value(&format!("thrust_p{}", player.id))
                     .unwrap_or(0.0);
+                audio_events.events.push(AudioEvent::Engine {
+                    player: player.id,
+                    state: ship.applying_thrust != 0. || ship.applying_torque != 0.,
+                });
             }
         }
     }

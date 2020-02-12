@@ -40,7 +40,11 @@ impl<'s> System<'s> for AudioManagerSystem {
         for i in 0..audio_events.events.len() {
             match audio_events.events[i] {
                 AudioEvent::Engine { player, state } => {
-                    asset_manager.play_wav("engine-pulse", &storage, &audio_output);
+                    let cur = audio_state.engines.get(&player).or(Some(&false)).expect("Engine audio issue");
+                    if !cur && state {
+                      asset_manager.play_wav("engine-pulse", &storage, &audio_output);
+                    }
+                    audio_state.engines.insert(player, state);
                 },
                 AudioEvent::ExplosionPlayer => asset_manager.play_wav("explosion-player", &storage, &audio_output),
                 AudioEvent::ExplosionTorpedo => asset_manager.play_wav("explosion-torpedo", &storage, &audio_output),
