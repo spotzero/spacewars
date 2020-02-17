@@ -151,7 +151,7 @@ impl<'s> System<'s> for PlayerCollisionResponseSystem {
                     damage_events.events.push(Damage {
                         player: collision_events.gravity_well_collision[i].target.id(),
                         damage: 2.,
-                        kind: damage_types::KINETIC,
+                        kind: damage_types::GRAVITYWELL,
                     });
                 }
             }

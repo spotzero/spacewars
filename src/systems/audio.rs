@@ -52,7 +52,6 @@ impl<'s> System<'s> for AudioManagerSystem {
                 AudioEvent::ExplosionTorpedo => asset_manager.play_wav("explosion-torpedo", &storage, &audio_output),
                 AudioEvent::Railgun => asset_manager.play_wav("railgun", &storage, &audio_output),
                 AudioEvent::Torpedo => asset_manager.play_wav("torpedo", &storage, &audio_output),
-                _ => {},
             }
         }
         audio_events.events.clear();

@@ -27,10 +27,12 @@ impl<'s> System<'s> for DamageSystem {
                         calculate_damage(event.kind, event.damage, ship.hull, ship.shield);
                     ship.hull = hull;
                     ship.shield = shield;
-                    if shielded && event.kind == damage_types::KINETIC {
-                        audio_events.events.push(AudioEvent::ShieldHit);
-                    } else {
-                        audio_events.events.push(AudioEvent::HullHit);
+                    if  event.kind == damage_types::KINETIC {
+                        if shielded {
+                            audio_events.events.push(AudioEvent::ShieldHit);
+                        } else {
+                            audio_events.events.push(AudioEvent::HullHit);
+                        }
                     }
                 }
             }
