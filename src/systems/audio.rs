@@ -46,6 +46,8 @@ impl<'s> System<'s> for AudioManagerSystem {
                     }
                     audio_state.engines.insert(player, state);
                 },
+                AudioEvent::HullHit => asset_manager.play_wav("clank-hull", &storage, &audio_output),
+                AudioEvent::ShieldHit => asset_manager.play_wav("clank-shield", &storage, &audio_output),
                 AudioEvent::ExplosionPlayer => asset_manager.play_wav("explosion-player", &storage, &audio_output),
                 AudioEvent::ExplosionTorpedo => asset_manager.play_wav("explosion-torpedo", &storage, &audio_output),
                 AudioEvent::Railgun => asset_manager.play_wav("railgun", &storage, &audio_output),
