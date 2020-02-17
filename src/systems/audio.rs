@@ -42,7 +42,7 @@ impl<'s> System<'s> for AudioManagerSystem {
                 AudioEvent::Engine { player, state } => {
                     let cur = audio_state.engines.get(&player).or(Some(&false)).expect("Engine audio issue");
                     if !cur && state {
-                      asset_manager.play_wav("engine-pulse", &storage, &audio_output);
+                        asset_manager.play_wav("engine-pulse", &storage, &audio_output);
                     }
                     audio_state.engines.insert(player, state);
                 },
