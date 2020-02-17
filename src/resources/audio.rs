@@ -8,7 +8,7 @@ pub struct AudioEvents {
 pub enum AudioEvent {
     Railgun,
     Torpedo,
-    DebrisHit,
+    HullHit,
     ShieldHit,
     ExplosionTorpedo,
     ExplosionPlayer,

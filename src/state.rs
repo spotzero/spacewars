@@ -91,6 +91,8 @@ fn load_assets(world: &mut World) {
     asset_manager.insert(world, "particles/debris", AssetKind::Sprite);
     asset_manager.insert(world, "weapons/missle-001", AssetKind::Sprite);
 
+    asset_manager.insert(world, "clank-hull", AssetKind::Sound);
+    asset_manager.insert(world, "clank-shield", AssetKind::Sound);
     asset_manager.insert(world, "engine-pulse", AssetKind::Sound);
     asset_manager.insert(world, "torpedo", AssetKind::Sound);
     asset_manager.insert(world, "explosion-player", AssetKind::Sound);
