@@ -13,9 +13,8 @@ mod torpedo;
 mod ui;
 
 pub use self::{
-    audio::AudioManagerSystem,
-    collision::CollisionSystem, collision::DebugCollisionSystem, damage::DamageSystem,
-    energy::RechargeSystem, explosion::ExplosionCollisionResponseSystem,
+    audio::AudioManagerSystem, collision::CollisionSystem, collision::DebugCollisionSystem,
+    damage::DamageSystem, energy::RechargeSystem, explosion::ExplosionCollisionResponseSystem,
     explosion::ExplosionSystem, input::ShipInputSystem, particle::EngineParticleSystem,
     particle::ParticleSystem, physics::PhysicsSystem, player::PlayerCollisionResponseSystem,
     player::PlayerDeathSystem, player::PlayerRespawnSystem, railgun::FireRailGunSystem,

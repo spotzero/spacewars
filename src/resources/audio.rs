@@ -1,6 +1,6 @@
+use amethyst::audio::SourceHandle;
 use std::collections::HashMap;
 use std::{iter::Cycle, vec::IntoIter};
-use amethyst::audio::SourceHandle;
 
 pub struct Music {
     pub music: Cycle<IntoIter<SourceHandle>>,
@@ -18,10 +18,7 @@ pub enum AudioEvent {
     ShieldHit,
     ExplosionTorpedo,
     ExplosionPlayer,
-    Engine {
-        player: u8,
-        state: bool,
-    },
+    Engine { player: u8, state: bool },
 }
 
 #[derive(Default)]

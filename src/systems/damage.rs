@@ -18,7 +18,10 @@ impl<'s> System<'s> for DamageSystem {
         WriteExpect<'s, AudioEvents>,
     );
 
-    fn run(&mut self, (entities, mut ships, mut damage_events, mut audio_events): Self::SystemData) {
+    fn run(
+        &mut self,
+        (entities, mut ships, mut damage_events, mut audio_events): Self::SystemData,
+    ) {
         for (entity, ship) in (&entities, &mut ships).join() {
             for i in 0..damage_events.events.len() {
                 if entity.id() == damage_events.events[i].player {
@@ -27,7 +30,7 @@ impl<'s> System<'s> for DamageSystem {
                         calculate_damage(event.kind, event.damage, ship.hull, ship.shield);
                     ship.hull = hull;
                     ship.shield = shield;
-                    if  event.kind == damage_types::KINETIC {
+                    if event.kind == damage_types::KINETIC {
                         if shielded {
                             audio_events.events.push(AudioEvent::ShieldHit);
                         } else {

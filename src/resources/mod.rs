@@ -10,8 +10,8 @@ mod player;
 mod ui;
 
 pub use self::{
-    assets::AssetManager,
     assets::AssetKind,
+    assets::AssetManager,
     audio::AudioEvent,
     audio::AudioEvents,
     audio::AudioState,

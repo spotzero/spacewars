@@ -5,8 +5,8 @@ use amethyst::{
     input::{InputHandler, StringBindings},
 };
 
-use crate::resources::*;
 use crate::components::*;
+use crate::resources::*;
 
 #[derive(SystemDesc)]
 pub struct ShipInputSystem;

@@ -4,7 +4,9 @@ use amethyst::{
     core::transform::Transform,
     core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, Write, WriteExpect, WriteStorage},
+    ecs::prelude::{
+        Join, Read, ReadStorage, System, SystemData, World, Write, WriteExpect, WriteStorage,
+    },
     ecs::{world::EntitiesRes, Entities, Entity, LazyUpdate, ReadExpect},
     input::{InputHandler, StringBindings},
     renderer::debug_drawing::DebugLinesComponent,
@@ -97,15 +99,15 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
     fn run(
         &mut self,
         (
-        entities,
-        transforms,
-        movables,
-        mut torpedos,
-        asset_manager,
-        lazy_update,
-        mut audio_events,
-        time
-    ): Self::SystemData,
+            entities,
+            transforms,
+            movables,
+            mut torpedos,
+            asset_manager,
+            lazy_update,
+            mut audio_events,
+            time,
+        ): Self::SystemData,
     ) {
         for (entity, transform, movable, torpedo) in
             (&entities, &transforms, &movables, &mut torpedos).join()
@@ -227,9 +229,7 @@ fn spawn_torpedo(
     let part: Entity = entities.create();
     lazy_update.insert(
         part,
-        asset_manager
-            .get_render("weapons/missle-001")
-            .unwrap(),
+        asset_manager.get_render("weapons/missle-001").unwrap(),
     );
     lazy_update.insert(part, pos);
     lazy_update.insert(part, ParticleCom);

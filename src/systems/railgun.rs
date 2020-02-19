@@ -91,9 +91,7 @@ fn spawn_railgun(
     let part: Entity = entities.create();
     lazy_update.insert(
         part,
-        asset_manager
-            .get_render("particles/particle0")
-            .unwrap(),
+        asset_manager.get_render("particles/particle0").unwrap(),
     );
     lazy_update.insert(part, pos);
     lazy_update.insert(part, ParticleCom);

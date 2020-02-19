@@ -1,6 +1,6 @@
 use amethyst::{
     assets::Loader,
-    audio::Mp3Format,
+    audio::{AudioSink, Mp3Format},
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
@@ -16,8 +16,8 @@ use amethyst::{
     Trans,
 };
 
-use rand::thread_rng;
 use rand::seq::SliceRandom;
+use rand::thread_rng;
 
 use crate::components::*;
 use crate::resources::*;
@@ -94,13 +94,21 @@ fn load_music(world: &mut World) {
         "music/Zabutom_-_17_-_Endorphemeral.mp3",
     ];
     tracks.shuffle(&mut thread_rng());
-   
+    world.write_resource::<AudioSink>().set_volume(0.25);
     world.insert(Music {
-        music: tracks.iter()
-        .map(|file| world.read_resource::<Loader>().load(file.to_string(), Mp3Format, (), &world.read_resource()))
-        .collect::<Vec<_>>()
-        .into_iter()
-        .cycle()
+        music: tracks
+            .iter()
+            .map(|file| {
+                world.read_resource::<Loader>().load(
+                    file.to_string(),
+                    Mp3Format,
+                    (),
+                    &world.read_resource(),
+                )
+            })
+            .collect::<Vec<_>>()
+            .into_iter()
+            .cycle(),
     });
 }
 

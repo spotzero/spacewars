@@ -16,7 +16,12 @@ pub struct DamageEvents {
     pub events: Vec<Damage>,
 }
 
-pub fn calculate_damage(kind: u32, amount: f32, mut hull: f32, mut shield: f32) -> (f32, f32, bool) {
+pub fn calculate_damage(
+    kind: u32,
+    amount: f32,
+    mut hull: f32,
+    mut shield: f32,
+) -> (f32, f32, bool) {
     let mut shielded = true;
     if kind == damage_types::EXPLOSION || kind == damage_types::KINETIC {
         shield -= amount;
@@ -24,7 +29,8 @@ pub fn calculate_damage(kind: u32, amount: f32, mut hull: f32, mut shield: f32) 
             hull += shield * 2.;
             shielded = false;
         }
-    } else { //kind == damage_types::ENERGY || kind == damage_types::GRAVITYWELL
+    } else {
+        //kind == damage_types::ENERGY || kind == damage_types::GRAVITYWELL
         shield -= amount * 2.;
         if shield < 0. {
             hull += shield / 2.;

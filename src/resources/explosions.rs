@@ -99,9 +99,7 @@ pub fn generate_explosion(
     lazy_update.insert(exploder, Tint(Srgba::new(1., 0.6, 0., 0.3)));
     lazy_update.insert(
         exploder,
-        asset_manager
-            .get_render("particles/particle0")
-            .unwrap(),
+        asset_manager.get_render("particles/particle0").unwrap(),
     );
     lazy_update.insert(
         exploder,

@@ -99,13 +99,7 @@ impl<'s> System<'s> for PlayerRespawnSystem {
 
     fn run(
         &mut self,
-        (
-        entities,
-        asset_manager,
-        lazy_update,
-        mut status_of_players,
-        time,
-    ): Self::SystemData,
+        (entities, asset_manager, lazy_update, mut status_of_players, time): Self::SystemData,
     ) {
         for mut status in status_of_players.players.values_mut() {
             if status.dead && status.respawn <= time.absolute_real_time_seconds() {

@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
 use amethyst::{
-    audio::{SourceHandle, Source, WavFormat, output::Output},
     assets::{AssetStorage, Handle, Loader, ProgressCounter},
+    audio::{output::Output, Source, SourceHandle, WavFormat},
     ecs::prelude::*,
     renderer::rendy::hal::image::{Anisotropic, Filter, Lod, SamplerInfo, WrapMode},
     renderer::rendy::texture::image::{ImageTextureConfig, Repr, TextureKind},
@@ -26,7 +26,6 @@ pub enum AssetKind {
     Sound,
 }
 
-
 impl AssetManager {
     pub fn insert(&mut self, world: &World, name: &str, kind: AssetKind) {
         match kind {
@@ -37,9 +36,14 @@ impl AssetManager {
                 );
             }
             AssetKind::Sound => {
-                self.sounds.insert(name.to_string(),
-                    world.read_resource::<Loader>()
-                        .load(format!("sounds/{}.wav", name), WavFormat, (), &world.read_resource())
+                self.sounds.insert(
+                    name.to_string(),
+                    world.read_resource::<Loader>().load(
+                        format!("sounds/{}.wav", name),
+                        WavFormat,
+                        (),
+                        &world.read_resource(),
+                    ),
                 );
             }
         }
@@ -50,9 +54,9 @@ impl AssetManager {
     }
 
     pub fn play_wav(&self, name: &str, storage: &AssetStorage<Source>, output: &Output) {
-            if let Some(sound) = storage.get(self.get_wav(name).expect("Invalid sound loaded")) {
-                output.play_once(sound, 1.0);
-            }
+        if let Some(sound) = storage.get(self.get_wav(name).expect("Invalid sound loaded")) {
+            output.play_once(sound, 1.0);
+        }
     }
 
     pub fn get_handle(&self, name: &str) -> Option<&SpriteSheetHandle> {
