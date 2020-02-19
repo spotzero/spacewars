@@ -1,7 +1,7 @@
 extern crate amethyst;
 
 use amethyst::{
-    audio::{AudioBundle},
+    audio::{AudioBundle, DjSystemDesc},
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
     prelude::*,
@@ -54,7 +54,12 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(UiBundle::<StringBindings>::new())?
         .with_bundle(AudioBundle::default())?
         .with_bundle(SpacewarsBundle)?
-        .with_bundle(rendering_bundle)?;
+        .with_bundle(rendering_bundle)?
+        .with_system_desc(
+            DjSystemDesc::new(|music: &mut resources::Music| music.music.next()),
+            "dj_system",
+            &[],
+        );
 
     let mut game = Application::new(resources, state::LoadingState, game_data)?;
     game.run();

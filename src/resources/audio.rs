@@ -1,4 +1,10 @@
 use std::collections::HashMap;
+use std::{iter::Cycle, vec::IntoIter};
+use amethyst::audio::SourceHandle;
+
+pub struct Music {
+    pub music: Cycle<IntoIter<SourceHandle>>,
+}
 
 #[derive(Default)]
 pub struct AudioEvents {

@@ -15,6 +15,7 @@ pub use self::{
     audio::AudioEvent,
     audio::AudioEvents,
     audio::AudioState,
+    audio::Music,
     collision::CollisionEvents,
     collision::ForceCollision,
     collision::TorpedoCollision,

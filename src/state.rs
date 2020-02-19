@@ -1,5 +1,6 @@
 use amethyst::{
     assets::Loader,
+    audio::Mp3Format,
     core::math::Vector3,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
@@ -15,6 +16,9 @@ use amethyst::{
     Trans,
 };
 
+use rand::thread_rng;
+use rand::seq::SliceRandom;
+
 use crate::components::*;
 use crate::resources::*;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
@@ -25,6 +29,7 @@ pub struct SpacewarsState;
 impl SimpleState for LoadingState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         initialise_resources(data.world);
+        load_music(data.world);
         load_assets(data.world);
     }
 
@@ -78,6 +83,25 @@ impl SimpleState for SpacewarsState {
         // Keep going
         Trans::None
     }
+}
+
+fn load_music(world: &mut World) {
+    //let loader = world.read_resource::<Loader>();
+    let mut tracks = vec![
+        "music/Virt_-_07_-_Five_Nine_Seven_Eight.mp3",
+        "music/Synapsis_-_08_-_From_the_Dunes.mp3",
+        "music/Bomb_Boy_-_06_-_Ignition_Set_GO.mp3",
+        "music/Zabutom_-_17_-_Endorphemeral.mp3",
+    ];
+    tracks.shuffle(&mut thread_rng());
+   
+    world.insert(Music {
+        music: tracks.iter()
+        .map(|file| world.read_resource::<Loader>().load(file.to_string(), Mp3Format, (), &world.read_resource()))
+        .collect::<Vec<_>>()
+        .into_iter()
+        .cycle()
+    });
 }
 
 fn load_assets(world: &mut World) {
