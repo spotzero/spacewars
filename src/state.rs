@@ -24,6 +24,8 @@ use crate::resources::*;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
 pub struct LoadingState;
+pub struct MenuState;
+pub struct PauseState;
 pub struct SpacewarsState;
 
 impl SimpleState for LoadingState {
@@ -35,8 +37,7 @@ impl SimpleState for LoadingState {
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         let asset_manager = data.world.fetch::<AssetManager>();
-        if asset_manager.progress.is_complete() {
-            println!("Loaded");
+        if asset_manager.progress.is_complete() { // Loaded.
             return SimpleTrans::Switch(Box::new(SpacewarsState));
         }
         Trans::None
@@ -57,6 +58,34 @@ impl SimpleState for LoadingState {
     }
 }
 
+impl SimpleState for MenuState {
+    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+    }
+
+    fn handle_event(
+        &mut self,
+        data: StateData<'_, GameData<'_, '_>>,
+        event: StateEvent,
+    ) -> SimpleTrans {
+        if let StateEvent::Window(event) = &event {
+            // Check if the window should be closed
+            if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
+                return Trans::Quit;
+            }
+
+            if is_key_down(&event, VirtualKeyCode::Space) {
+                return SimpleTrans::Switch(Box::new(SpacewarsState));
+            }
+        }
+
+        //for world.fetch::<StatusOfPlayers>()
+
+        // Keep going
+        Trans::None
+    }
+}
+
+
 impl SimpleState for SpacewarsState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         reset_game(data.world);
@@ -71,16 +100,10 @@ impl SimpleState for SpacewarsState {
             // Check if the window should be closed
             if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
                 return Trans::Quit;
-            }
-
-            if is_key_down(&event, VirtualKeyCode::R) {
-                reset_game(data.world);
+                //return SimpleTrans::Switch(Box::new(MenuState));
             }
         }
 
-        //for world.fetch::<StatusOfPlayers>()
-
-        // Keep going
         Trans::None
     }
 }
