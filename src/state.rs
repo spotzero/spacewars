@@ -23,6 +23,18 @@ use crate::components::*;
 use crate::resources::*;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum CurrentState {
+    Menu,
+    Gameplay,
+    Pause,
+    Loading,
+}
+
+struct Game {
+    current_state: CurrentState,
+}
+
 pub struct LoadingState;
 pub struct MenuState;
 pub struct PauseState;
@@ -216,6 +228,7 @@ fn initialise_camera(world: &mut World) {
 }
 
 fn initialise_resources(world: &mut World) {
+    world.insert(Game { current_state: CurrentState::Loading });
     world.insert(StatusOfPlayers::default());
     world.insert(AssetManager::default());
     world.insert(CollisionEvents::default());
