@@ -49,7 +49,8 @@ impl SimpleState for LoadingState {
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         let asset_manager = data.world.fetch::<AssetManager>();
-        if asset_manager.progress.is_complete() { // Loaded.
+        if asset_manager.progress.is_complete() {
+            // Loaded.
             return SimpleTrans::Switch(Box::new(SpacewarsState));
         }
         Trans::None
@@ -71,8 +72,7 @@ impl SimpleState for LoadingState {
 }
 
 impl SimpleState for MenuState {
-    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-    }
+    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {}
 
     fn handle_event(
         &mut self,
@@ -96,7 +96,6 @@ impl SimpleState for MenuState {
         Trans::None
     }
 }
-
 
 impl SimpleState for SpacewarsState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
@@ -228,7 +227,9 @@ fn initialise_camera(world: &mut World) {
 }
 
 fn initialise_resources(world: &mut World) {
-    world.insert(Game { current_state: CurrentState::Loading });
+    world.insert(Game {
+        current_state: CurrentState::Loading,
+    });
     world.insert(StatusOfPlayers::default());
     world.insert(AssetManager::default());
     world.insert(CollisionEvents::default());

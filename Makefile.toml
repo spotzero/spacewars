@@ -1,0 +1,38 @@
+[tasks.release]
+dependencies = ["clean_release","pre_build", "build_release_linux"]
+
+[tasks.pre_build]
+script = [
+    "mkdir releases || exit 0"
+]
+
+[tasks.build_release_linux]
+dependencies = ["clean_release_linux"]
+script_runner = "bash"
+script = [
+    "cargo build --release",
+    "mkdir -p target/Spacewars.AppDir",
+    "cp -r resources target/Spacewars.AppDir",
+    "cp target/release/spacewars target/Spacewars.AppDir/AppRun",
+    "cd target/Spacewars.AppDir",
+    "mv resources/logo.png Spacewars.png",
+    "echo '[Desktop Entry]' > Spacewars.desktop",
+    "echo 'Name=Spacewars' >> Spacewars.desktop",
+    "echo 'Exec=Spacewars' >> Spacewars.desktop",
+    "echo 'Icon=Spacewars' >> Spacewars.desktop",
+    "echo 'Type=Application' >> Spacewars.desktop",
+    "echo 'Categories=Game;' >> Spacewars.desktop",
+    "cd ..",
+    "appimagetool-x86_64.AppImage Spacewars.AppDir",
+    "mv Spacewars-x86_64.AppImage ../releases",
+]
+
+[tasks.clean_release]
+dependencies = ["clean_release_linux"]
+script = ["rm -Rf releases"]
+
+[tasks.clean_release_linux]
+script = ["rm -rf target/Spacewars.AppDir || exit 0"]
+
+[tasks.clean]
+dependencies = ["clean_release"]
