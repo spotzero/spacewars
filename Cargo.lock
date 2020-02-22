@@ -2852,7 +2852,7 @@ dependencies = [
 
 [[package]]
 name = "spacewars"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "amethyst 0.14.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "amethyst_rendy 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
