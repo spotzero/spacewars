@@ -17,7 +17,7 @@ use amethyst::{
 mod bundle;
 mod components;
 mod resources;
-mod state;
+mod states;
 mod systems;
 
 use crate::bundle::SpacewarsBundle;
@@ -61,7 +61,7 @@ fn main() -> amethyst::Result<()> {
             &[],
         );
 
-    let mut game = Application::new(resources, state::LoadingState, game_data)?;
+    let mut game = Application::new(resources, states::LoadingState, game_data)?;
     game.run();
 
     Ok(())

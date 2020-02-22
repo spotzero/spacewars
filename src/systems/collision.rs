@@ -1,9 +1,8 @@
 use amethyst::{
     core::math::Point3,
     core::transform::Transform,
-    core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, ReadStorage, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, ReadStorage, System, SystemData, WriteExpect, WriteStorage},
     ecs::Entities,
     renderer::debug_drawing::DebugLinesComponent,
     renderer::palette::Srgba,

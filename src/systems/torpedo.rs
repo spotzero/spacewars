@@ -2,11 +2,8 @@ use amethyst::{
     core::math::Vector3,
     core::timing::Time,
     core::transform::Transform,
-    core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{
-        Join, Read, ReadStorage, System, SystemData, World, Write, WriteExpect, WriteStorage,
-    },
+    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, WriteExpect, WriteStorage},
     ecs::{world::EntitiesRes, Entities, Entity, LazyUpdate, ReadExpect},
     input::{InputHandler, StringBindings},
     renderer::debug_drawing::DebugLinesComponent,

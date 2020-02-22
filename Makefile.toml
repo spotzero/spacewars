@@ -6,6 +6,11 @@ script = [
     "mkdir releases || exit 0"
 ]
 
+[tasks.build_release_windows]
+script = [
+    "cargo build --release --target x86_64-pc-windows-gnu",
+]
+
 [tasks.build_release_linux]
 dependencies = ["clean_release_linux"]
 script_runner = "bash"

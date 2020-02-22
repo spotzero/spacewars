@@ -3,9 +3,8 @@ use amethyst::{
     core::math::Vector3,
     core::timing::Time,
     core::transform::Transform,
-    core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
+    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
     ecs::{world::EntitiesRes, Entities, LazyUpdate, ReadExpect},
     renderer::resources::Tint,
 };

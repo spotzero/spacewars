@@ -4,6 +4,7 @@ mod collision;
 mod damage;
 mod debris;
 mod explosions;
+mod game;
 mod math;
 mod particle;
 mod player;
@@ -25,6 +26,8 @@ pub use self::{
     damage::DamageEvents,
     debris::generate_debris,
     explosions::generate_explosion,
+    game::CurrentState,
+    game::Game,
     math::unit_vector,
     particle::emit_particle,
     //particle::emit_spark,

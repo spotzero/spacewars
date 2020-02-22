@@ -1,7 +1,6 @@
 use amethyst::{
-    core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, System, SystemData, World, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, System, SystemData, WriteExpect, WriteStorage},
     ecs::Entities,
 };
 

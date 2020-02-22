@@ -1,19 +1,12 @@
 use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
-    core::math::Vector3,
-    core::timing::Time,
-    core::transform::Transform,
-    core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteExpect},
-    ecs::{world::EntitiesRes, Entities, Entity, LazyUpdate, ReadExpect},
-    input::{InputHandler, StringBindings},
-    renderer::debug_drawing::DebugLinesComponent,
-    renderer::transparent::Transparent,
+    ecs::prelude::{Read, System, SystemData, WriteExpect},
+    ecs::ReadExpect,
 };
 
-use crate::{components::*, resources::*};
+use crate::resources::*;
 
 #[derive(SystemDesc)]
 pub struct AudioManagerSystem;

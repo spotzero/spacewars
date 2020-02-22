@@ -1,6 +1,6 @@
 [package]
 name = "spacewars"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["David Pascoe-Deslauriers <dpascoed@coldfrontlabs.ca>"]
 edition = "2018"
 
@@ -17,3 +17,6 @@ rand = "0.7"
 
 [profile.dev]
 debug = 1
+
+[target.x86_64-pc-windows-gnu]
+linker = "/usr/bin/x86_64-w64-mingw32-gcc"

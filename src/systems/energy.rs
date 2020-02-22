@@ -1,8 +1,7 @@
 use amethyst::{
     core::timing::Time,
-    core::SystemDesc,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, System, SystemData, World, WriteStorage},
+    ecs::prelude::{Join, Read, System, SystemData, WriteStorage},
 };
 
 use crate::components::*;
