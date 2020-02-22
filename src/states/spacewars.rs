@@ -44,7 +44,7 @@ impl SimpleState for SpacewarsState {
             }
 
             if is_key_down(&event, VirtualKeyCode::Escape) {
-               return Trans::Push(Box::new(PauseState));
+                return Trans::Push(Box::new(PauseState));
             }
         }
 

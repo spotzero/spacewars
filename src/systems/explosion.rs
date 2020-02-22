@@ -3,7 +3,9 @@ use amethyst::{
     core::timing::Time,
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadExpect, ReadStorage, System, SystemData, WriteExpect, WriteStorage},
+    ecs::prelude::{
+        Join, Read, ReadExpect, ReadStorage, System, SystemData, WriteExpect, WriteStorage,
+    },
     ecs::Entities,
 };
 
@@ -34,8 +36,7 @@ impl<'s> System<'s> for ExplosionSystem {
             (&explosions, &lifetimes, &mut transforms, &mut collidables).join()
         {
             collidable.radius += explosion.vel * time.delta_seconds();
-            let radius =
-                (time.absolute_time_seconds() - lifetime.start) * explosion.vel as f64;
+            let radius = (time.absolute_time_seconds() - lifetime.start) * explosion.vel as f64;
             let s = radius / 50.;
             transform.set_scale(Vector3::new(s, s, s));
         }

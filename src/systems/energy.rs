@@ -11,7 +11,11 @@ use crate::resources::Game;
 pub struct RechargeSystem;
 
 impl<'s> System<'s> for RechargeSystem {
-    type SystemData = (WriteStorage<'s, Energy>, Read<'s, Time>, ReadExpect<'s, Game>,);
+    type SystemData = (
+        WriteStorage<'s, Energy>,
+        Read<'s, Time>,
+        ReadExpect<'s, Game>,
+    );
 
     fn run(&mut self, (mut energies, time, game): Self::SystemData) {
         if !game.is_playing() {

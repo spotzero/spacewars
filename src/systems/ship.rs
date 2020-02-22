@@ -9,7 +9,7 @@ use amethyst::{
     renderer::resources::Tint,
 };
 
-use crate::components::{Ship, Movable, Energy, Shield};
+use crate::components::{Energy, Movable, Shield, Ship};
 use crate::resources::Game;
 
 #[derive(SystemDesc)]
@@ -25,7 +25,10 @@ impl<'s> System<'s> for ShipSystem {
         ReadExpect<'s, Game>,
     );
 
-    fn run(&mut self, (mut ships, transforms, mut movables, mut energies, time, game): Self::SystemData) {
+    fn run(
+        &mut self,
+        (mut ships, transforms, mut movables, mut energies, time, game): Self::SystemData,
+    ) {
         if !game.is_playing() {
             return;
         }
@@ -82,7 +85,10 @@ impl<'s> System<'s> for ShieldSystem {
         ReadExpect<'s, Game>,
     );
 
-    fn run(&mut self, (entities, shields, ships, mut transforms, mut tints, game): Self::SystemData) {
+    fn run(
+        &mut self,
+        (entities, shields, ships, mut transforms, mut tints, game): Self::SystemData,
+    ) {
         if !game.is_playing() {
             return;
         }
