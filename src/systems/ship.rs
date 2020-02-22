@@ -3,13 +3,14 @@ use amethyst::{
     core::timing::Time,
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
+    ecs::prelude::{Join, Read, ReadExpect, ReadStorage, System, SystemData, WriteStorage},
     ecs::Entities,
     renderer::palette::Srgba,
     renderer::resources::Tint,
 };
 
-use crate::components::*;
+use crate::components::{Ship, Movable, Energy, Shield};
+use crate::resources::Game;
 
 #[derive(SystemDesc)]
 pub struct ShipSystem;
@@ -21,9 +22,13 @@ impl<'s> System<'s> for ShipSystem {
         WriteStorage<'s, Movable>,
         WriteStorage<'s, Energy>,
         Read<'s, Time>,
+        ReadExpect<'s, Game>,
     );
 
-    fn run(&mut self, (mut ships, transforms, mut movables, mut energies, time): Self::SystemData) {
+    fn run(&mut self, (mut ships, transforms, mut movables, mut energies, time, game): Self::SystemData) {
+        if !game.is_playing() {
+            return;
+        }
         for (ship, transform, movable, energy) in
             (&mut ships, &transforms, &mut movables, &mut energies).join()
         {
@@ -74,9 +79,13 @@ impl<'s> System<'s> for ShieldSystem {
         ReadStorage<'s, Ship>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Tint>,
+        ReadExpect<'s, Game>,
     );
 
-    fn run(&mut self, (entities, shields, ships, mut transforms, mut tints): Self::SystemData) {
+    fn run(&mut self, (entities, shields, ships, mut transforms, mut tints, game): Self::SystemData) {
+        if !game.is_playing() {
+            return;
+        }
         for (entity, shield, tint) in (&entities, &shields, &mut tints).join() {
             let shield_amount = match ships.get(shield.target) {
                 Some(s) => s.shield / s.max_shield,

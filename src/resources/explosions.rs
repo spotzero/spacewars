@@ -54,7 +54,7 @@ pub fn generate_explosion(
         pos.set_scale(Vector3::new(0.1, 0.1, 1.0));
 
         emit_particle(
-            time.absolute_real_time_seconds(),
+            time.absolute_time_seconds(),
             rng.gen_range(min_life, max_life),
             pos,
             mover.velocity + thrustvector,
@@ -104,7 +104,7 @@ pub fn generate_explosion(
     lazy_update.insert(
         exploder,
         Lifetime {
-            start: time.absolute_real_time_seconds(),
+            start: time.absolute_time_seconds(),
             life: max_life,
         },
     );

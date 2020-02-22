@@ -2,7 +2,7 @@ use amethyst::{
     core::math::Point3,
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::prelude::{Join, ReadStorage, System, SystemData, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, ReadExpect, ReadStorage, System, SystemData, WriteExpect, WriteStorage},
     ecs::Entities,
     renderer::debug_drawing::DebugLinesComponent,
     renderer::palette::Srgba,
@@ -22,12 +22,17 @@ impl<'s> System<'s> for CollisionSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Collidable>,
         WriteExpect<'s, CollisionEvents>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(
         &mut self,
-        (entities, movables, transforms, colliables, mut collision_events): Self::SystemData,
+        (entities, movables, transforms, colliables, mut collision_events, game): Self::SystemData,
     ) {
+        if !game.is_playing() {
+            return;
+        }
+
         for (entity1, transform1, movable1, colliable1) in
             (&entities, &transforms, &movables, &colliables).join()
         {

@@ -3,10 +3,11 @@ use amethyst::{
     core::timing::Time,
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, System, SystemData, WriteStorage},
+    ecs::prelude::{Join, Read, ReadExpect, System, SystemData, WriteStorage},
 };
 
 use crate::components::*;
+use crate::resources::Game;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 
 #[derive(SystemDesc)]
@@ -17,9 +18,14 @@ impl<'s> System<'s> for PhysicsSystem {
         WriteStorage<'s, Movable>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
+        ReadExpect<'s, Game>,
     );
 
-    fn run(&mut self, (mut movable, mut transforms, time): Self::SystemData) {
+    fn run(&mut self, (mut movable, mut transforms, time, game): Self::SystemData) {
+        if !game.is_playing() {
+            return;
+        }
+
         let gravitywell = Vector3::new(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, 0.0);
 
         for (mover, transform) in (&mut movable, &mut transforms).join() {

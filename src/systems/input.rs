@@ -1,6 +1,6 @@
 use amethyst::{
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, Read, ReadExpect, ReadStorage, System, SystemData, WriteExpect, WriteStorage},
     input::{InputHandler, StringBindings},
 };
 
@@ -16,10 +16,15 @@ impl<'s> System<'s> for ShipInputSystem {
         WriteStorage<'s, Ship>,
         Read<'s, InputHandler<StringBindings>>,
         WriteExpect<'s, AudioEvents>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (players, mut ships, input, mut audio_events) = data;
+        let (players, mut ships, input, mut audio_events, game) = data;
+
+        if !game.is_playing() {
+            return;
+        }
 
         for (player, ship) in (&players, &mut ships).join() {
             if player.controllable {

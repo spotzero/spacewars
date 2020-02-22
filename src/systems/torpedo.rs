@@ -28,6 +28,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, AudioEvents>,
         Read<'s, Time>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(
@@ -43,8 +44,12 @@ impl<'s> System<'s> for FireTorpedoSystem {
             lazy_update,
             mut audio_events,
             time,
+            game,
         ): Self::SystemData,
     ) {
+        if !game.is_playing() {
+            return;
+        }
         for (entity, transform, movable, player, energy) in (
             &entities,
             &transforms,
@@ -58,11 +63,11 @@ impl<'s> System<'s> for FireTorpedoSystem {
                 .action_is_down(&format!("torpedo_p{}", player.id))
                 .expect("Shoot action exists");
             if fire_torpedo
-                && player.last_torpedo + player.torpedo_interval < time.absolute_real_time_seconds()
+                && player.last_torpedo + player.torpedo_interval < time.absolute_time_seconds()
                 && energy.charge > player.torpedo_energy
             {
                 energy.charge -= player.torpedo_energy;
-                player.last_torpedo = time.absolute_real_time_seconds();
+                player.last_torpedo = time.absolute_time_seconds();
                 audio_events.events.push(AudioEvent::Torpedo);
                 spawn_torpedo(
                     &entity,
@@ -91,6 +96,7 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, AudioEvents>,
         Read<'s, Time>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(
@@ -104,12 +110,16 @@ impl<'s> System<'s> for ExplodeTorpedoSystem {
             lazy_update,
             mut audio_events,
             time,
+            game,
         ): Self::SystemData,
     ) {
+        if !game.is_playing() {
+            return;
+        }
         for (entity, transform, movable, torpedo) in
             (&entities, &transforms, &movables, &mut torpedos).join()
         {
-            if (torpedo.fired + torpedo.life) <= time.absolute_real_time_seconds() {
+            if (torpedo.fired + torpedo.life) <= time.absolute_time_seconds() {
                 audio_events.events.push(AudioEvent::ExplosionTorpedo);
                 explode_torpedo(
                     &transform,
@@ -139,6 +149,7 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
         WriteExpect<'s, CollisionEvents>,
         WriteExpect<'s, AudioEvents>,
         Read<'s, Time>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(
@@ -153,8 +164,12 @@ impl<'s> System<'s> for TorpedoCollisionResponseSystem {
             mut collision_events,
             mut audio_events,
             time,
+            game,
         ): Self::SystemData,
     ) {
+        if !game.is_playing() {
+            return;
+        }
         for (entity, transform, movable, torpedo) in
             (&entities, &transforms, &movables, &torpedos).join()
         {
@@ -259,7 +274,7 @@ fn spawn_torpedo(
     lazy_update.insert(
         part,
         Torpedo {
-            fired: time.absolute_real_time_seconds(),
+            fired: time.absolute_time_seconds(),
             life: 2.0,
             player: entity.id(),
         },

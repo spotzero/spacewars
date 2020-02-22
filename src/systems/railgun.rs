@@ -27,6 +27,7 @@ impl<'s> System<'s> for FireRailGunSystem {
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
         WriteExpect<'s, AudioEvents>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(
@@ -42,8 +43,12 @@ impl<'s> System<'s> for FireRailGunSystem {
             lazy_update,
             time,
             mut audio_events,
+            game,
         ): Self::SystemData,
     ) {
+        if !game.is_playing() {
+            return;
+        }
         for (transform, movable, player, energy) in
             (&transforms, &movables, &mut players, &mut energies).join()
         {
@@ -51,11 +56,11 @@ impl<'s> System<'s> for FireRailGunSystem {
                 .action_is_down(&format!("railgun_p{}", player.id))
                 .expect("Shoot action exists");
             if fire_railgun
-                && player.last_railgun + player.railgun_interval < time.absolute_real_time_seconds()
+                && player.last_railgun + player.railgun_interval < time.absolute_time_seconds()
                 && energy.charge > player.railgun_energy
             {
                 energy.charge -= player.railgun_energy;
-                player.last_railgun = time.absolute_real_time_seconds();
+                player.last_railgun = time.absolute_time_seconds();
                 audio_events.events.push(AudioEvent::Railgun);
                 spawn_railgun(
                     &transform,
@@ -105,7 +110,7 @@ fn spawn_railgun(
     lazy_update.insert(
         part,
         Lifetime {
-            start: time.absolute_real_time_seconds(),
+            start: time.absolute_time_seconds(),
             life: 1.,
         },
     );

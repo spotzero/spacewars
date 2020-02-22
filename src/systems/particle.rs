@@ -4,8 +4,8 @@ use amethyst::{
     core::timing::Time,
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::prelude::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
-    ecs::{world::EntitiesRes, Entities, LazyUpdate, ReadExpect},
+    ecs::prelude::{Join, Read, ReadExpect, ReadStorage, System, SystemData, WriteStorage},
+    ecs::{world::EntitiesRes, Entities, LazyUpdate},
     renderer::resources::Tint,
 };
 
@@ -27,11 +27,15 @@ impl<'s> System<'s> for ParticleSystem {
         ReadStorage<'s, ParticleCom>,
         ReadStorage<'s, Lifetime>,
         Read<'s, Time>,
+        ReadExpect<'s, Game>,
     );
 
-    fn run(&mut self, (entities, _particles, lifetimes, time): Self::SystemData) {
+    fn run(&mut self, (entities, _particles, lifetimes, time, game): Self::SystemData) {
+        if !game.is_playing() {
+            return;
+        }
         for (entity, lifetime) in (&entities, &lifetimes).join() {
-            if lifetime.start + lifetime.life < time.absolute_real_time_seconds() {
+            if lifetime.start + lifetime.life < time.absolute_time_seconds() {
                 let _ = entities.delete(entity);
             }
         }
@@ -48,6 +52,7 @@ impl<'s> System<'s> for EngineParticleSystem {
         ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, Time>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(
@@ -61,8 +66,12 @@ impl<'s> System<'s> for EngineParticleSystem {
             asset_manager,
             lazy_update,
             time,
+            game,
         ): Self::SystemData,
     ) {
+        if !game.is_playing() {
+            return;
+        }
         for (ship, transform, mover, ship_engine) in
             (&ships, &transforms, &movables, &mut ship_engines).join()
         {
@@ -88,7 +97,7 @@ impl<'s> System<'s> for EngineParticleSystem {
 }
 
 fn check_engine(engine: &Engine, ship: &Ship, time: &Time) -> bool {
-    if engine.last_emit + engine.emit_rate < time.absolute_real_time_seconds()
+    if engine.last_emit + engine.emit_rate < time.absolute_time_seconds()
         && ((ship.applying_thrust > 0.0 && engine.direction > 0 && !ship.thrust_failure)
             || (ship.applying_thrust < 0.0 && engine.direction < 0 && !ship.thrust_failure)
             || (ship.applying_torque > 0.0 && engine.rotate > 0 && !ship.torque_failure)
@@ -110,7 +119,7 @@ fn emit_particle_for<'a>(
     asset_manager: &AssetManager,
 ) {
     let mut rng = rand::thread_rng();
-    engine.last_emit = time.absolute_real_time_seconds();
+    engine.last_emit = time.absolute_time_seconds();
     let mut thrust = 10000.0 * time.delta_seconds();
     if engine.direction > 0 {
         thrust *= -1.0;

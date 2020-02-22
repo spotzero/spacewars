@@ -1,4 +1,5 @@
 use amethyst::{
+    core::timing::Time,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     GameData, SimpleState, SimpleTrans, StateData, Trans,
@@ -12,6 +13,7 @@ pub struct PauseState;
 impl SimpleState for PauseState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         data.world.fetch_mut::<Game>().current_state = CurrentState::Pause;
+        data.world.fetch_mut::<Time>().set_time_scale(0.);
     }
 
     fn handle_event(

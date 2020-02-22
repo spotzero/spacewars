@@ -1,6 +1,7 @@
 use amethyst::{
     assets::Loader,
     core::math::Vector3,
+    core::timing::Time,
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
@@ -24,8 +25,11 @@ pub struct SpacewarsState;
 
 impl SimpleState for SpacewarsState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        data.world.fetch_mut::<Game>().current_state = CurrentState::Playing;
         reset_game(data.world);
+    }
+
+    fn on_resume(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        resume_game(data.world);
     }
 
     fn handle_event(
@@ -35,9 +39,12 @@ impl SimpleState for SpacewarsState {
     ) -> SimpleTrans {
         if let StateEvent::Window(event) = &event {
             // Check if the window should be closed
-            if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
+            if is_close_requested(&event) {
                 return Trans::Quit;
-                //return SimpleTrans::Switch(Box::new(MenuState));
+            }
+
+            if is_key_down(&event, VirtualKeyCode::Escape) {
+               return Trans::Push(Box::new(PauseState));
             }
         }
 
@@ -45,11 +52,17 @@ impl SimpleState for SpacewarsState {
     }
 }
 
+fn resume_game(world: &mut World) {
+    world.fetch_mut::<Game>().current_state = CurrentState::Playing;
+    world.fetch_mut::<Time>().set_time_scale(1.);
+}
+
 fn reset_game(world: &mut World) {
     world.delete_all();
     initialise_entities(world);
     initialise_camera(world);
     initialise_ui(world);
+    resume_game(world);
 }
 
 fn initialise_entities(world: &mut World) {

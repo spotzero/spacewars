@@ -1,6 +1,6 @@
 use amethyst::{
     derive::SystemDesc,
-    ecs::prelude::{Join, System, SystemData, WriteExpect, WriteStorage},
+    ecs::prelude::{Join, ReadExpect, System, SystemData, WriteExpect, WriteStorage},
     ecs::Entities,
 };
 
@@ -15,12 +15,17 @@ impl<'s> System<'s> for DamageSystem {
         WriteStorage<'s, Ship>,
         WriteExpect<'s, DamageEvents>,
         WriteExpect<'s, AudioEvents>,
+        ReadExpect<'s, Game>,
     );
 
     fn run(
         &mut self,
-        (entities, mut ships, mut damage_events, mut audio_events): Self::SystemData,
+        (entities, mut ships, mut damage_events, mut audio_events, game): Self::SystemData,
     ) {
+        if !game.is_playing() {
+            return;
+        }
+
         for (entity, ship) in (&entities, &mut ships).join() {
             for i in 0..damage_events.events.len() {
                 if entity.id() == damage_events.events[i].player {
