@@ -11,21 +11,58 @@
         "torque_p2": Emulated(
             pos: Key(Numpad6),
             neg: Key(Numpad4)
-            ),
+        ),
         "thrust_p2": Emulated(
             pos: Key(Numpad8),
             neg: Key(Numpad5)
         ),
+        "pad_torque_p1": Controller(
+            controller_id: 0,
+            axis: LeftX,
+            invert: false,
+            dead_zone: 0.2
+        ),
+        "pad_forward_thrust_p1": Controller(
+            controller_id: 0,
+            axis: RightTrigger,
+            invert: false,
+            dead_zone: 0.0
+        ),
+        "pad_reverse_thrust_p1": Controller(
+            controller_id: 0,
+            axis: LeftTrigger,
+            invert: false,
+            dead_zone: 0.0
+        ),
+        "pad_torque_p2": Controller(
+            controller_id: 1,
+            axis: LeftX,
+            invert: false,
+            dead_zone: 0.2
+        ),
+        "pad_forward_thrust_p2": Controller(
+            controller_id: 1,
+            axis: RightTrigger,
+            invert: false,
+            dead_zone: 0.0
+        ),
+        "pad_reverse_thrust_p2": Controller(
+            controller_id: 1,
+            axis: LeftTrigger,
+            invert: false,
+            dead_zone: 0.0
+        ),
+
     },
     actions: {
-        "railgun_p1": [[Key(Q)]],
-        "torpedo_p1": [[Key(E)]],
+        "railgun_p1": [[Key(Q)], [Controller(0, A)]],
+        "torpedo_p1": [[Key(E)], [Controller(0, B)]],
         "laser_p1":  [[Key(Z)]],
         "recharge_p1":  [[Key(X)]],
         "hyperspace_p1": [[Key(C)]],
 
-        "railgun_p2": [[Key(Numpad7)]],
-        "torpedo_p2": [[Key(Numpad9)]],
+        "railgun_p2": [[Key(Numpad7)], [Controller(1, A)]],
+        "torpedo_p2": [[Key(Numpad9)], [Controller(1, B)]],
         "laser_p2":  [[Key(Numpad1)]],
         "recharge_p2": [[Key(Numpad2)]],
         "hyperspace_p2": [[Key(Numpad3)]],

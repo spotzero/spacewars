@@ -29,6 +29,7 @@ pub use self::{
     game::CurrentState,
     game::Game,
     math::unit_vector,
+    math::you_mean_one,
     particle::emit_particle,
     //particle::emit_spark,
     player::spawn_player,
