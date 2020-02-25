@@ -20,7 +20,7 @@ script = [
     "cp -r resources target/Spacewars.AppDir",
     "cp target/release/spacewars target/Spacewars.AppDir/AppRun",
     "cd target/Spacewars.AppDir",
-    "mv resources/logo.png Spacewars.png",
+    "cp resources/textures/logo.png Spacewars.png",
     "echo '[Desktop Entry]' > Spacewars.desktop",
     "echo 'Name=Spacewars' >> Spacewars.desktop",
     "echo 'Exec=Spacewars' >> Spacewars.desktop",
