@@ -11,6 +11,7 @@ use amethyst::{
         sprite::{SpriteRender, SpriteSheetFormat, SpriteSheetHandle},
         SpriteSheet, Texture,
     },
+    ui::{FontAsset, TtfFormat},
 };
 
 #[derive(Default)]
@@ -18,12 +19,14 @@ pub struct AssetManager {
     pub progress: ProgressCounter,
     sprites: HashMap<String, Handle<SpriteSheet>>,
     sounds: HashMap<String, SourceHandle>,
+    font: Option<Handle<FontAsset>>,
 }
 
 #[derive(Debug)]
 pub enum AssetKind {
     Sprite,
     Sound,
+    Font,
 }
 
 impl AssetManager {
@@ -41,10 +44,18 @@ impl AssetManager {
                     world.read_resource::<Loader>().load(
                         format!("sounds/{}.wav", name),
                         WavFormat,
-                        (),
+                        &mut self.progress,
                         &world.read_resource(),
                     ),
                 );
+            }
+            AssetKind::Font => {
+                self.font = Some(world.read_resource::<Loader>().load(
+                    name,
+                    TtfFormat,
+                    &mut self.progress,
+                    &world.read_resource(),
+                ));
             }
         }
     }
@@ -56,6 +67,14 @@ impl AssetManager {
     pub fn play_wav(&self, name: &str, storage: &AssetStorage<Source>, output: &Output) {
         if let Some(sound) = storage.get(self.get_wav(name).expect("Invalid sound loaded")) {
             output.play_once(sound, 1.0);
+        }
+    }
+
+    pub fn font(&self) -> Option<Handle<FontAsset>> {
+        if self.font.is_some() {
+            self.font.clone()
+        } else {
+            None
         }
     }
 

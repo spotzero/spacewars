@@ -119,12 +119,7 @@ fn initialise_camera(world: &mut World) {
 }
 
 fn initialise_ui(world: &mut World) {
-    let font = world.read_resource::<Loader>().load(
-        "font/UbuntuMono-R.ttf",
-        TtfFormat,
-        (),
-        &world.read_resource(),
-    );
+    let font = world.fetch::<AssetManager>().font().unwrap();
 
     let mut p1_transform = UiTransform::new(
         "p1-stats".to_string(),
