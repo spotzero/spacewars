@@ -17,7 +17,7 @@ pub use self::{
     damage::DamageSystem, energy::RechargeSystem, explosion::ExplosionCollisionResponseSystem,
     explosion::ExplosionSystem, input::ShipInputSystem, particle::EngineParticleSystem,
     particle::ParticleSystem, physics::PhysicsSystem, player::PlayerCollisionResponseSystem,
-    player::PlayerDeathSystem, player::PlayerRespawnSystem, railgun::FireRailGunSystem,
+    player::PlayerDeathSystem, player::PlayerRespawnSystem, player::PlayerWinnerSystem, railgun::FireRailGunSystem,
     ship::ShieldSystem, ship::ShipSystem, torpedo::ExplodeTorpedoSystem,
     torpedo::FireTorpedoSystem, torpedo::TorpedoCollisionResponseSystem, ui::StatusUiSystem,
     ui::StatusUpdateSystem,

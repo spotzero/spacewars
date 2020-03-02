@@ -63,6 +63,7 @@ impl<'s> System<'s> for FireTorpedoSystem {
                 .action_is_down(&format!("torpedo_p{}", player.id))
                 .expect("Shoot action exists");
             if fire_torpedo
+                && player.controllable
                 && player.last_torpedo + player.torpedo_interval < time.absolute_time_seconds()
                 && energy.charge > player.torpedo_energy
             {

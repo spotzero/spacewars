@@ -7,7 +7,7 @@ pub struct StatusOfPlayer {
     pub hull: f32,
     pub dead: bool,
     pub respawn: f64,
-    pub lives: i32,
+    pub lives: isize,
 }
 
 #[derive(Default)]

@@ -40,7 +40,7 @@ impl<'s> System<'s> for ShipSystem {
                 if energy.charge > thrust {
                     ship.thrust_failure = false;
 
-                    energy.charge -= thrust * 0.05;
+                    energy.charge -= thrust.abs() * 0.05;
 
                     let mut thrustvector = Vector3::new(0.0, thrust, 0.0);
                     thrustvector = transform.rotation().transform_vector(&thrustvector);

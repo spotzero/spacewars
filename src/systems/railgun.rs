@@ -56,6 +56,7 @@ impl<'s> System<'s> for FireRailGunSystem {
                 .action_is_down(&format!("railgun_p{}", player.id))
                 .expect("Shoot action exists");
             if fire_railgun
+                && player.controllable
                 && player.last_railgun + player.railgun_interval < time.absolute_time_seconds()
                 && energy.charge > player.railgun_energy
             {

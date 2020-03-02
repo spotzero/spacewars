@@ -26,7 +26,7 @@ impl SimpleState for PauseState {
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let text = data.world.remove::<PauseText>().unwrap();
-        data.world.entities().delete(text.text);
+        let _ = data.world.entities().delete(text.text);
     }
 
     fn handle_event(

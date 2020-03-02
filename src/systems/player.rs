@@ -4,7 +4,8 @@ use amethyst::{
     core::transform::Transform,
     derive::SystemDesc,
     ecs::prelude::{Join, Read, System, SystemData, WriteExpect, WriteStorage},
-    ecs::{Entities, LazyUpdate, ReadExpect},
+    ecs::{world::EntitiesRes, Entities, Entity, LazyUpdate, ReadExpect},
+    ui::{Anchor, UiText, UiTransform},
 };
 
 use crate::{components::*, resources::*};
@@ -110,10 +111,50 @@ impl<'s> System<'s> for PlayerRespawnSystem {
             return;
         }
         for mut status in status_of_players.players.values_mut() {
-            if status.dead && status.respawn <= time.absolute_time_seconds() {
+            if status.dead && status.lives >= 0 && status.respawn <= time.absolute_time_seconds() {
                 status.dead = false;
                 spawn_player(status.id, &lazy_update, &entities, &asset_manager);
             }
+        }
+    }
+}
+
+
+#[derive(SystemDesc)]
+pub struct PlayerWinnerSystem;
+
+impl<'s> System<'s> for PlayerWinnerSystem {
+    type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, Player>,
+        ReadExpect<'s, AssetManager>,
+        ReadExpect<'s, LazyUpdate>,
+        WriteExpect<'s, StatusOfPlayers>,
+        Read<'s, Time>,
+        ReadExpect<'s, Game>,
+    );
+
+    fn run(
+        &mut self,
+        (entities, mut players, asset_manager, lazy_update, mut status_of_players, time, game): Self::SystemData,
+    ) {
+        if !game.is_playing() {
+            return;
+        }
+        let mut winner = 255;
+        let mut loser = 255;
+        for mut status in status_of_players.players.values_mut() {
+            if !status.lives >= 0 {
+                loser = status.id;
+            } else {
+                winner = status.id;
+            }
+        }
+        if loser != 255 {
+            for (player) in (&mut players).join() {
+                player.controllable = false;
+            }
+            winner_text(&lazy_update, &entities, winner, &asset_manager);
         }
     }
 }
@@ -164,4 +205,44 @@ impl<'s> System<'s> for PlayerCollisionResponseSystem {
         }
         collision_events.player_collisions.clear();
     }
+}
+
+fn winner_text(
+    lazy_update: &LazyUpdate,
+    entities: &Read<EntitiesRes>,
+    winner: u8,
+    asset_manager: &AssetManager,
+) {
+    if winner > 2 {
+        return;
+    }
+    let winner = winner - 1;
+
+    let player_name = ["red", "blue"];
+    let player_colour = [
+        [1., 0., 0., 1.],
+        [0., 0., 1., 1.]
+    ];
+
+    let font = asset_manager.font().unwrap();
+
+    let mut text = UiTransform::new(
+        format!("The {} ship wins!", player_name[winner as usize]),
+        Anchor::Middle,
+        Anchor::Middle,
+        0.0,
+        240.0,
+        0.0,
+        900.,
+        50.,
+    );
+
+    let ui: Entity = entities.create();
+    lazy_update.insert(ui, text);
+    lazy_update.insert(ui, UiText::new(
+            font.clone(),
+            format!("The {} ship wins!", player_name[winner as usize]),
+            player_colour[winner as usize],
+            50.,
+        ));
 }

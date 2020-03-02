@@ -43,10 +43,10 @@ impl<'s> System<'s> for StatusUiSystem {
             let status = status_of_players.players.get(&stat_ui.player).unwrap();
 
             ui_text.text = match stat_ui.data {
-                StatusUiKind::Energy => format!("Energy: {}", status.energy as u8),
-                StatusUiKind::Shields => format!("Shields: {}", status.shields as u8),
-                StatusUiKind::Hull => format!("Hull: {}", status.hull as u8),
-                StatusUiKind::Score => format!("Lives: {}", status.lives as u8),
+                StatusUiKind::Energy => format!("Energy: {}", status.energy as usize),
+                StatusUiKind::Shields => format!("Shields: {}", status.shields as usize),
+                StatusUiKind::Hull => format!("Hull: {}", status.hull as usize),
+                StatusUiKind::Score => format!("Lives: {}", status.lives as usize),
             };
         }
     }
