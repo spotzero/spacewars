@@ -16,7 +16,7 @@ impl SimpleState for MenuState {
 
     fn handle_event(
         &mut self,
-        data: StateData<'_, GameData<'_, '_>>,
+        _data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
         if let StateEvent::Window(event) = &event {

@@ -3,12 +3,11 @@ use amethyst::{
     ecs::Entity,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
+    ui::{Anchor, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, Trans,
-    ui::{Anchor, TtfFormat, UiText, UiTransform},
 };
 
 use crate::resources::*;
-use crate::states::*;
 
 pub struct PauseState;
 
@@ -20,7 +19,9 @@ impl SimpleState for PauseState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         data.world.fetch_mut::<Game>().current_state = CurrentState::Pause;
         data.world.fetch_mut::<Time>().set_time_scale(0.);
-        let pause_text = PauseText { text: pause_text(data.world) };
+        let pause_text = PauseText {
+            text: pause_text(data.world),
+        };
         data.world.insert(pause_text);
     }
 
@@ -31,7 +32,7 @@ impl SimpleState for PauseState {
 
     fn handle_event(
         &mut self,
-        data: StateData<'_, GameData<'_, '_>>,
+        _data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
         if let StateEvent::Window(event) = &event {
@@ -51,7 +52,7 @@ impl SimpleState for PauseState {
 
 fn pause_text(world: &mut World) -> Entity {
     let font = world.fetch::<AssetManager>().font().unwrap();
-    let mut pause = UiTransform::new(
+    let pause = UiTransform::new(
         "Paused".to_string(),
         Anchor::Middle,
         Anchor::Middle,

@@ -36,7 +36,8 @@ impl<'s> System<'s> for ShipSystem {
             (&mut ships, &transforms, &mut movables, &mut energies).join()
         {
             if ship.applying_thrust != 0.0 {
-                let thrust = (ship.thrust * ship.applying_thrust * time.delta_seconds()) / movable.mass;
+                let thrust =
+                    (ship.thrust * ship.applying_thrust * time.delta_seconds()) / movable.mass;
                 if energy.charge > thrust {
                     ship.thrust_failure = false;
 
@@ -51,7 +52,8 @@ impl<'s> System<'s> for ShipSystem {
             }
 
             if ship.applying_torque != 0.0 {
-                let torque = (ship.torque * ship.applying_torque * time.delta_seconds()) / movable.mass;
+                let torque =
+                    (ship.torque * ship.applying_torque * time.delta_seconds()) / movable.mass;
                 if energy.charge > torque {
                     energy.charge -= torque * 2.0;
                     ship.thrust_failure = false;

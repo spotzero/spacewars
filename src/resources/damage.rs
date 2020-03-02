@@ -6,7 +6,7 @@ pub struct Damage {
 
 pub mod damage_types {
     pub const EXPLOSION: u32 = 1;
-    pub const ENERGY: u32 = 2;
+    // pub const ENERGY: u32 = 2;
     pub const KINETIC: u32 = 3;
     pub const GRAVITYWELL: u32 = 4;
 }

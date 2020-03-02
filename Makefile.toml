@@ -12,10 +12,9 @@ script = [
 ]
 
 [tasks.build_release_linux]
-dependencies = ["clean_release_linux"]
+dependencies = ["clean_release_linux", "build"]
 script_runner = "bash"
 script = [
-    "cargo build --release",
     "mkdir -p target/Spacewars.AppDir",
     "cp -r resources target/Spacewars.AppDir",
     "cp target/release/spacewars target/Spacewars.AppDir/AppRun",

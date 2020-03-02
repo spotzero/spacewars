@@ -30,26 +30,26 @@ impl<'s> System<'s> for ShipInputSystem {
 
         for (player, ship) in (&players, &mut ships).join() {
             if player.controllable {
-
                 ship.applying_torque = you_mean_one(
                     input
                         .axis_value(&format!("torque_p{}", player.id))
                         .unwrap_or(0.0)
-                     + input
-                        .axis_value(&format!("pad_torque_p{}", player.id))
-                        .unwrap_or(0.0)
+                        + input
+                            .axis_value(&format!("pad_torque_p{}", player.id))
+                            .unwrap_or(0.0),
                 );
-                
+
                 ship.applying_thrust = you_mean_one(
                     input
                         .axis_value(&format!("thrust_p{}", player.id))
                         .unwrap_or(0.0)
-                     + input
-                        .axis_value(&format!("pad_forward_thrust_p{}", player.id))
-                        .unwrap_or(0.0)
-                     + (-1. * input
-                        .axis_value(&format!("pad_reverse_thrust_p{}", player.id))
-                        .unwrap_or(0.0))
+                        + input
+                            .axis_value(&format!("pad_forward_thrust_p{}", player.id))
+                            .unwrap_or(0.0)
+                        + (-1.
+                            * input
+                                .axis_value(&format!("pad_reverse_thrust_p{}", player.id))
+                                .unwrap_or(0.0)),
                 );
 
                 audio_events.events.push(AudioEvent::Engine {

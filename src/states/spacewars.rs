@@ -1,5 +1,4 @@
 use amethyst::{
-    assets::Loader,
     core::math::Vector3,
     core::timing::Time,
     core::transform::Transform,
@@ -7,7 +6,7 @@ use amethyst::{
     prelude::*,
     renderer::debug_drawing::DebugLinesComponent,
     renderer::{Camera, Transparent},
-    ui::{Anchor, TtfFormat, UiText, UiTransform},
+    ui::{Anchor, UiText, UiTransform},
     //    window::ScreenDimensions,
     GameData,
     SimpleState,
@@ -34,7 +33,7 @@ impl SimpleState for SpacewarsState {
 
     fn handle_event(
         &mut self,
-        data: StateData<'_, GameData<'_, '_>>,
+        _data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
         if let StateEvent::Window(event) = &event {
