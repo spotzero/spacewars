@@ -25,15 +25,20 @@ pub struct SpacewarsState;
 impl SimpleState for SpacewarsState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         reset_game(data.world);
+        resume_game(data.world);
     }
 
     fn on_resume(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         resume_game(data.world);
     }
 
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {    
+        data.world.delete_all();
+    }
+
     fn handle_event(
         &mut self,
-        _data: StateData<'_, GameData<'_, '_>>,
+        data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
         if let StateEvent::Window(event) = &event {
@@ -41,9 +46,13 @@ impl SimpleState for SpacewarsState {
             if is_close_requested(&event) {
                 return Trans::Quit;
             }
-
+            
             if is_key_down(&event, VirtualKeyCode::Escape) {
-                return Trans::Push(Box::new(PauseState));
+                if data.world.fetch::<Game>().winner {
+                    return SimpleTrans::Switch(Box::new(MenuState));
+                } else {
+                    return Trans::Push(Box::new(PauseState));
+                }
             }
         }
 
@@ -58,6 +67,7 @@ fn resume_game(world: &mut World) {
 
 fn reset_game(world: &mut World) {
     world.delete_all();
+    world.fetch_mut::<Game>().winner = false;
     initialise_entities(world);
     initialise_camera(world);
     initialise_ui(world);

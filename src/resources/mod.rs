@@ -31,7 +31,6 @@ pub use self::{
     math::unit_vector,
     math::you_mean_one,
     particle::emit_particle,
-    //particle::emit_spark,
     player::spawn_player,
     ui::StatusOfPlayer,
     ui::StatusOfPlayers,

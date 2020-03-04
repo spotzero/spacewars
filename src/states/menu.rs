@@ -1,4 +1,5 @@
 use amethyst::{
+    core::timing::Time,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     GameData, SimpleState, SimpleTrans, StateData, Trans,
@@ -12,6 +13,7 @@ pub struct MenuState;
 impl SimpleState for MenuState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         data.world.fetch_mut::<Game>().current_state = CurrentState::Menu;
+        data.world.fetch_mut::<Time>().set_time_scale(0.);
     }
 
     fn handle_event(
@@ -25,12 +27,10 @@ impl SimpleState for MenuState {
                 return Trans::Quit;
             }
 
-            if is_key_down(&event, VirtualKeyCode::Space) {
+            if is_key_down(&event, VirtualKeyCode::Space) || is_key_down(&event, VirtualKeyCode::Return) {
                 return SimpleTrans::Switch(Box::new(SpacewarsState));
             }
         }
-
-        //for world.fetch::<StatusOfPlayers>()
 
         // Keep going
         Trans::None

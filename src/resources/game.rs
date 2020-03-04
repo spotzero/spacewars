@@ -8,6 +8,7 @@ pub enum CurrentState {
 
 pub struct Game {
     pub current_state: CurrentState,
+    pub winner: bool,
 }
 
 impl Game {

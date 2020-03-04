@@ -129,12 +129,12 @@ impl<'s> System<'s> for PlayerWinnerSystem {
         ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, StatusOfPlayers>,
-        ReadExpect<'s, Game>,
+        WriteExpect<'s, Game>,
     );
 
     fn run(
         &mut self,
-        (entities, mut players, asset_manager, lazy_update, mut status_of_players, game): Self::SystemData,
+        (entities, mut players, asset_manager, lazy_update, mut status_of_players, mut game): Self::SystemData,
     ) {
         if !game.is_playing() {
             return;
@@ -153,6 +153,7 @@ impl<'s> System<'s> for PlayerWinnerSystem {
                 player.controllable = false;
             }
             winner_text(&lazy_update, &entities, winner, &asset_manager);
+            game.winner = true;
         }
     }
 }

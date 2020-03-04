@@ -25,7 +25,7 @@ impl SimpleState for LoadingState {
         let asset_manager = data.world.fetch::<AssetManager>();
         if asset_manager.progress.is_complete() {
             // Loaded.
-            return SimpleTrans::Switch(Box::new(SpacewarsState));
+            return SimpleTrans::Switch(Box::new(MenuState));
         }
         Trans::None
     }
@@ -77,6 +77,7 @@ fn load_assets(world: &mut World) {
     asset_manager.insert(world, "font/UbuntuMono-R.ttf", AssetKind::Font);
 
     asset_manager.insert(world, "logo", AssetKind::Sprite);
+    asset_manager.insert(world, "controls", AssetKind::Sprite);
     asset_manager.insert(world, "backgrounds/background-2", AssetKind::Sprite);
     asset_manager.insert(world, "backgrounds/gravity-well", AssetKind::Sprite);
     asset_manager.insert(world, "ships/ship-001", AssetKind::Sprite);
@@ -98,6 +99,7 @@ fn load_assets(world: &mut World) {
 fn initialise_resources(world: &mut World) {
     world.insert(Game {
         current_state: CurrentState::Loading,
+        winner: false,
     });
     world.insert(StatusOfPlayers::default());
     world.insert(AssetManager::default());
