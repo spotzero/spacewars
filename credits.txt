@@ -1,9 +1,8 @@
-Programming & Sounds Effects: David Pascoe-Deslauriers (@spotzero)
+Programming, art and graphics, and sound by David Pascoe-Deslauriers (@spotzero)
 
-Thanks you to the Amethyst Game Engine and the Rust programming language.
+Built with the Amethyst Game Engine and the Rust programming language.
 
 Music Attibution:
-
 "Ignition, Set, GO!" by Bomb Boy is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
 "Five Nine Seven Eight" by Virt is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
 "Endorphemeral" by Zabutom is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
