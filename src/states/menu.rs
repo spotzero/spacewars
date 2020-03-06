@@ -79,8 +79,8 @@ fn init_menu(world: &mut World) {
     world.create_entity().with(title).with(title_transform).with(Transparent).build();
 
     let mut control_transform = Transform::default();
-    control_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 3.5, -10.0);
-    control_transform.set_scale(Vector3::new(0.75, 0.75, 1.));
+    control_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 4., -10.0);
+    control_transform.set_scale(Vector3::new(0.6, 0.6, 1.));
     world.create_entity().with(controls).with(control_transform).with(Transparent).build();
 }
 
@@ -91,7 +91,7 @@ fn start_text(world: &mut World) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        100.0,
+        0.0,
         0.0,
         600.,
         50.,
