@@ -99,7 +99,7 @@ fn load_assets(world: &mut World) {
 fn initialise_resources(world: &mut World) {
     world.insert(Game {
         current_state: CurrentState::Loading,
-        winner: false,
+        game_state: GameState::Playing,
     });
     world.insert(StatusOfPlayers::default());
     world.insert(AssetManager::default());

@@ -27,6 +27,7 @@ pub use self::{
     debris::generate_debris,
     explosions::generate_explosion,
     game::CurrentState,
+    game::GameState,
     game::Game,
     math::unit_vector,
     math::you_mean_one,
