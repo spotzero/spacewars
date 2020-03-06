@@ -4,7 +4,6 @@ use amethyst::{
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     GameData, SimpleState, SimpleTrans, StateData, Trans,
-    renderer::{Camera, Transparent},
 };
 
 use rand::seq::SliceRandom;

@@ -5,7 +5,7 @@ use amethyst::{
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::debug_drawing::DebugLinesComponent,
-    renderer::{Camera, Transparent},
+    renderer::Transparent,
     ui::{Anchor, UiText, UiTransform},
     //    window::ScreenDimensions,
     GameData,
@@ -32,7 +32,7 @@ impl SimpleState for SpacewarsState {
         resume_game(data.world);
     }
 
-    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {    
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         data.world.delete_all();
     }
 
@@ -46,7 +46,7 @@ impl SimpleState for SpacewarsState {
             if is_close_requested(&event) {
                 return Trans::Quit;
             }
-            
+
             if is_key_down(&event, VirtualKeyCode::Escape) {
                 if data.world.fetch::<Game>().winner {
                     return SimpleTrans::Switch(Box::new(MenuState));

@@ -4,8 +4,7 @@ use amethyst::{
     core::transform::Transform,
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
-    renderer::debug_drawing::DebugLinesComponent,
-    renderer::{Camera, Transparent},
+    renderer::Transparent,
     ui::{Anchor, UiText, UiTransform},
     //    window::ScreenDimensions,
     GameData,
@@ -15,7 +14,6 @@ use amethyst::{
     Trans,
 };
 
-use crate::components::*;
 use crate::resources::*;
 use crate::states::*;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
@@ -76,14 +74,13 @@ fn init_menu(world: &mut World) {
     world.create_entity().with(bg_ss).with(bg_transform).with(Transparent).build();
 
     let mut title_transform = Transform::default();
-    //bg_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -10.0);
-    //bg_transform.set_scale(Vector3::new(scale, scale, scale));
+    title_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 1.333, -10.0);
+    title_transform.set_scale(Vector3::new(1.5, 1.5, 1.));
     world.create_entity().with(title).with(title_transform).with(Transparent).build();
 
     let mut control_transform = Transform::default();
-    let scale = ARENA_WIDTH / 1000.0;
-    //bg_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -10.0);
-    //bg_transform.set_scale(Vector3::new(scale, scale, scale));
+    control_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 3.5, -10.0);
+    control_transform.set_scale(Vector3::new(0.75, 0.75, 1.));
     world.create_entity().with(controls).with(control_transform).with(Transparent).build();
 }
 
@@ -94,7 +91,7 @@ fn start_text(world: &mut World) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        200.0,
+        100.0,
         0.0,
         600.,
         50.,
