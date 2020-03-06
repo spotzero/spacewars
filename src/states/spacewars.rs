@@ -68,8 +68,8 @@ fn resume_game(world: &mut World) {
 fn reset_game(world: &mut World) {
     world.delete_all();
     world.fetch_mut::<Game>().winner = false;
-    initialise_entities(world);
     initialise_camera(world);
+    initialise_entities(world);
     initialise_ui(world);
     resume_game(world);
 }
@@ -111,19 +111,6 @@ fn initialise_entities(world: &mut World) {
             apply_physics: false,
         })
         .with(DebugLinesComponent::with_capacity(16))
-        .build();
-}
-
-/// Initialise the camera.
-fn initialise_camera(world: &mut World) {
-    // Setup camera in a way that our screen covers whole arena and (0, 0) is in the bottom left.
-    let mut transform = Transform::default();
-    transform.set_translation_xyz(ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5, 1.0);
-
-    world
-        .create_entity()
-        .with(Camera::standard_2d(ARENA_WIDTH, ARENA_HEIGHT))
-        .with(transform)
         .build();
 }
 

@@ -34,4 +34,5 @@ pub use self::{
     player::spawn_player,
     ui::StatusOfPlayer,
     ui::StatusOfPlayers,
+    ui::initialise_camera,
 };
