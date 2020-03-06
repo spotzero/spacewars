@@ -48,7 +48,7 @@ impl SimpleState for SpacewarsState {
             }
 
             if is_key_down(&event, VirtualKeyCode::Escape) {
-                if data.world.fetch::<Game>().winner {
+                if data.world.fetch::<Game>().game_over() {
                     return SimpleTrans::Switch(Box::new(MenuState));
                 } else {
                     return Trans::Push(Box::new(PauseState));
@@ -67,7 +67,7 @@ fn resume_game(world: &mut World) {
 
 fn reset_game(world: &mut World) {
     world.delete_all();
-    world.fetch_mut::<Game>().winner = false;
+    world.fetch_mut::<Game>().game_state = GameState::Playing;
     initialise_camera(world);
     initialise_entities(world);
     initialise_ui(world);

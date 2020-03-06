@@ -23,11 +23,7 @@ impl Game {
         self.current_state == CurrentState::Playing
     }
 
-    pub fn has_winner(&self) -> bool {
-        self.game_state == GameState::Winner
-    }
-
-    pub fn is_winner(&self) -> bool {
-        self.game_state == GameState::Tie
+    pub fn game_over(&self) -> bool {
+        self.game_state == GameState::Winner || self.game_state == GameState::Tie
     }
 }

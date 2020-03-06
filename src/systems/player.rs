@@ -139,6 +139,14 @@ impl<'s> System<'s> for PlayerWinnerSystem {
         if !game.is_playing() {
             return;
         }
+        if game.game_state == GameState::Tie {
+            for player in (&mut players).join() {
+                player.controllable = false;
+            }
+            winner_text(&lazy_update, &entities, 2, &asset_manager);
+            return;
+        }
+
         let mut winner = 255;
         let mut loser = 255;
         for status in status_of_players.players.values_mut() {
@@ -153,7 +161,7 @@ impl<'s> System<'s> for PlayerWinnerSystem {
                 player.controllable = false;
             }
             winner_text(&lazy_update, &entities, winner, &asset_manager);
-            game.winner = true;
+            game.game_state = GameState::Winner;
         }
     }
 }
@@ -212,13 +220,13 @@ fn winner_text(
     winner: u8,
     asset_manager: &AssetManager,
 ) {
-    if winner > 2 {
+    if winner > 3 {
         return;
     }
     let winner = winner - 1;
 
-    let player_name = ["red", "blue"];
-    let player_colour = [[1., 0., 0., 1.], [0., 0., 1., 1.]];
+    let player_name = ["The red ship wins!", "The blue ship wins!", "Tie game!"];
+    let player_colour = [[1., 0., 0., 1.], [0., 0., 1., 1.], [1.,1.,1.,1.]];
 
     let font = asset_manager.font().unwrap();
 
@@ -227,7 +235,7 @@ fn winner_text(
     lazy_update.insert(
         ui,
         UiTransform::new(
-            format!("The {} ship wins!", player_name[winner as usize]),
+            player_name[winner as usize].to_string(),
             Anchor::Middle,
             Anchor::Middle,
             0.0,
@@ -241,7 +249,7 @@ fn winner_text(
         ui,
         UiText::new(
             font.clone(),
-            format!("The {} ship wins!", player_name[winner as usize]),
+            player_name[winner as usize].to_string(),
             player_colour[winner as usize],
             50.,
         ),
