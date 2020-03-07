@@ -64,7 +64,7 @@ impl SimpleState for SpacewarsState {
                 }
             }
 
-            if is_key_down(&event, VirtualKeyCode::Back) {
+            if is_key_down(&event, VirtualKeyCode::Back) && data.world.fetch_mut::<Game>().game_over() {
                 data.world.fetch_mut::<Game>().game_state = GameState::Tie;
                 data.world.fetch_mut::<Game>().end_time = data.world.fetch::<Time>().absolute_time_seconds();
             }
@@ -82,6 +82,7 @@ fn resume_game(world: &mut World) {
 fn reset_game(world: &mut World) {
     world.delete_all();
     world.fetch_mut::<Game>().game_state = GameState::Playing;
+    world.fetch_mut::<Game>().stopped = false;
     initialise_camera(world);
     initialise_entities(world);
     initialise_ui(world);

@@ -140,11 +140,17 @@ impl<'s> System<'s> for PlayerWinnerSystem {
         if !game.is_playing() {
             return;
         }
+
+        if game.stopped {
+            return;
+        }
+
         if game.game_state == GameState::Tie {
             for player in (&mut players).join() {
                 player.controllable = false;
             }
             winner_text(&lazy_update, &entities, 3, &asset_manager);
+            game.stopped = true;
             return;
         }
 
@@ -164,6 +170,7 @@ impl<'s> System<'s> for PlayerWinnerSystem {
             winner_text(&lazy_update, &entities, winner, &asset_manager);
             game.game_state = GameState::Winner;
             game.end_time = time.absolute_time_seconds();
+            game.stopped = true;
         }
     }
 }

@@ -17,6 +17,7 @@ pub struct Game {
     pub current_state: CurrentState,
     pub game_state: GameState,
     pub end_time: f64,
+    pub stopped: bool,
 }
 
 impl Game {
@@ -25,6 +26,6 @@ impl Game {
     }
 
     pub fn game_over(&self) -> bool {
-        self.game_state == GameState::Winner || self.game_state == GameState::Tie
+        self.game_state != GameState::Playing
     }
 }
