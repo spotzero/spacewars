@@ -9,16 +9,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="700"
-   height="400"
-   viewBox="0 0 185.20833 105.83334"
+   width="1200"
+   height="600"
+   viewBox="0 0 317.49999 158.75001"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="controls.svg"
    inkscape:export-filename="controls.png"
-   inkscape:export-xdpi="164.57143"
-   inkscape:export-ydpi="164.57143">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <inkscape:perspective
@@ -30,7 +30,7 @@
        id="perspective815" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="94.179762 : 209.81329 : 1"
+       inkscape:vp_x="94.179761 : 209.81329 : 1"
        inkscape:vp_y="0 : 264.58334 : 0"
        inkscape:vp_z="149.74226 : 209.81329 : 1"
        inkscape:persp3d-origin="121.96101 : 196.71641 : 1"
@@ -39,8 +39,8 @@
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="152.60362 : 148.0688 : 1"
        inkscape:vp_y="0 : 987.9414 : 0"
-       inkscape:vp_z="-54.864062 : 148.0688 : 1"
-       inkscape:persp3d-origin="48.869778 : 99.165675 : 1"
+       inkscape:vp_z="-54.864061 : 148.0688 : 1"
+       inkscape:persp3d-origin="48.869777 : 99.165675 : 1"
        id="perspective815-9" />
   </defs>
   <sodipodi:namedview
@@ -50,17 +50,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.8101934"
-     inkscape:cx="437.90978"
-     inkscape:cy="229.92035"
+     inkscape:zoom="1"
+     inkscape:cx="597.83744"
+     inkscape:cy="336.38541"
      inkscape:document-units="mm"
      inkscape:current-layer="g817"
      showgrid="false"
      units="px"
      inkscape:window-width="3840"
-     inkscape:window-height="2099"
+     inkscape:window-height="2054"
      inkscape:window-x="0"
-     inkscape:window-y="34"
+     inkscape:window-y="54"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -78,13 +78,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-191.16665)">
+     transform="translate(0,-138.24998)">
     <g
        id="g817"
        style="opacity:1;fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
       <g
          id="g1464"
-         transform="translate(-18.708867,141.77813)">
+         transform="matrix(1.6695053,0,0,1.6695053,-35.110232,49.101824)">
         <g
            transform="matrix(-1,0,0,1,206.29945,15.902256)"
            id="g923-0"
@@ -361,10 +361,56 @@
              x="39.876488"
              id="tspan1252-79"
              sodipodi:role="line">Q</tspan></text>
+        <g
+           transform="matrix(-1.9919842,0,0,0.86514451,439.97177,16.901495)"
+           id="g923-0-9-9-7"
+           style="opacity:1;fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+          <path
+             inkscape:connector-curvature="0"
+             d="m 154.78125,71.915177 v 15.126308 l 12.4153,2.55086 V 75.517372 Z"
+             style="fill:#353564;fill-rule:evenodd;stroke:none;stroke-linejoin:round"
+             id="path903-6-2-2-5" />
+          <path
+             inkscape:connector-curvature="0"
+             d="m 167.19655,75.517372 2.93062,-3.22764 v 15.01699 l -2.93062,2.285623 z"
+             style="fill:#e9e9ff;fill-rule:evenodd;stroke:none;stroke-linejoin:round"
+             id="path905-2-0-2-69" />
+          <path
+             inkscape:connector-curvature="0"
+             d="m 154.78125,71.915177 2.26785,-3.746558 13.07807,4.121113 -2.93062,3.22764 z"
+             style="fill:#4d4d9f;fill-rule:evenodd;stroke:none;stroke-linejoin:round"
+             id="path907-6-2-8-8" />
+          <path
+             inkscape:connector-curvature="0"
+             d="m 154.78125,87.041485 2.26785,-2.65309 13.07807,2.918327 -2.93062,2.285623 z"
+             style="fill:#afafde;fill-rule:evenodd;stroke:none;stroke-linejoin:round"
+             id="path909-1-3-9-72" />
+          <path
+             inkscape:connector-curvature="0"
+             d="m 157.0491,68.168619 v 16.219776 l 13.07807,2.918327 v -15.01699 z"
+             style="fill:#d7d7ff;fill-rule:evenodd;stroke:none;stroke-linejoin:round"
+             id="path911-8-7-7-82" />
+          <path
+             inkscape:connector-curvature="0"
+             d="m 154.78125,71.915177 2.26785,-3.746558 v 16.219776 l -2.26785,2.65309 z"
+             style="fill:#8686bf;fill-rule:evenodd;stroke:none;stroke-linejoin:round"
+             id="path913-7-5-3-9" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:6.33920336px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.63392031"
+           x="102.97591"
+           y="86.413963"
+           id="text1023"><tspan
+             sodipodi:role="line"
+             id="tspan1021"
+             x="102.97591"
+             y="86.413963"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.0713625px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';stroke-width:0.63392031">Backspace</tspan></text>
       </g>
       <g
          id="g1408"
-         transform="translate(-7.0671969,141.24896)">
+         transform="matrix(1.6695053,0,0,1.6695053,3.3756004,47.160037)">
         <g
            transform="translate(6.9451438,16.431426)"
            id="g923-0-1"
@@ -653,16 +699,16 @@
              height="72.85714"
              x="112.14286"
              y="188.94826" /></flowRegion><flowPara
-           id="flowPara1472"></flowPara></flowRoot>      <text
+           id="flowPara1472" /></flowRoot>      <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328"
-         x="17.728291"
-         y="204.39207"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303"
+         x="25.721798"
+         y="153.63605"
          id="text1476"><tspan
            sodipodi:role="line"
-           x="17.728291"
-           y="204.39207"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.05833328"
+           x="25.721798"
+           y="153.63605"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.76689303"
            id="tspan1482">Red Ship</tspan></text>
       <flowRoot
          xml:space="preserve"
@@ -675,114 +721,114 @@
              height="47.142857"
              x="131.42857"
              y="221.8054" /></flowRegion><flowPara
-           id="flowPara1494"></flowPara></flowRoot>      <text
+           id="flowPara1494" /></flowRoot>      <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328"
-         x="19.653549"
-         y="287.7822"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303"
+         x="28.936026"
+         y="292.85648"
          id="text1498"><tspan
            sodipodi:role="line"
            id="tspan1496"
-           x="19.653549"
-           y="287.7822"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.05833328">Left Keyboard</tspan></text>
+           x="28.936026"
+           y="292.85648"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.77928734px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.76689303">Left Keyboard</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="122.50452"
-         y="204.39207"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="219.69611"
+         y="152.57773"
          id="text1476-6"><tspan
            sodipodi:role="line"
-           x="122.50452"
-           y="204.39207"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.05833328"
+           x="219.69611"
+           y="152.57773"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.76689303"
            id="tspan1482-6">Blue Ship</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="135.79582"
-         y="288.52362"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="241.88602"
+         y="293.03595"
          id="text1498-4"><tspan
            sodipodi:role="line"
            id="tspan1496-6"
-           x="135.79582"
-           y="288.52362"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.05833328">Numpad</tspan></text>
+           x="241.88602"
+           y="293.03595"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.77928734px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.76689303">Numpad</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="27.837646"
-         y="218.38022"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="42.599419"
+         y="176.98933"
          id="text1498-2"><tspan
            sodipodi:role="line"
            id="tspan1496-8"
-           x="27.837646"
-           y="218.38022"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.05833328">Forward</tspan></text>
+           x="42.599419"
+           y="176.98933"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.76689303">Forward</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="31.644112"
-         y="268.91272"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="48.954334"
+         y="261.35382"
          id="text1498-2-9"><tspan
            sodipodi:role="line"
            id="tspan1496-8-6"
-           x="31.644112"
-           y="268.91272"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.05833328">Reverse</tspan></text>
+           x="48.954334"
+           y="261.35382"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.76689303">Reverse</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="3.237092"
-         y="227.08626"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="1.5286642"
+         y="191.52411"
          id="text1498-2-0"><tspan
            sodipodi:role="line"
            id="tspan1496-8-7"
-           x="3.237092"
-           y="227.08626"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.05833328">Missle</tspan></text>
+           x="1.5286642"
+           y="191.52411"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.76689303">Missle</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="54.262661"
-         y="214.048"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="86.716125"
+         y="169.75667"
          id="text1498-2-9-0"><tspan
            sodipodi:role="line"
            id="tspan1496-8-6-1"
-           x="54.262661"
-           y="214.048"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.05833328">Railgun</tspan></text>
+           x="86.716125"
+           y="169.75667"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ff0000;stroke-width:1.76689303">Railgun</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:5.29695845px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="16.167591"
-         y="270.71118"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:8.84330082px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="23.116199"
+         y="264.35632"
          id="text1498-2-0-3"><tspan
            sodipodi:role="line"
-           x="16.167591"
-           y="270.71118"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.05833328"
+           x="23.116199"
+           y="264.35632"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.76689303"
            id="tspan1664">Rotate</tspan><tspan
            sodipodi:role="line"
-           x="16.167591"
-           y="277.06119"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.05833328"
+           x="23.116199"
+           y="274.95767"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.76689303"
            id="tspan1678">left</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:5.29695845px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="69.254143"
-         y="258.90384"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:8.84330082px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="111.74451"
+         y="244.64372"
          id="text1498-2-0-3-6"><tspan
            sodipodi:role="line"
            id="tspan1496-8-7-7-4"
-           x="69.254143"
-           y="258.90384"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.05833328">Rotate</tspan><tspan
+           x="111.74451"
+           y="244.64372"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.76689303">Rotate</tspan><tspan
            sodipodi:role="line"
-           x="69.254143"
-           y="265.25385"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.05833328"
+           x="111.74451"
+           y="255.24509"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:1.76689303"
            id="tspan1676">right</tspan></text>
       <flowRoot
          xml:space="preserve"
@@ -795,82 +841,93 @@
              height="137.14285"
              x="-642.85712"
              y="370.37683" /></flowRegion><flowPara
-           id="flowPara1650"></flowPara></flowRoot>      <text
+           id="flowPara1650" /></flowRoot>      <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="139.4996"
-         y="219.4099"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="248.0695"
+         y="177.65005"
          id="text1498-2-5"><tspan
            sodipodi:role="line"
            id="tspan1496-8-2"
-           x="139.4996"
-           y="219.4099"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.05833328">Forward</tspan></text>
+           x="248.0695"
+           y="177.65005"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.76689303">Forward</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="135.70564"
-         y="268.04227"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="241.73546"
+         y="258.84216"
          id="text1498-2-9-02"><tspan
            sodipodi:role="line"
            id="tspan1496-8-6-9"
-           x="135.70564"
-           y="268.04227"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.05833328">Reverse</tspan></text>
+           x="241.73546"
+           y="258.84216"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.76689303">Reverse</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="118.26091"
-         y="214.52278"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="212.61139"
+         y="169.491"
          id="text1498-2-0-0"><tspan
            sodipodi:role="line"
            id="tspan1496-8-7-9"
-           x="118.26091"
-           y="214.52278"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.05833328">Missle</tspan></text>
+           x="212.61139"
+           y="169.491"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.76689303">Missle</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1000;font-family:sans-serif;letter-spacing:5.29695845px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="160.66277"
-         y="226.03992"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="283.40179"
+         y="188.71892"
          id="text1498-2-9-0-9"><tspan
            sodipodi:role="line"
            id="tspan1496-8-6-1-4"
-           x="160.66277"
-           y="226.03992"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.05833328">Railgun</tspan></text>
+           x="283.40179"
+           y="188.71892"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#0000ff;stroke-width:1.76689303">Railgun</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:5.29695845px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="123.5909"
-         y="260.194"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:8.84330082px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="221.50983"
+         y="245.73933"
          id="text1498-2-0-3-5"><tspan
            sodipodi:role="line"
-           x="123.5909"
-           y="260.194"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.05833328"
+           x="221.50983"
+           y="245.73933"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.76689303"
            id="tspan1664-1">Rotate</tspan><tspan
            sodipodi:role="line"
-           x="123.5909"
-           y="266.54401"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.05833328"
+           x="221.50983"
+           y="256.3407"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.76689303"
            id="tspan1678-0">left</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:5.29695845px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="169.36923"
-         y="271.33423"
+         style="font-style:normal;font-weight:normal;font-size:17.66893005px;line-height:0.60000002;font-family:sans-serif;text-align:center;letter-spacing:8.84330082px;word-spacing:0px;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="297.93729"
+         y="264.33817"
          id="text1498-2-0-3-6-3"><tspan
            sodipodi:role="line"
            id="tspan1496-8-7-7-4-7"
-           x="169.36923"
-           y="271.33423"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.05833328">Rotate</tspan><tspan
+           x="297.93729"
+           y="264.33817"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.76689303">Rotate</tspan><tspan
            sodipodi:role="line"
-           x="169.36923"
-           y="277.68423"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.05833328"
+           x="297.93729"
+           y="274.93951"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;line-height:0.60000002;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#0000ff;stroke-width:1.76689303"
            id="tspan1676-8">right</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:17.66893196px;line-height:1000;font-family:sans-serif;letter-spacing:8.84330082px;word-spacing:0px;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.76689303;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;"
+         x="140.62514"
+         y="215.55249"
+         id="text1498-2-9-0-4"><tspan
+           sodipodi:role="line"
+           id="tspan1496-8-6-1-49"
+           x="140.62514"
+           y="215.55249"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.42343044px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;fill:#ffffff;stroke-width:1.76689303;">End Game</tspan></text>
     </g>
   </g>
 </svg>

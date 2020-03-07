@@ -24,6 +24,7 @@ impl SimpleState for MenuState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         data.world.fetch_mut::<Game>().current_state = CurrentState::Menu;
         data.world.fetch_mut::<Time>().set_time_scale(1.);
+        data.world.delete_all();
         init_menu(data.world);
         start_text(data.world);
         initialise_camera(data.world);
@@ -57,7 +58,7 @@ impl SimpleState for MenuState {
 }
 
 fn init_menu(world: &mut World) {
-    let bg_ss = world
+    let bg = world
         .fetch::<AssetManager>()
         .get_render("backgrounds/background-2")
         .unwrap();
@@ -75,13 +76,13 @@ fn init_menu(world: &mut World) {
     bg_transform.set_scale(Vector3::new(scale, scale, scale));
     world
         .create_entity()
-        .with(bg_ss)
+        .with(bg)
         .with(bg_transform)
         .with(Transparent)
         .build();
 
     let mut title_transform = Transform::default();
-    title_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 1.333, -10.0);
+    title_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 1.333, 0.0);
     title_transform.set_scale(Vector3::new(1.5, 1.5, 1.));
     world
         .create_entity()
@@ -91,7 +92,7 @@ fn init_menu(world: &mut World) {
         .build();
 
     let mut control_transform = Transform::default();
-    control_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 4., -10.0);
+    control_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 4., 0.0);
     control_transform.set_scale(Vector3::new(0.6, 0.6, 1.));
     world
         .create_entity()
