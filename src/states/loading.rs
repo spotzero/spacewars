@@ -100,6 +100,7 @@ fn initialise_resources(world: &mut World) {
     world.insert(Game {
         current_state: CurrentState::Loading,
         game_state: GameState::Playing,
+        end_time: 0.,
     });
     world.insert(StatusOfPlayers::default());
     world.insert(AssetManager::default());

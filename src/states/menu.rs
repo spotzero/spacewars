@@ -29,6 +29,10 @@ impl SimpleState for MenuState {
         start_text(data.world);
     }
 
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        data.world.delete_all();
+    }
+
     fn handle_event(
         &mut self,
         _data: StateData<'_, GameData<'_, '_>>,

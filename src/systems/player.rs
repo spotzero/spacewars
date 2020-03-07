@@ -126,6 +126,7 @@ impl<'s> System<'s> for PlayerWinnerSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Player>,
+        Read<'s, Time>,
         ReadExpect<'s, AssetManager>,
         ReadExpect<'s, LazyUpdate>,
         WriteExpect<'s, StatusOfPlayers>,
@@ -134,7 +135,7 @@ impl<'s> System<'s> for PlayerWinnerSystem {
 
     fn run(
         &mut self,
-        (entities, mut players, asset_manager, lazy_update, mut status_of_players, mut game): Self::SystemData,
+        (entities, mut players, time, asset_manager, lazy_update, mut status_of_players, mut game): Self::SystemData,
     ) {
         if !game.is_playing() {
             return;
@@ -143,7 +144,7 @@ impl<'s> System<'s> for PlayerWinnerSystem {
             for player in (&mut players).join() {
                 player.controllable = false;
             }
-            winner_text(&lazy_update, &entities, 2, &asset_manager);
+            winner_text(&lazy_update, &entities, 3, &asset_manager);
             return;
         }
 
@@ -162,6 +163,7 @@ impl<'s> System<'s> for PlayerWinnerSystem {
             }
             winner_text(&lazy_update, &entities, winner, &asset_manager);
             game.game_state = GameState::Winner;
+            game.end_time = time.absolute_time_seconds();
         }
     }
 }

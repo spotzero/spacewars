@@ -16,6 +16,7 @@ pub enum GameState {
 pub struct Game {
     pub current_state: CurrentState,
     pub game_state: GameState,
+    pub end_time: f64,
 }
 
 impl Game {

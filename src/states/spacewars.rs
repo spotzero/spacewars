@@ -25,7 +25,6 @@ pub struct SpacewarsState;
 impl SimpleState for SpacewarsState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         reset_game(data.world);
-        resume_game(data.world);
     }
 
     fn on_resume(&mut self, data: StateData<'_, GameData<'_, '_>>) {
@@ -34,6 +33,16 @@ impl SimpleState for SpacewarsState {
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         data.world.delete_all();
+    }
+
+    fn fixed_update(&mut self, data: StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        if data.world.fetch_mut::<Game>().game_over() {
+            let time = data.world.fetch::<Time>().absolute_time_seconds();
+            if data.world.fetch_mut::<Game>().end_time + 3. < time {
+                return SimpleTrans::Switch(Box::new(MenuState));
+            }
+        }
+        Trans::None
     }
 
     fn handle_event(
@@ -53,6 +62,11 @@ impl SimpleState for SpacewarsState {
                 } else {
                     return Trans::Push(Box::new(PauseState));
                 }
+            }
+
+            if is_key_down(&event, VirtualKeyCode::Back) {
+                data.world.fetch_mut::<Game>().game_state = GameState::Tie;
+                data.world.fetch_mut::<Game>().end_time = data.world.fetch::<Time>().absolute_time_seconds();
             }
         }
 
