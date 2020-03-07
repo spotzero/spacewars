@@ -235,7 +235,7 @@ fn winner_text(
     let winner = winner - 1;
 
     let player_name = ["The red ship wins!", "The blue ship wins!", "Tie game!"];
-    let player_colour = [[1., 0., 0., 1.], [0., 0., 1., 1.], [1.,1.,1.,1.]];
+    let player_colour = [[1., 0., 0., 1.], [0., 0., 1., 1.], [1., 1., 1., 1.]];
 
     let font = asset_manager.font().unwrap();
 

@@ -1,8 +1,4 @@
-use amethyst::{
-    core::transform::Transform,
-    prelude::*,
-    renderer::Camera,
-};
+use amethyst::{core::transform::Transform, prelude::*, renderer::Camera};
 
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 

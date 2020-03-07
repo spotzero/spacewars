@@ -24,9 +24,9 @@ impl SimpleState for MenuState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         data.world.fetch_mut::<Game>().current_state = CurrentState::Menu;
         data.world.fetch_mut::<Time>().set_time_scale(1.);
-        initialise_camera(data.world);
         init_menu(data.world);
         start_text(data.world);
+        initialise_camera(data.world);
     }
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
@@ -44,7 +44,9 @@ impl SimpleState for MenuState {
                 return Trans::Quit;
             }
 
-            if is_key_down(&event, VirtualKeyCode::Space) || is_key_down(&event, VirtualKeyCode::Return) {
+            if is_key_down(&event, VirtualKeyCode::Space)
+                || is_key_down(&event, VirtualKeyCode::Return)
+            {
                 return SimpleTrans::Switch(Box::new(SpacewarsState));
             }
         }
@@ -60,32 +62,43 @@ fn init_menu(world: &mut World) {
         .get_render("backgrounds/background-2")
         .unwrap();
 
-    let title = world
-        .fetch::<AssetManager>()
-        .get_render("logo")
-        .unwrap();
+    let title = world.fetch::<AssetManager>().get_render("logo").unwrap();
 
     let controls = world
         .fetch::<AssetManager>()
         .get_render("controls")
         .unwrap();
 
-
     let mut bg_transform = Transform::default();
     let scale = ARENA_WIDTH / 1000.0;
     bg_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 2.0, -10.0);
     bg_transform.set_scale(Vector3::new(scale, scale, scale));
-    world.create_entity().with(bg_ss).with(bg_transform).with(Transparent).build();
+    world
+        .create_entity()
+        .with(bg_ss)
+        .with(bg_transform)
+        .with(Transparent)
+        .build();
 
     let mut title_transform = Transform::default();
     title_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 1.333, -10.0);
     title_transform.set_scale(Vector3::new(1.5, 1.5, 1.));
-    world.create_entity().with(title).with(title_transform).with(Transparent).build();
+    world
+        .create_entity()
+        .with(title)
+        .with(title_transform)
+        .with(Transparent)
+        .build();
 
     let mut control_transform = Transform::default();
     control_transform.set_translation_xyz(ARENA_WIDTH / 2.0, ARENA_HEIGHT / 4., -10.0);
     control_transform.set_scale(Vector3::new(0.6, 0.6, 1.));
-    world.create_entity().with(controls).with(control_transform).with(Transparent).build();
+    world
+        .create_entity()
+        .with(controls)
+        .with(control_transform)
+        .with(Transparent)
+        .build();
 }
 
 fn start_text(world: &mut World) {
