@@ -1,4 +1,6 @@
-# Requirements
+# Game Design
+
+This is my intial game design document.  It is a development starting point and **not** a reflection of the final game or product.
 
 ## Overview
 

@@ -1,9 +1,0 @@
-Programming, art and graphics, and sound by David Pascoe-Deslauriers (@spotzero)
-
-Built with the Amethyst Game Engine and the Rust programming language.
-
-Music Attibution:
-"Ignition, Set, GO!" by Bomb Boy is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
-"Five Nine Seven Eight" by Virt is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
-"Endorphemeral" by Zabutom is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
-"From the Dunes" by Synapsis is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License.

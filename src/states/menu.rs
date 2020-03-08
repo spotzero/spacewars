@@ -42,7 +42,7 @@ impl SimpleState for MenuState {
         if let StateEvent::Window(event) = &event {
             // Check if the window should be closed
             if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
-                return Trans::Quit;
+                return SimpleTrans::Switch(Box::new(CreditsState));
             }
 
             if is_key_down(&event, VirtualKeyCode::Space)
