@@ -30,7 +30,11 @@ impl SimpleState for CreditsState {
         event: StateEvent,
     ) -> SimpleTrans {
         if let StateEvent::Window(event) = &event {
-            if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) || is_key_down(&event, VirtualKeyCode::Return) || is_key_down(&event, VirtualKeyCode::Space) {
+            if is_close_requested(&event)
+                || is_key_down(&event, VirtualKeyCode::Escape)
+                || is_key_down(&event, VirtualKeyCode::Return)
+                || is_key_down(&event, VirtualKeyCode::Space)
+            {
                 return Trans::Quit;
             }
         }
@@ -63,7 +67,7 @@ fn credits_text(world: &mut World) {
         "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License.",
         "",
         "",
-        "Thanks for playing!"
+        "Thanks for playing!",
     ];
     let font = world.fetch::<AssetManager>().font().unwrap();
     let mut offset = 500.;
