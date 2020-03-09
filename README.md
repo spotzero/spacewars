@@ -18,3 +18,11 @@ Music Attibution:
 "Five Nine Seven Eight" by Virt is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
 "Endorphemeral" by Zabutom is licensed under a Attribution-Noncommercial-Share Alike 3.0 United States License.
 "From the Dunes" by Synapsis is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License.
+
+## Building
+
+On Ubuntu, you need at least:
+
+```
+sudo apt install gcc pkg-config openssl libasound2-dev cmake build-essential python3 libfreetype6-dev libexpat1-dev libxcb-composite0-dev libssl-dev libx11-dev libfontconfig1-dev libsdl1.2-dev
+```
