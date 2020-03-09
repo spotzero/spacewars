@@ -15,21 +15,13 @@ script = [
 dependencies = ["clean_release_linux"]
 script_runner = "bash"
 script = [
-    "PKG_CONFIG_ALLOW_CROSS=1 cargo build --release --target=x86_64-unknown-linux-musl"
+    "cargo build --release",
+    "linuxdeploy-x86_64.AppImage --appdir target/Spacewars.AppDir -e target/release/spacewars",
     "mkdir -p target/Spacewars.AppDir",
     "cp -r resources target/Spacewars.AppDir",
-    "cp target/x86_64-unknown-linux-musl/release /spacewars target/Spacewars.AppDir/AppRun",
-    "cd target/Spacewars.AppDir",
-    "cp resources/textures/logo.png Spacewars.png",
-    "echo '[Desktop Entry]' > Spacewars.desktop",
-    "echo 'Name=Spacewars' >> Spacewars.desktop",
-    "echo 'Exec=Spacewars' >> Spacewars.desktop",
-    "echo 'Icon=Spacewars' >> Spacewars.desktop",
-    "echo 'Type=Application' >> Spacewars.desktop",
-    "echo 'Categories=Game;' >> Spacewars.desktop",
-    "cd ..",
-    "appimagetool-x86_64.AppImage Spacewars.AppDir",
-    "mv Spacewars-x86_64.AppImage ../releases/linux",
+    "linuxdeploy-x86_64.AppImage --appdir target/Spacewars.AppDir -e target/release/spacewars --desktop-file=resources/packaging/Spacewars.desktop --icon-file=resources/packaging/icon.png",
+#    "appimagetool-x86_64.AppImage Spacewars.AppDir",
+#    "mv Spacewars-x86_64.AppImage ../releases/linux",
 ]
 
 [tasks.clean_release]
