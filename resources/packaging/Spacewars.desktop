@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Spacewars
-Exec=Spacewars
+Exec=spacewars
 Type=Application
 Categories=Game;
 Icon=icon

@@ -18,10 +18,10 @@ script = [
     "cargo build --release",
     "linuxdeploy-x86_64.AppImage --appdir target/Spacewars.AppDir -e target/release/spacewars",
     "mkdir -p target/Spacewars.AppDir",
-    "cp -r resources target/Spacewars.AppDir",
+    "cp -r resources target/Spacewars.AppDir/usr/bin",
     "linuxdeploy-x86_64.AppImage --appdir target/Spacewars.AppDir -e target/release/spacewars --desktop-file=resources/packaging/Spacewars.desktop --icon-file=resources/packaging/icon.png",
-#    "appimagetool-x86_64.AppImage Spacewars.AppDir",
-#    "mv Spacewars-x86_64.AppImage ../releases/linux",
+    "appimagetool-x86_64.AppImage target/Spacewars.AppDir",
+    "mv Spacewars-x86_64.AppImage releases/linux",
 ]
 
 [tasks.clean_release]
