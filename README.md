@@ -27,6 +27,12 @@ On Ubuntu, you need at least:
 sudo apt install gcc pkg-config openssl libasound2-dev cmake build-essential python3 libfreetype6-dev libexpat1-dev libxcb-composite0-dev libssl-dev libx11-dev libfontconfig1-dev libsdl1.2-dev
 ```
 
+To build the AppImage release, you need "cargo make", linuxdeploy, and appimagetool.  Then run:
+
+```
+cargo make release
+```
+
 ## License
 
 This software is licensed under the GNU General Public License v3.0.  See LICENSE.txt for the full restrictions.
