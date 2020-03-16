@@ -6,6 +6,7 @@ I wanted to learn how to use the Amethyst Game Engine and improve my rust, so I 
 
 **Spacewar!** has the honour of also being one of the very first computer game ever written, so it seems like a logical place to start when learning to use a game engine.
 
+![Preview of gameplay](https://github.com/spotzero/spacewars/raw/master/preview.gif "Preview")
 
 ## Credits
 
