@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = ["David Pascoe-Deslauriers <dpascoed@coldfrontlabs.ca>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+build = "build.rs"
 
 [dependencies]
 
@@ -18,5 +18,3 @@ rand = "0.7"
 [profile.dev]
 debug = 1
 
-[target.x86_64-pc-windows-gnu]
-linker = "/usr/bin/x86_64-w64-mingw32-gcc"

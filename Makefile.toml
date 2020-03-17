@@ -1,14 +1,12 @@
-[tasks.release]
-dependencies = ["clean_release","pre_build", "build_release_linux"]
+[tasks.release-linux]
+dependencies = ["clean_release_linux","pre_build_linux", "build_release_linux"]
 
-[tasks.pre_build]
+[tasks.clean_release_linux]
+script = ["rm -rf target/Spacewars.AppDir || exit 0"]
+
+[tasks.pre_build_linux]
 script = [
     "mkdir -p releases/linux || exit 0"
-]
-
-[tasks.build_release_windows]
-script = [
-    "cargo build --release --target x86_64-pc-windows-gnu",
 ]
 
 [tasks.build_release_linux]
@@ -24,12 +22,26 @@ script = [
     "mv Spacewars-x86_64.AppImage releases/linux",
 ]
 
-[tasks.clean_release]
-dependencies = ["clean_release_linux"]
-script = ["rm -Rf releases/linux"]
+[tasks.release-windows]
+dependencies = ["clean_release_windows","pre_build_windows", "build_release_windows"]
 
-[tasks.clean_release_linux]
-script = ["rm -rf target/Spacewars.AppDir || exit 0"]
+[tasks.clean_release_windows]
+script_runner = "cmd"
+script = ['del /F /Q releases']
 
-[tasks.clean]
-dependencies = ["clean_release"]
+
+[tasks.pre_build_windows]
+script_runner = "cmd"
+script = [
+    'mkdir releases\windows\spacewars || exit 0',
+]
+
+[tasks.build_release_windows]
+script_runner = "cmd"
+script = [
+    #"cargo build --release",
+    'copy target\release\spacewars.exe releases\windows\spaceswars\spaceswars.exe',
+    'copy resources releases\windows\spaceswars',
+    'copy *.txt releases\windows\spacewars',
+    'copy *.md releases\windows\spacewars',
+]

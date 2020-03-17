@@ -22,6 +22,8 @@ Music Attibution:
 
 ## Building
 
+### Linux
+
 On Ubuntu, you need at least:
 
 ```
@@ -31,7 +33,17 @@ sudo apt install gcc pkg-config openssl libasound2-dev cmake build-essential pyt
 To build the AppImage release, you need "cargo make", linuxdeploy, and appimagetool.  Then run:
 
 ```
-cargo make release
+cargo make release-linux
+```
+
+### Windows
+
+Follow the directions for a SDL 2.0 to the project for Windows: https://github.com/Rust-SDL2/rust-sdl2
+
+Then run:
+
+```
+cargo make release-windows
 ```
 
 ## License
